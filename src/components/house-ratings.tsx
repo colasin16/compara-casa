@@ -5,6 +5,7 @@ import { rateCriterion } from "@/app/houses/actions";
 import { Slider } from "@/components/ui/slider";
 import { computeFinalScore, formatScore } from "@/lib/scoring";
 import type { Criterion } from "@/lib/types";
+import { useTranslations } from "@/lib/i18n/context";
 
 type Props = {
   houseId: string;
@@ -15,6 +16,7 @@ type Props = {
 export function HouseRatings({ houseId, criteria, initialScores }: Props) {
   const [scores, setScores] = useState<Record<string, number>>(initialScores);
   const [, startTransition] = useTransition();
+  const t = useTranslations();
 
   const result = useMemo(
     () =>
@@ -42,11 +44,11 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
   if (criteria.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        You haven&apos;t defined any criteria yet. Add some on the{" "}
+        {t("ratings.noCriteriaBefore")}
         <a href="/criteria" className="underline">
-          Criteria
-        </a>{" "}
-        page first, then come back to score this house.
+          {t("ratings.noCriteriaLink")}
+        </a>
+        {t("ratings.noCriteriaAfter")}
       </p>
     );
   }
@@ -60,11 +62,14 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
             <span className="text-xl font-semibold text-primary/50">/10</span>
           </span>
           <span className="mt-1 text-xs font-medium text-muted-foreground">
-            Weighted final score
+            {t("ratings.finalScore")}
           </span>
         </div>
         <div className="ml-auto text-right text-xs font-medium text-muted-foreground">
-          {rated} of {criteria.length} criteria rated
+          {t("ratings.criteriaRated", {
+            rated,
+            total: criteria.length,
+          })}
         </div>
       </div>
 
@@ -77,7 +82,7 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">{criterion.name}</span>
                   <span className="rounded-full bg-muted-foreground/[0.12] px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                    weight {Number(criterion.weight)}
+                    {t("ratings.weight", { weight: Number(criterion.weight) })}
                   </span>
                 </div>
                 <span className="font-heading text-sm font-bold tabular-nums">

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { getTranslations } from "@/lib/i18n/server";
 
-export default function Home() {
+export default async function Home() {
+  const { t } = await getTranslations();
   return (
     <main className="relative flex flex-1 flex-col items-center justify-center gap-10 overflow-hidden px-6 py-24 text-center">
       <div
@@ -10,28 +12,26 @@ export default function Home() {
       />
       <div className="flex flex-col items-center gap-5">
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
-          🏠 ComparaCasa
+          🏠 {t("home.badge")}
         </span>
         <h1 className="max-w-2xl text-4xl font-extrabold tracking-tight text-balance sm:text-6xl">
-          Score and compare houses{" "}
-          <span className="text-primary">your way</span>
+          {t("home.titleLead")}{" "}
+          <span className="text-primary">{t("home.titleHighlight")}</span>
         </h1>
         <p className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
-          Define the aspects that matter to you — location, condition, parking,
-          terrace, lighting — give each one a weight, and let ComparaCasa rank
-          every house by what <em>you</em> value most.
+          {t("home.description")}
         </p>
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link href="/dashboard" className={buttonVariants({ size: "lg" })}>
-          Get started
+          {t("home.getStarted")}
         </Link>
         <Link
           href="/login"
           className={buttonVariants({ size: "lg", variant: "outline" })}
         >
-          Log in
+          {t("home.logIn")}
         </Link>
       </div>
     </main>

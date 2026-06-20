@@ -6,9 +6,11 @@ import { CriterionForm } from "@/components/criterion-form";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Criterion } from "@/lib/types";
+import { useTranslations } from "@/lib/i18n/context";
 
 export function CriterionItem({ criterion }: { criterion: Criterion }) {
   const [editing, setEditing] = useState(false);
+  const t = useTranslations();
 
   return (
     <Card>
@@ -28,7 +30,7 @@ export function CriterionItem({ criterion }: { criterion: Criterion }) {
             <div className="flex items-center gap-3">
               <span
                 className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold tabular-nums text-primary"
-                title="Weight"
+                title={t("criterionForm.weightTitle")}
               >
                 {Number(criterion.weight)}
               </span>
@@ -40,7 +42,7 @@ export function CriterionItem({ criterion }: { criterion: Criterion }) {
                 onClick={() => setEditing(true)}
                 className={buttonVariants({ size: "sm", variant: "ghost" })}
               >
-                Edit
+                {t("common.edit")}
               </button>
               <form action={deleteCriterion}>
                 <input type="hidden" name="id" value={criterion.id} />
@@ -52,7 +54,7 @@ export function CriterionItem({ criterion }: { criterion: Criterion }) {
                     className: "text-destructive",
                   })}
                 >
-                  Delete
+                  {t("common.delete")}
                 </button>
               </form>
             </div>

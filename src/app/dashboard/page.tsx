@@ -8,18 +8,19 @@ import {
 } from "@/components/ui/card";
 import { getHousesWithScores } from "@/lib/queries";
 import { formatScore } from "@/lib/scoring";
+import { getTranslations } from "@/lib/i18n/server";
 
 export default async function DashboardPage() {
   const houses = await getHousesWithScores();
+  const { t } = await getTranslations();
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight">Your houses</h1>
-        <p className="text-sm text-muted-foreground">
-          Ranked by their weighted score. Open a house to rate it against your
-          criteria.
-        </p>
+        <h1 className="text-2xl font-bold tracking-tight">
+          {t("dashboard.title")}
+        </h1>
+        <p className="text-sm text-muted-foreground">{t("dashboard.subtitle")}</p>
       </div>
 
       <div className="grid gap-8 md:grid-cols-[1fr_320px] md:items-start">
@@ -28,16 +29,15 @@ export default async function DashboardPage() {
             <Card className="border border-dashed border-border bg-transparent shadow-none">
               <CardHeader>
                 <CardTitle className="text-base font-medium text-muted-foreground">
-                  No houses yet
+                  {t("dashboard.emptyTitle")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                Add your first house using the form, then open it to score each
-                criterion. Make sure you&apos;ve set up your{" "}
+                {t("dashboard.emptyBodyBefore")}
                 <Link href="/criteria" className="underline">
-                  criteria
-                </Link>{" "}
-                first.
+                  {t("dashboard.emptyBodyLink")}
+                </Link>
+                {t("dashboard.emptyBodyAfter")}
               </CardContent>
             </Card>
           ) : (
@@ -60,7 +60,10 @@ export default async function DashboardPage() {
                         </span>
                       ) : null}
                       <span className="text-xs text-muted-foreground">
-                        {house.rated} of {house.totalCriteria} criteria rated
+                        {t("dashboard.criteriaRated", {
+                          rated: house.rated,
+                          total: house.totalCriteria,
+                        })}
                       </span>
                     </div>
                     <div className="flex flex-col items-end">
@@ -68,7 +71,7 @@ export default async function DashboardPage() {
                         {formatScore(house.finalScore)}
                       </span>
                       <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                        score
+                        {t("dashboard.score")}
                       </span>
                     </div>
                   </CardContent>
@@ -80,7 +83,7 @@ export default async function DashboardPage() {
 
         <Card className="md:sticky md:top-20">
           <CardHeader>
-            <CardTitle className="text-base">Add a house</CardTitle>
+            <CardTitle className="text-base">{t("dashboard.addHouse")}</CardTitle>
           </CardHeader>
           <CardContent>
             <HouseForm mode="create" />

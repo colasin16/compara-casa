@@ -3,6 +3,9 @@ import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "@/components/ui/sonner";
+import { I18nProvider } from "@/lib/i18n/context";
+import { getDictionary } from "@/lib/i18n/translate";
+import { getLocale } from "@/lib/i18n/server";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -22,26 +25,33 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "ComparaCasa — Score and compare houses your way",
-  description:
-    "Define your own weighted criteria and score houses to find the one that truly fits you.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const dictionary = getDictionary(await getLocale());
+  return {
+    title: dictionary.metadata.title,
+    description: dictionary.metadata.description,
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const dictionary = getDictionary(locale);
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${publicSans.variable} ${barlow.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background">
-        <SiteHeader />
-        {children}
-        <Toaster />
+        <I18nProvider locale={locale} dictionary={dictionary}>
+          <SiteHeader />
+          {children}
+          <Toaster />
+        </I18nProvider>
       </body>
     </html>
   );

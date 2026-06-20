@@ -6,6 +6,7 @@ import { HouseRatings } from "@/components/house-ratings";
 import { buttonVariants } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import type { Criterion, House, Rating } from "@/lib/types";
+import { getTranslations } from "@/lib/i18n/server";
 
 export default async function HouseDetailPage({
   params,
@@ -35,6 +36,8 @@ export default async function HouseDetailPage({
     ratings.map((r) => [r.criterion_id, Number(r.score)]),
   );
 
+  const { t } = await getTranslations();
+
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
       <div className="mb-6">
@@ -42,7 +45,7 @@ export default async function HouseDetailPage({
           href="/dashboard"
           className="text-sm text-muted-foreground hover:text-foreground"
         >
-          ← Back to houses
+          {t("houseDetail.back")}
         </Link>
       </div>
 
@@ -67,7 +70,7 @@ export default async function HouseDetailPage({
               className: "text-destructive",
             })}
           >
-            Delete this house
+            {t("houseDetail.deleteHouse")}
           </button>
         </form>
       </div>
