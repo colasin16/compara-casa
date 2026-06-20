@@ -37,3 +37,9 @@ export function computeFinalScore(items: ScoredCriterion[]): ScoreResult {
 
   return { finalScore: weightedSum / totalWeight, contributing };
 }
+
+/** Formats a 0–10 score for display, e.g. 7.3, or "—" when null. */
+export function formatScore(score: number | null): string {
+  if (score === null) return "—";
+  return (Math.round(score * 10) / 10).toFixed(1);
+}
