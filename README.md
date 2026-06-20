@@ -62,11 +62,15 @@ compared on the same axes. New criteria can be added later; houses simply have n
 - Email/password (and optionally Google) sign-up / login / logout via Supabase Auth.
 - Protected routes; session handling; redirect unauthenticated users.
 
-> **Status:** Implemented with **anonymous (guest) auth only** for fast iteration.
-> `/login` offers a "Continue as guest" button (`signInAnonymously`), the proxy
-> redirects unauthenticated users to `/login`, and the header shows the guest
-> session + sign out. Real email/OAuth login is deferred.
-> **Requires:** enable *Anonymous sign-ins* in Supabase → Authentication → Sign In / Providers.
+> **Status:** Implemented. `/login` offers **email/password** sign-up and
+> sign-in (Supabase Auth), with a "Continue as guest" fallback
+> (`signInAnonymously`). The proxy redirects unauthenticated users to `/login`,
+> email confirmation links are handled by the `/auth/confirm` route handler
+> (`verifyOtp`), and the header shows the signed-in email (or guest id) plus
+> sign out.
+> **Requires:** in Supabase → Authentication, enable the *Email* provider
+> (and *Anonymous sign-ins* for the guest button). Add this app's origin to the
+> *Site URL* / *Redirect URLs* so confirmation links resolve to `/auth/confirm`.
 
 ### Phase 3 — Criteria management
 - CRUD for criteria with name + weight (0–10 slider).
@@ -117,7 +121,9 @@ npm install
 # 2. Configure Supabase
 cp .env.local.example .env.local
 #   then fill in NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
-#   also enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Providers
+#   enable the "Email" provider in Supabase → Authentication → Sign In / Providers
+#   (and "Anonymous sign-ins" if you want the guest button)
+#   add this app's origin to Supabase → Authentication → URL Configuration
 
 # 3. Apply the database schema
 #   run the SQL files in supabase/migrations/ in order (0001, 0002, …)

@@ -2,6 +2,20 @@ import { z } from "zod";
 
 import type { Locale } from "@/lib/i18n/config";
 
+export const authSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Enter a valid email address"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .max(72, "Password must be 72 characters or fewer"),
+});
+
+export type AuthInput = z.infer<typeof authSchema>;
+
 export const criterionSchema = z.object({
   name: z
     .string()
