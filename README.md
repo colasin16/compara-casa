@@ -59,6 +59,12 @@ compared on the same axes. New criteria can be added later; houses simply have n
 - Email/password (and optionally Google) sign-up / login / logout via Supabase Auth.
 - Protected routes; session handling; redirect unauthenticated users.
 
+> **Status:** Implemented with **anonymous (guest) auth only** for fast iteration.
+> `/login` offers a "Continue as guest" button (`signInAnonymously`), the proxy
+> redirects unauthenticated users to `/login`, and the header shows the guest
+> session + sign out. Real email/OAuth login is deferred.
+> **Requires:** enable *Anonymous sign-ins* in Supabase → Authentication → Sign In / Providers.
+
 ### Phase 3 — Criteria management
 - CRUD for criteria with name + weight (0–10 slider).
 - Validation (unique names, weight range).
@@ -98,6 +104,7 @@ npm install
 # 2. Configure Supabase
 cp .env.local.example .env.local
 #   then fill in NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
+#   also enable "Anonymous sign-ins" in Supabase → Authentication → Sign In / Providers
 
 # 3. Apply the database schema
 #   run supabase/migrations/0001_init.sql in the Supabase SQL editor
