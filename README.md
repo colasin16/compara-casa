@@ -70,10 +70,20 @@ compared on the same axes. New criteria can be added later; houses simply have n
 - Validation (unique names, weight range).
 - Optional starter template (Location, Condition, Parking, Terrace, Lighting).
 
+> **Status:** Implemented. `/criteria` lists criteria (sorted by weight), with an
+> add form, inline edit, and delete — all via Server Actions with Zod validation.
+> Empty state offers a one-click "Add starter criteria" seed. Duplicate names are
+> rejected (DB unique constraint surfaced as a friendly error).
+
 ### Phase 4 — Houses & scoring
 - CRUD for houses (name, address, notes).
 - House detail page: rate each criterion 0–10 (sliders).
 - Live weighted final score with breakdown per criterion.
+
+> **Status:** Implemented. `/dashboard` lists houses ranked by weighted score with
+> an add form; `/houses/[id]` rates each criterion with sliders, shows a live
+> final score (updates as you drag), and persists each rating on commit. House
+> edit (inline) and delete included.
 
 ### Phase 5 — Comparison & ranking
 - Houses list sorted by final score.
