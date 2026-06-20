@@ -230,7 +230,7 @@ export function ProsCons({
   const isDragging = dragging !== null;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4">
       {(Object.keys(SIDE_VISUALS) as Side[]).map((side) => {
         const visuals = SIDE_VISUALS[side];
         const text = sideText(side);
