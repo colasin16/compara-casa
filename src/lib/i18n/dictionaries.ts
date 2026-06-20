@@ -42,10 +42,25 @@ export const en = {
 		signIn: "Sign in",
 		signUp: "Sign up",
 		createAccount: "Create account",
+		confirmPassword: "Confirm password",
+		confirmPasswordPlaceholder: "Re-enter your password",
+		forgotPassword: "Forgot your password?",
 		emailSent:
 			"Check your inbox — we've sent you a link to confirm your email and finish signing up.",
 		or: "or",
 		continueAsGuest: "Continue as guest",
+		forgotPasswordTitle: "Reset your password",
+		forgotPasswordDescription:
+			"Enter the email for your account and we'll send you a link to set a new password.",
+		sendResetLink: "Send reset link",
+		resetEmailSent:
+			"If an account exists for that email, we've sent a link to reset your password. Check your inbox.",
+		backToSignIn: "Back to sign in",
+		updatePasswordTitle: "Set a new password",
+		updatePasswordDescription:
+			"Choose a new password for your account. You'll be signed in once it's saved.",
+		newPassword: "New password",
+		savePassword: "Save password",
 	},
 	dashboard: {
 		title: "Your houses",
@@ -180,10 +195,25 @@ export const es: Dictionary = {
 		signIn: "Iniciar sesión",
 		signUp: "Registrarse",
 		createAccount: "Crear cuenta",
+		confirmPassword: "Confirmar contraseña",
+		confirmPasswordPlaceholder: "Vuelve a escribir tu contraseña",
+		forgotPassword: "¿Olvidaste tu contraseña?",
 		emailSent:
 			"Revisa tu correo — te hemos enviado un enlace para confirmar tu email y terminar el registro.",
 		or: "o",
 		continueAsGuest: "Continuar como invitado",
+		forgotPasswordTitle: "Restablece tu contraseña",
+		forgotPasswordDescription:
+			"Introduce el email de tu cuenta y te enviaremos un enlace para crear una nueva contraseña.",
+		sendResetLink: "Enviar enlace",
+		resetEmailSent:
+			"Si existe una cuenta con ese email, te hemos enviado un enlace para restablecer tu contraseña. Revisa tu correo.",
+		backToSignIn: "Volver a iniciar sesión",
+		updatePasswordTitle: "Crea una nueva contraseña",
+		updatePasswordDescription:
+			"Elige una nueva contraseña para tu cuenta. Iniciarás sesión en cuanto se guarde.",
+		newPassword: "Nueva contraseña",
+		savePassword: "Guardar contraseña",
 	},
 	dashboard: {
 		title: "Tus casas",

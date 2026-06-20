@@ -2,19 +2,50 @@ import { z } from "zod";
 
 import type { Locale } from "@/lib/i18n/config";
 
+const emailField = z
+  .string()
+  .trim()
+  .min(1, "Email is required")
+  .email("Enter a valid email address");
+
+const passwordField = z
+  .string()
+  .min(6, "Password must be at least 6 characters")
+  .max(72, "Password must be 72 characters or fewer");
+
 export const authSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .min(1, "Email is required")
-    .email("Enter a valid email address"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(72, "Password must be 72 characters or fewer"),
+  email: emailField,
+  password: passwordField,
 });
 
 export type AuthInput = z.infer<typeof authSchema>;
+
+export const signUpSchema = z
+  .object({
+    email: emailField,
+    password: passwordField,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type SignUpInput = z.infer<typeof signUpSchema>;
+
+export const emailOnlySchema = z.object({ email: emailField });
+
+export const updatePasswordSchema = z
+  .object({
+    password: passwordField,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
 
 export const criterionSchema = z.object({
   name: z

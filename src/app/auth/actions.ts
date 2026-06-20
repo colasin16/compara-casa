@@ -3,7 +3,12 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { authSchema } from "@/lib/validation";
+import {
+  authSchema,
+  emailOnlySchema,
+  signUpSchema,
+  updatePasswordSchema,
+} from "@/lib/validation";
 
 export type AuthFormState = {
   error?: string;
@@ -58,9 +63,10 @@ export async function signUpWithEmail(
   _prevState: AuthFormState,
   formData: FormData,
 ): Promise<AuthFormState> {
-  const parsed = authSchema.safeParse({
+  const parsed = signUpSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
   });
 
   if (!parsed.success) {
@@ -109,4 +115,65 @@ export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/login");
+}
+
+/**
+ * Sends a password-reset email. The link points at the confirm route, which
+ * verifies the recovery OTP and forwards the user to the update-password page.
+ * Always reports success to avoid leaking which emails are registered.
+ */
+export async function requestPasswordReset(
+  _prevState: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const parsed = emailOnlySchema.safeParse({ email: formData.get("email") });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Invalid email" };
+  }
+
+  const supabase = await createClient();
+  const origin = await getOrigin();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(
+    parsed.data.email,
+    origin
+      ? { redirectTo: `${origin}/auth/confirm?next=/auth/update-password` }
+      : undefined,
+  );
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { emailSent: true };
+}
+
+/**
+ * Sets a new password for the user. Requires an active recovery session, which
+ * is established by the confirm route after the user clicks the reset email.
+ */
+export async function updatePassword(
+  _prevState: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const parsed = updatePasswordSchema.safeParse({
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
+  });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Invalid password" };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.updateUser({
+    password: parsed.data.password,
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  redirect("/dashboard");
 }
