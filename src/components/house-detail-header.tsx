@@ -4,13 +4,15 @@ import { useState } from "react";
 import { HouseForm } from "@/components/house-form";
 import { buttonVariants } from "@/components/ui/button";
 import type { House } from "@/lib/types";
+import { useTranslations } from "@/lib/i18n/context";
 
 export function HouseDetailHeader({ house }: { house: House }) {
   const [editing, setEditing] = useState(false);
+  const t = useTranslations();
 
   if (editing) {
     return (
-      <div className="rounded-lg border p-4">
+      <div className="rounded-2xl bg-card p-6 shadow-card">
         <HouseForm
           mode="edit"
           house={{
@@ -43,7 +45,7 @@ export function HouseDetailHeader({ house }: { house: House }) {
         onClick={() => setEditing(true)}
         className={buttonVariants({ size: "sm", variant: "outline" })}
       >
-        Edit
+        {t("common.edit")}
       </button>
     </div>
   );

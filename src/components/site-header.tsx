@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "@/app/auth/actions";
+import { MainNav } from "@/components/main-nav";
 
 export async function SiteHeader() {
   const supabase = await createClient();
@@ -9,35 +9,18 @@ export async function SiteHeader() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-        <Link href="/" className="font-semibold">
-          🏠 ComparaCasa
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
+      <div className="relative mx-auto flex h-16 max-w-5xl items-center justify-between gap-2 px-4 sm:px-6">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-heading text-base font-extrabold tracking-tight sm:text-lg"
+        >
+          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary/10 text-base">
+            🏠
+          </span>
+          ComparaCasa
         </Link>
-        <nav className="flex items-center gap-4 text-sm text-muted-foreground">
-          {user ? (
-            <>
-              <Link href="/dashboard" className="hover:text-foreground">
-                Houses
-              </Link>
-              <Link href="/criteria" className="hover:text-foreground">
-                Criteria
-              </Link>
-              <span className="hidden text-xs sm:inline">
-                Guest {user.id.slice(0, 8)}
-              </span>
-              <form action={signOut}>
-                <button type="submit" className="hover:text-foreground">
-                  Sign out
-                </button>
-              </form>
-            </>
-          ) : (
-            <Link href="/login" className="hover:text-foreground">
-              Log in
-            </Link>
-          )}
-        </nav>
+        <MainNav isLoggedIn={!!user} guestId={user?.id.slice(0, 8)} />
       </div>
     </header>
   );

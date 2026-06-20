@@ -5,6 +5,7 @@ import { rateCriterion } from "@/app/houses/actions";
 import { Slider } from "@/components/ui/slider";
 import { computeFinalScore, formatScore } from "@/lib/scoring";
 import type { Criterion } from "@/lib/types";
+import { useTranslations } from "@/lib/i18n/context";
 
 type Props = {
   houseId: string;
@@ -15,6 +16,7 @@ type Props = {
 export function HouseRatings({ houseId, criteria, initialScores }: Props) {
   const [scores, setScores] = useState<Record<string, number>>(initialScores);
   const [, startTransition] = useTransition();
+  const t = useTranslations();
 
   const result = useMemo(
     () =>
@@ -42,47 +44,52 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
   if (criteria.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        You haven&apos;t defined any criteria yet. Add some on the{" "}
+        {t("ratings.noCriteriaBefore")}
         <a href="/criteria" className="underline">
-          Criteria
-        </a>{" "}
-        page first, then come back to score this house.
+          {t("ratings.noCriteriaLink")}
+        </a>
+        {t("ratings.noCriteriaAfter")}
       </p>
     );
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-4 rounded-lg border bg-muted/30 px-5 py-4">
+      <div className="flex items-center gap-4 rounded-2xl bg-primary/[0.08] px-4 py-4 ring-1 ring-primary/10 sm:px-6 sm:py-5">
         <div className="flex flex-col">
-          <span className="text-4xl font-bold tabular-nums">
+          <span className="font-heading text-4xl font-extrabold text-primary tabular-nums sm:text-5xl">
             {formatScore(result.finalScore)}
-            <span className="text-lg font-normal text-muted-foreground">
+            <span className="text-lg font-semibold text-primary/50 sm:text-xl">
               /10
             </span>
           </span>
-          <span className="text-xs text-muted-foreground">
-            Weighted final score
+          <span className="mt-1 text-xs font-medium text-muted-foreground">
+            {t("ratings.finalScore")}
           </span>
         </div>
-        <div className="ml-auto text-right text-xs text-muted-foreground">
-          {rated} of {criteria.length} criteria rated
+        <div className="ml-auto max-w-[40%] text-right text-xs font-medium text-balance text-muted-foreground">
+          {t("ratings.criteriaRated", {
+            rated,
+            total: criteria.length,
+          })}
         </div>
       </div>
 
-      <ul className="flex flex-col divide-y">
+      <ul className="flex flex-col divide-y divide-border">
         {criteria.map((criterion) => {
           const score = scores[criterion.id] ?? 0;
           return (
-            <li key={criterion.id} className="flex flex-col gap-2 py-4">
+            <li key={criterion.id} className="flex flex-col gap-2.5 py-5">
               <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{criterion.name}</span>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                    weight {Number(criterion.weight)}
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="truncate font-semibold">
+                    {criterion.name}
+                  </span>
+                  <span className="shrink-0 rounded-full bg-muted-foreground/[0.12] px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                    {t("ratings.weight", { weight: Number(criterion.weight) })}
                   </span>
                 </div>
-                <span className="text-sm font-semibold tabular-nums">
+                <span className="shrink-0 font-heading text-sm font-bold tabular-nums">
                   {score}
                 </span>
               </div>

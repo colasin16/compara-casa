@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getTranslations } from "@/lib/i18n/server";
 
 export default async function LoginPage({
   searchParams,
@@ -14,16 +15,14 @@ export default async function LoginPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
+  const { t } = await getTranslations();
 
   return (
     <main className="flex flex-1 items-center justify-center px-6 py-16">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Welcome to ComparaCasa</CardTitle>
-          <CardDescription>
-            Jump straight in as a guest. Your houses and criteria are saved to
-            this session — you can add a permanent login later.
-          </CardDescription>
+          <CardTitle>{t("login.title")}</CardTitle>
+          <CardDescription>{t("login.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {error ? (
@@ -36,7 +35,7 @@ export default async function LoginPage({
               type="submit"
               className={buttonVariants({ size: "lg", className: "w-full" })}
             >
-              Continue as guest
+              {t("login.continueAsGuest")}
             </button>
           </form>
         </CardContent>
