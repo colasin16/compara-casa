@@ -1,11 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { computeFinalScore } from "@/lib/scoring";
+import { resolveCoverUrls } from "@/lib/storage";
 import type { Criterion, House, Rating } from "@/lib/types";
 
 export type HouseWithScore = House & {
   finalScore: number | null;
   rated: number;
   totalCriteria: number;
+  coverUrl: string | null;
 };
 
 /**
@@ -27,6 +29,13 @@ export async function getHousesWithScores(): Promise<HouseWithScore[]> {
 
   const weightById = new Map(criteria.map((c) => [c.id, Number(c.weight)]));
 
+  const coverUrls = await resolveCoverUrls(
+    supabase,
+    houses
+      .map((h) => h.cover_image_path)
+      .filter((p): p is string => p !== null),
+  );
+
   return houses
     .map((house) => {
       const houseRatings = ratings.filter((r) => r.house_id === house.id);
@@ -44,6 +53,9 @@ export async function getHousesWithScores(): Promise<HouseWithScore[]> {
         finalScore,
         rated: houseRatings.length,
         totalCriteria: criteria.length,
+        coverUrl: house.cover_image_path
+          ? coverUrls.get(house.cover_image_path) ?? null
+          : null,
       };
     })
     .sort((a, b) => {

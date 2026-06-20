@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { HouseForm } from "@/components/house-form";
 import {
@@ -52,6 +53,18 @@ export default async function DashboardPage() {
                     <span className="grid size-8 shrink-0 place-items-center rounded-full bg-muted text-sm font-bold text-muted-foreground tabular-nums">
                       {index + 1}
                     </span>
+                    {house.coverUrl ? (
+                      <span className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-muted">
+                        <Image
+                          src={house.coverUrl}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                          unoptimized
+                        />
+                      </span>
+                    ) : null}
                     <div className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate font-semibold">{house.name}</span>
                       {house.address ? (

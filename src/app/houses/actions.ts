@@ -3,7 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { houseSchema, housePointsSchema } from "@/lib/validation";
+import { COVER_BUCKET } from "@/lib/storage";
+import {
+  houseSchema,
+  housePointsSchema,
+  validateCoverImage,
+  type CoverImageError,
+} from "@/lib/validation";
 
 export type HouseFormState = { error?: string; ok?: boolean };
 
@@ -89,9 +95,123 @@ export async function deleteHouse(formData: FormData) {
   const id = formData.get("id");
   if (typeof id !== "string" || id.length === 0) return;
 
+  // Remove the cover object (if any) before deleting the row so storage does
+  // not accumulate orphaned files.
+  const { data: house } = await supabase
+    .from("houses")
+    .select("cover_image_path")
+    .eq("id", id)
+    .eq("user_id", userId)
+    .maybeSingle();
+  const coverPath = (house as { cover_image_path: string | null } | null)
+    ?.cover_image_path;
+  if (coverPath) {
+    await supabase.storage.from(COVER_BUCKET).remove([coverPath]);
+  }
+
   await supabase.from("houses").delete().eq("id", id).eq("user_id", userId);
   revalidatePath("/dashboard");
   redirect("/dashboard");
+}
+
+export type HouseCoverState = {
+  error?: string;
+  errorCode?: CoverImageError;
+  ok?: boolean;
+};
+
+/**
+ * Uploads (or replaces) a single cover image for a house. Ownership and the
+ * file's type/size are enforced server-side. The object is stored at
+ * "<user_id>/<house_id>" so re-uploading overwrites the previous image and no
+ * orphaned files accumulate.
+ */
+export async function uploadHouseCover(
+  formData: FormData,
+): Promise<HouseCoverState> {
+  const { supabase, userId } = await requireUserId();
+  if (!userId) return { error: "You must be signed in." };
+
+  const houseId = formData.get("houseId");
+  if (typeof houseId !== "string" || houseId.length === 0) {
+    return { error: "Missing house id." };
+  }
+
+  const file = formData.get("file");
+  const fileOrNull = file instanceof File ? file : null;
+  const invalid = validateCoverImage(fileOrNull);
+  if (invalid) return { errorCode: invalid };
+  const validFile = fileOrNull as File;
+
+  // Ensure the house belongs to the current user before attaching an image.
+  const { data: house } = await supabase
+    .from("houses")
+    .select("id")
+    .eq("id", houseId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!house) return { error: "House not found." };
+
+  const path = `${userId}/${houseId}`;
+  const { error: uploadError } = await supabase.storage
+    .from(COVER_BUCKET)
+    .upload(path, validFile, {
+      upsert: true,
+      contentType: validFile.type,
+    });
+  if (uploadError) return { error: uploadError.message };
+
+  const { error: updateError } = await supabase
+    .from("houses")
+    .update({ cover_image_path: path })
+    .eq("id", houseId)
+    .eq("user_id", userId);
+  if (updateError) return { error: updateError.message };
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/houses/${houseId}`);
+  return { ok: true };
+}
+
+/**
+ * Removes a house's cover image: deletes the stored object and clears the
+ * pointer on the house. Leaves the house otherwise unchanged.
+ */
+export async function removeHouseCover(
+  formData: FormData,
+): Promise<HouseCoverState> {
+  const { supabase, userId } = await requireUserId();
+  if (!userId) return { error: "You must be signed in." };
+
+  const houseId = formData.get("houseId");
+  if (typeof houseId !== "string" || houseId.length === 0) {
+    return { error: "Missing house id." };
+  }
+
+  const { data: house } = await supabase
+    .from("houses")
+    .select("cover_image_path")
+    .eq("id", houseId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!house) return { error: "House not found." };
+
+  const coverPath = (house as { cover_image_path: string | null })
+    .cover_image_path;
+  if (coverPath) {
+    await supabase.storage.from(COVER_BUCKET).remove([coverPath]);
+  }
+
+  const { error: updateError } = await supabase
+    .from("houses")
+    .update({ cover_image_path: null })
+    .eq("id", houseId)
+    .eq("user_id", userId);
+  if (updateError) return { error: updateError.message };
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/houses/${houseId}`);
+  return { ok: true };
 }
 
 /**

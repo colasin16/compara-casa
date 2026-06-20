@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteHouse } from "@/app/houses/actions";
+import { HouseCover } from "@/components/house-cover";
 import { HouseDetailHeader } from "@/components/house-detail-header";
 import { HouseRatings } from "@/components/house-ratings";
 import { ProsCons } from "@/components/pros-cons";
 import { buttonVariants } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
+import { resolveCoverUrl } from "@/lib/storage";
 import type { Criterion, House, HousePoint, Rating } from "@/lib/types";
 import { getTranslations } from "@/lib/i18n/server";
 
@@ -45,6 +47,8 @@ export default async function HouseDetailPage({
 
   const { t } = await getTranslations();
 
+  const coverUrl = await resolveCoverUrl(supabase, house.cover_image_path);
+
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-6">
@@ -57,6 +61,22 @@ export default async function HouseDetailPage({
       </div>
 
       <HouseDetailHeader house={house} />
+
+      <section className="mt-8">
+        <div className="mb-3">
+          <h2 className="text-lg font-semibold tracking-tight">
+            {t("houseCover.title")}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {t("houseCover.description")}
+          </p>
+        </div>
+        <HouseCover
+          houseId={house.id}
+          houseName={house.name}
+          initialCoverUrl={coverUrl}
+        />
+      </section>
 
       <div className="mt-8">
         <HouseRatings

@@ -12,6 +12,7 @@ export type House = {
   name: string;
   address: string | null;
   notes: string | null;
+  cover_image_path: string | null;
   created_at: string;
 };
 

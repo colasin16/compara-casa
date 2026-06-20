@@ -46,6 +46,9 @@ Next.js + Prisma + Postgres (Neon) + Auth.js — more manual control if you'd ra
 - `house_points`: `id, user_id, house_id, kind ('pro' | 'con'), body, position, created_at` —
   per-house positives/negatives that users can add, edit, remove, reorder, and
   drag between the two lists on the house detail page.
+- `houses.cover_image_path` (optional): pointer to an optional cover image stored
+  in the private **`house-covers`** Supabase Storage bucket (`<user_id>/<house_id>`).
+  Houses without a cover (`cover_image_path = null`) work exactly as before.
 
 Design choice: criteria are defined once per user and reused across houses, so houses are
 compared on the same axes. New criteria can be added later; houses simply have no rating yet.
@@ -122,6 +125,8 @@ cp .env.local.example .env.local
 # 3. Apply the database schema
 #   run the SQL files in supabase/migrations/ in order (0001, 0002, …)
 #   in the Supabase SQL editor (or via the Supabase CLI)
+#   migration 0003 also creates the private "house-covers" Storage bucket used
+#   for optional house cover images (no extra setup needed beyond running it)
 
 # 4. Start the dev server
 npm run dev

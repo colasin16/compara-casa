@@ -54,6 +54,36 @@ export const housePointsSchema = z
 
 export type HousePointInput = z.infer<typeof housePointSchema>;
 
+// ---------------------------------------------------------------------------
+// Cover image upload constraints. Enforced server-side; the client may mirror
+// them for a nicer UX but must never be trusted as the source of truth.
+// ---------------------------------------------------------------------------
+export const COVER_IMAGE_MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+
+export const COVER_IMAGE_ALLOWED_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
+export type CoverImageError = "noFile" | "invalidType" | "tooLarge";
+
+/**
+ * Validates an uploaded cover image's MIME type and size. Returns `null` when
+ * the file is acceptable, or a stable error code the UI can localize.
+ */
+export function validateCoverImage(file: File | null): CoverImageError | null {
+  if (!file || file.size === 0) return "noFile";
+  if (
+    !(COVER_IMAGE_ALLOWED_TYPES as readonly string[]).includes(file.type)
+  ) {
+    return "invalidType";
+  }
+  if (file.size > COVER_IMAGE_MAX_BYTES) return "tooLarge";
+  return null;
+}
+
+
 export const DEFAULT_CRITERIA: Record<
   Locale,
   { name: string; weight: number }[]
