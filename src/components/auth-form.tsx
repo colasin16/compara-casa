@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 
 import {
@@ -69,7 +70,17 @@ export function AuthForm() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="password">{t("login.password")}</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">{t("login.password")}</Label>
+            {mode === "signIn" ? (
+              <Link
+                href="/auth/forgot-password"
+                className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              >
+                {t("login.forgotPassword")}
+              </Link>
+            ) : null}
+          </div>
           <Input
             id="password"
             name="password"
@@ -82,6 +93,23 @@ export function AuthForm() {
             required
           />
         </div>
+
+        {mode === "signUp" ? (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="confirmPassword">
+              {t("login.confirmPassword")}
+            </Label>
+            <Input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              placeholder={t("login.confirmPasswordPlaceholder")}
+              minLength={6}
+              required
+            />
+          </div>
+        ) : null}
 
         {state.error ? (
           <p
