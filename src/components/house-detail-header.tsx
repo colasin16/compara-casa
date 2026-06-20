@@ -10,7 +10,7 @@ export function HouseDetailHeader({ house }: { house: House }) {
 
   if (editing) {
     return (
-      <div className="rounded-lg border p-4">
+      <div className="rounded-2xl bg-card p-6 shadow-card">
         <HouseForm
           mode="edit"
           house={{

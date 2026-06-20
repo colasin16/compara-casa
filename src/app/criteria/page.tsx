@@ -38,7 +38,7 @@ export default async function CriteriaPage() {
               Couldn&apos;t load criteria: {error.message}
             </p>
           ) : criteria.length === 0 ? (
-            <Card className="border-dashed">
+            <Card className="border border-dashed border-border bg-transparent shadow-none">
               <CardHeader>
                 <CardTitle className="text-base font-medium text-muted-foreground">
                   No criteria yet

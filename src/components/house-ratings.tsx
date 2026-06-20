@@ -53,36 +53,34 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-4 rounded-lg border bg-muted/30 px-5 py-4">
+      <div className="flex items-center gap-4 rounded-2xl bg-primary/[0.08] px-6 py-5 ring-1 ring-primary/10">
         <div className="flex flex-col">
-          <span className="text-4xl font-bold tabular-nums">
+          <span className="font-heading text-5xl font-extrabold text-primary tabular-nums">
             {formatScore(result.finalScore)}
-            <span className="text-lg font-normal text-muted-foreground">
-              /10
-            </span>
+            <span className="text-xl font-semibold text-primary/50">/10</span>
           </span>
-          <span className="text-xs text-muted-foreground">
+          <span className="mt-1 text-xs font-medium text-muted-foreground">
             Weighted final score
           </span>
         </div>
-        <div className="ml-auto text-right text-xs text-muted-foreground">
+        <div className="ml-auto text-right text-xs font-medium text-muted-foreground">
           {rated} of {criteria.length} criteria rated
         </div>
       </div>
 
-      <ul className="flex flex-col divide-y">
+      <ul className="flex flex-col divide-y divide-border">
         {criteria.map((criterion) => {
           const score = scores[criterion.id] ?? 0;
           return (
-            <li key={criterion.id} className="flex flex-col gap-2 py-4">
+            <li key={criterion.id} className="flex flex-col gap-2.5 py-5">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium">{criterion.name}</span>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                  <span className="font-semibold">{criterion.name}</span>
+                  <span className="rounded-full bg-muted-foreground/[0.12] px-2 py-0.5 text-xs font-medium text-muted-foreground">
                     weight {Number(criterion.weight)}
                   </span>
                 </div>
-                <span className="text-sm font-semibold tabular-nums">
+                <span className="font-heading text-sm font-bold tabular-nums">
                   {score}
                 </span>
               </div>
