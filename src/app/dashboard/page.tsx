@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProsCons } from "@/components/pros-cons";
 
 export default function DashboardPage() {
   return (
@@ -12,7 +13,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <Card className="border-dashed">
+      <Card className="mb-8 border-dashed">
         <CardHeader>
           <CardTitle className="text-base font-medium text-muted-foreground">
             No houses yet
@@ -23,6 +24,19 @@ export default function DashboardPage() {
           (auth, database, and scoring) is being set up.
         </CardContent>
       </Card>
+
+      <section>
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold tracking-tight">
+            Positives vs. negatives
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Jot down what counts for or against a house. Drag a line to reorder
+            it, or drag it across to the other list.
+          </p>
+        </div>
+        <ProsCons />
+      </section>
     </main>
   );
 }
