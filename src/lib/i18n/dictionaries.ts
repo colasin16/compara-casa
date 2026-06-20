@@ -34,7 +34,17 @@ export const en = {
 	login: {
 		title: "Welcome to ComparaCasa",
 		description:
-			"Jump straight in as a guest. Your houses and criteria are saved to this session — you can add a permanent login later.",
+			"Sign in with your email, or jump straight in as a guest. Your houses and criteria are saved to your account.",
+		email: "Email",
+		emailPlaceholder: "you@example.com",
+		password: "Password",
+		passwordPlaceholder: "At least 6 characters",
+		signIn: "Sign in",
+		signUp: "Sign up",
+		createAccount: "Create account",
+		emailSent:
+			"Check your inbox — we've sent you a link to confirm your email and finish signing up.",
+		or: "or",
 		continueAsGuest: "Continue as guest",
 	},
 	dashboard: {
@@ -162,7 +172,17 @@ export const es: Dictionary = {
 	login: {
 		title: "Bienvenido a ComparaCasa",
 		description:
-			"Entra directamente como invitado. Tus casas y criterios se guardan en esta sesión — más adelante puedes crear un acceso permanente.",
+			"Inicia sesión con tu email o entra directamente como invitado. Tus casas y criterios se guardan en tu cuenta.",
+		email: "Email",
+		emailPlaceholder: "tu@ejemplo.com",
+		password: "Contraseña",
+		passwordPlaceholder: "Al menos 6 caracteres",
+		signIn: "Iniciar sesión",
+		signUp: "Registrarse",
+		createAccount: "Crear cuenta",
+		emailSent:
+			"Revisa tu correo — te hemos enviado un enlace para confirmar tu email y terminar el registro.",
+		or: "o",
 		continueAsGuest: "Continuar como invitado",
 	},
 	dashboard: {

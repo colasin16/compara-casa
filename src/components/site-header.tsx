@@ -20,7 +20,11 @@ export async function SiteHeader() {
           </span>
           ComparaCasa
         </Link>
-        <MainNav isLoggedIn={!!user} guestId={user?.id.slice(0, 8)} />
+        <MainNav
+          isLoggedIn={!!user}
+          guestId={user?.id.slice(0, 8)}
+          email={user?.email}
+        />
       </div>
     </header>
   );

@@ -15,14 +15,18 @@ const linkClass =
 export function MainNav({
   isLoggedIn,
   guestId,
+  email,
 }: {
   isLoggedIn: boolean;
   guestId?: string;
+  email?: string;
 }) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
+
+  const accountLabel = email ?? t("header.guest", { id: guestId ?? "" });
 
   const links = isLoggedIn
     ? [
@@ -42,8 +46,8 @@ export function MainNav({
         ))}
         {isLoggedIn ? (
           <>
-            <span className="ml-2 hidden rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground md:inline">
-              {t("header.guest", { id: guestId ?? "" })}
+            <span className="ml-2 hidden max-w-[12rem] truncate rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground md:inline">
+              {accountLabel}
             </span>
             <form action={signOut}>
               <button type="submit" className={linkClass}>
@@ -91,8 +95,8 @@ export function MainNav({
             ))}
             {isLoggedIn ? (
               <>
-                <span className="px-3 py-1 text-xs font-medium text-muted-foreground">
-                  {t("header.guest", { id: guestId ?? "" })}
+                <span className="truncate px-3 py-1 text-xs font-medium text-muted-foreground">
+                  {accountLabel}
                 </span>
                 <form action={signOut} onSubmit={close}>
                   <button
