@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { Locale } from "@/lib/i18n/config";
+
 export const criterionSchema = z.object({
   name: z
     .string()
@@ -36,11 +38,40 @@ export const houseSchema = z.object({
 
 export type HouseInput = z.infer<typeof houseSchema>;
 
-export const DEFAULT_CRITERIA: { name: string; weight: number }[] = [
-  { name: "Location", weight: 9 },
-  { name: "Price", weight: 9 },
-  { name: "Condition", weight: 8 },
-  { name: "Lighting / Orientation", weight: 7 },
-  { name: "Parking", weight: 6 },
-  { name: "Terrace", weight: 5 },
-];
+export const housePointSchema = z.object({
+  id: z.string().uuid(),
+  kind: z.enum(["pro", "con"]),
+  body: z
+    .string()
+    .trim()
+    .min(1, "A line cannot be empty")
+    .max(300, "A line must be 300 characters or fewer"),
+});
+
+export const housePointsSchema = z
+  .array(housePointSchema)
+  .max(200, "Too many lines");
+
+export type HousePointInput = z.infer<typeof housePointSchema>;
+
+export const DEFAULT_CRITERIA: Record<
+  Locale,
+  { name: string; weight: number }[]
+> = {
+  en: [
+    { name: "Location", weight: 9 },
+    { name: "Price", weight: 9 },
+    { name: "Condition", weight: 8 },
+    { name: "Lighting / Orientation", weight: 7 },
+    { name: "Parking", weight: 6 },
+    { name: "Terrace", weight: 5 },
+  ],
+  es: [
+    { name: "Ubicación", weight: 9 },
+    { name: "Precio", weight: 9 },
+    { name: "Estado", weight: 8 },
+    { name: "Iluminación / Orientación", weight: 7 },
+    { name: "Parking", weight: 6 },
+    { name: "Terraza", weight: 5 },
+  ],
+};

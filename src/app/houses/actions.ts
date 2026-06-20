@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { houseSchema } from "@/lib/validation";
+import { houseSchema, housePointsSchema } from "@/lib/validation";
 
 export type HouseFormState = { error?: string; ok?: boolean };
 
@@ -129,4 +129,89 @@ export async function rateCriterion(formData: FormData) {
 
   revalidatePath(`/houses/${houseId}`);
   revalidatePath("/dashboard");
+}
+
+export type SaveHousePointsState = { error?: string; ok?: boolean };
+
+/**
+ * Replaces the full set of positives/negatives ("pros vs cons") for a house
+ * with the supplied ordered snapshot. The client sends every line in display
+ * order; `position` is derived from each line's index within its side, so
+ * reordering and moving lines between lists persists in a single round trip.
+ */
+export async function saveHousePoints(
+  houseId: string,
+  rawPoints: unknown,
+): Promise<SaveHousePointsState> {
+  const { supabase, userId } = await requireUserId();
+  if (!userId) return { error: "You must be signed in." };
+
+  if (typeof houseId !== "string" || houseId.length === 0) {
+    return { error: "Missing house id." };
+  }
+
+  const parsed = housePointsSchema.safeParse(rawPoints);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message };
+  }
+  const points = parsed.data;
+
+  // Ensure the house belongs to the current user before attaching points.
+  const { data: house } = await supabase
+    .from("houses")
+    .select("id")
+    .eq("id", houseId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!house) return { error: "House not found." };
+
+  // Reject duplicate ids in the snapshot to keep positions deterministic.
+  const ids = points.map((p) => p.id);
+  if (new Set(ids).size !== ids.length) {
+    return { error: "Duplicate line ids." };
+  }
+
+  // Derive a stable position per side from the incoming order.
+  const counters: Record<string, number> = { pro: 0, con: 0 };
+  const rows = points.map((p) => ({
+    id: p.id,
+    user_id: userId,
+    house_id: houseId,
+    kind: p.kind,
+    body: p.body,
+    position: counters[p.kind]++,
+  }));
+
+  if (rows.length > 0) {
+    const { error } = await supabase
+      .from("house_points")
+      .upsert(rows, { onConflict: "id" });
+    if (error) return { error: error.message };
+  }
+
+  // Delete any of this house's points that are no longer present.
+  const { data: existing, error: existingError } = await supabase
+    .from("house_points")
+    .select("id")
+    .eq("house_id", houseId)
+    .eq("user_id", userId);
+  if (existingError) return { error: existingError.message };
+
+  const keep = new Set(ids);
+  const toDelete = (existing ?? [])
+    .map((row) => row.id as string)
+    .filter((id) => !keep.has(id));
+
+  if (toDelete.length > 0) {
+    const { error: deleteError } = await supabase
+      .from("house_points")
+      .delete()
+      .eq("house_id", houseId)
+      .eq("user_id", userId)
+      .in("id", toDelete);
+    if (deleteError) return { error: deleteError.message };
+  }
+
+  revalidatePath(`/houses/${houseId}`);
+  return { ok: true };
 }

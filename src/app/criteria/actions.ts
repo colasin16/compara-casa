@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { criterionSchema, DEFAULT_CRITERIA } from "@/lib/validation";
+import { getLocale } from "@/lib/i18n/server";
 
 export type CriterionFormState = { error?: string; ok?: boolean };
 
@@ -98,7 +99,8 @@ export async function seedDefaultCriteria() {
   const { supabase, userId } = await requireUserId();
   if (!userId) return;
 
-  const rows = DEFAULT_CRITERIA.map((c) => ({ ...c, user_id: userId }));
+  const locale = await getLocale();
+  const rows = DEFAULT_CRITERIA[locale].map((c) => ({ ...c, user_id: userId }));
   // Ignore duplicates so re-running is safe.
   await supabase
     .from("criteria")
