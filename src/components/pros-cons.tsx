@@ -24,6 +24,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "@/lib/i18n/context";
 import type { HousePoint, HousePointKind } from "@/lib/types";
 
 type Side = "pros" | "cons";
@@ -80,19 +81,15 @@ function listsToSnapshot(lists: Lists) {
   );
 }
 
-const SIDE_META: Record<
+const SIDE_VISUALS: Record<
   Side,
-  { title: string; description: string; icon: typeof ThumbsUp; accent: string }
+  { icon: typeof ThumbsUp; accent: string }
 > = {
   pros: {
-    title: "Positives",
-    description: "Things that count in this house's favour.",
     icon: ThumbsUp,
     accent: "text-emerald-600 dark:text-emerald-400",
   },
   cons: {
-    title: "Negatives",
-    description: "Things that count against this house.",
     icon: ThumbsDown,
     accent: "text-rose-600 dark:text-rose-400",
   },
@@ -114,6 +111,19 @@ export function ProsCons({
   const [dropTarget, setDropTarget] = useState<DragState | null>(null);
   const [, startTransition] = useTransition();
   const baseId = useId();
+  const t = useTranslations();
+
+  const sideText = (side: Side) => ({
+    title: side === "pros" ? t("prosCons.prosTitle") : t("prosCons.consTitle"),
+    description:
+      side === "pros"
+        ? t("prosCons.prosDescription")
+        : t("prosCons.consDescription"),
+    placeholder:
+      side === "pros"
+        ? t("prosCons.prosPlaceholder")
+        : t("prosCons.consPlaceholder"),
+  });
 
   // Snapshot of the body when an input gains focus, so blur only persists when
   // the text actually changed.
@@ -123,7 +133,7 @@ export function ProsCons({
     startTransition(async () => {
       const result = await saveHousePoints(houseId, listsToSnapshot(next));
       if (result?.error) {
-        toast.error(`Could not save: ${result.error}`);
+        toast.error(t("prosCons.saveError", { error: result.error }));
       }
     });
   }
@@ -221,9 +231,10 @@ export function ProsCons({
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {(Object.keys(SIDE_META) as Side[]).map((side) => {
-        const meta = SIDE_META[side];
-        const Icon = meta.icon;
+      {(Object.keys(SIDE_VISUALS) as Side[]).map((side) => {
+        const visuals = SIDE_VISUALS[side];
+        const text = sideText(side);
+        const Icon = visuals.icon;
         const items = lists[side];
         const draftInputId = `${baseId}-${side}-draft`;
         const isColumnDropTarget =
@@ -250,14 +261,14 @@ export function ProsCons({
             }}
           >
             <CardHeader>
-              <CardTitle className={cn("flex items-center gap-2", meta.accent)}>
+              <CardTitle className={cn("flex items-center gap-2", visuals.accent)}>
                 <Icon className="size-4" aria-hidden />
-                {meta.title}
+                {text.title}
                 <span className="ml-auto text-xs font-normal text-muted-foreground">
                   {items.length}
                 </span>
               </CardTitle>
-              <CardDescription>{meta.description}</CardDescription>
+              <CardDescription>{text.description}</CardDescription>
             </CardHeader>
 
             <CardContent className="flex flex-col gap-2">
@@ -319,7 +330,10 @@ export function ProsCons({
 
                       <Input
                         value={item.body}
-                        aria-label={`${meta.title} item ${index + 1}`}
+                        aria-label={t("prosCons.itemLabel", {
+                          label: text.title,
+                          index: index + 1,
+                        })}
                         onFocus={() => {
                           editingFrom.current = item.body;
                         }}
@@ -335,7 +349,7 @@ export function ProsCons({
                           type="button"
                           variant="ghost"
                           size="icon-xs"
-                          aria-label="Move up"
+                          aria-label={t("prosCons.moveUp")}
                           disabled={index === 0}
                           onClick={() => reorder(side, index, -1)}
                         >
@@ -345,7 +359,7 @@ export function ProsCons({
                           type="button"
                           variant="ghost"
                           size="icon-xs"
-                          aria-label="Move down"
+                          aria-label={t("prosCons.moveDown")}
                           disabled={index === items.length - 1}
                           onClick={() => reorder(side, index, 1)}
                         >
@@ -357,8 +371,8 @@ export function ProsCons({
                           size="icon-xs"
                           aria-label={
                             side === "pros"
-                              ? "Move to negatives"
-                              : "Move to positives"
+                              ? t("prosCons.moveToCons")
+                              : t("prosCons.moveToPros")
                           }
                           onClick={() => switchSide(side, index)}
                         >
@@ -368,7 +382,7 @@ export function ProsCons({
                           type="button"
                           variant="ghost"
                           size="icon-xs"
-                          aria-label="Remove"
+                          aria-label={t("prosCons.remove")}
                           onClick={() => removeItem(side, item.id)}
                         >
                           <Trash2 />
@@ -381,8 +395,8 @@ export function ProsCons({
                 {items.length === 0 ? (
                   <li className="rounded-lg border border-dashed px-3 py-4 text-center text-xs text-muted-foreground">
                     {isDragging
-                      ? "Drop here"
-                      : "Nothing yet — add a line below or drag one here."}
+                      ? t("prosCons.dropHere")
+                      : t("prosCons.empty")}
                   </li>
                 ) : null}
               </ul>
@@ -395,14 +409,12 @@ export function ProsCons({
                 }}
               >
                 <label htmlFor={draftInputId} className="sr-only">
-                  Add a {meta.title.toLowerCase()} item
+                  {t("prosCons.addItemLabel", { label: text.title })}
                 </label>
                 <Input
                   id={draftInputId}
                   value={drafts[side]}
-                  placeholder={
-                    side === "pros" ? "Add a positive…" : "Add a negative…"
-                  }
+                  placeholder={text.placeholder}
                   onChange={(event) =>
                     setDrafts((prev) => ({
                       ...prev,
@@ -414,7 +426,7 @@ export function ProsCons({
                   type="submit"
                   size="icon"
                   variant="outline"
-                  aria-label={`Add ${meta.title.toLowerCase()} item`}
+                  aria-label={t("prosCons.addItemLabel", { label: text.title })}
                   disabled={drafts[side].trim().length === 0}
                 >
                   <Plus />

@@ -88,6 +88,27 @@ export const en = {
     criteriaRated: "{rated} of {total} criteria rated",
     weight: "weight {weight}",
   },
+  prosCons: {
+    sectionTitle: "Positives vs. negatives",
+    sectionDescription:
+      "Note what counts for or against this house. Drag a line to reorder it, or drag it across to the other list.",
+    prosTitle: "Positives",
+    prosDescription: "Things that count in this house's favour.",
+    prosPlaceholder: "Add a positive…",
+    consTitle: "Negatives",
+    consDescription: "Things that count against this house.",
+    consPlaceholder: "Add a negative…",
+    itemLabel: "{label} item {index}",
+    addItemLabel: "Add {label} item",
+    moveUp: "Move up",
+    moveDown: "Move down",
+    moveToPros: "Move to positives",
+    moveToCons: "Move to negatives",
+    remove: "Remove",
+    dropHere: "Drop here",
+    empty: "Nothing yet — add a line below or drag one here.",
+    saveError: "Could not save: {error}",
+  },
 };
 
 export type Dictionary = typeof en;
@@ -179,6 +200,27 @@ export const es: Dictionary = {
     finalScore: "Puntuación final ponderada",
     criteriaRated: "{rated} de {total} criterios puntuados",
     weight: "peso {weight}",
+  },
+  prosCons: {
+    sectionTitle: "Pros y contras",
+    sectionDescription:
+      "Anota lo que cuenta a favor o en contra de esta casa. Arrastra una línea para reordenarla, o muévela a la otra lista.",
+    prosTitle: "Pros",
+    prosDescription: "Cosas que juegan a favor de esta casa.",
+    prosPlaceholder: "Añadir un pro…",
+    consTitle: "Contras",
+    consDescription: "Cosas que juegan en contra de esta casa.",
+    consPlaceholder: "Añadir un contra…",
+    itemLabel: "{label}: elemento {index}",
+    addItemLabel: "Añadir elemento a {label}",
+    moveUp: "Subir",
+    moveDown: "Bajar",
+    moveToPros: "Mover a pros",
+    moveToCons: "Mover a contras",
+    remove: "Eliminar",
+    dropHere: "Suelta aquí",
+    empty: "Nada todavía — añade una línea abajo o arrastra una aquí.",
+    saveError: "No se pudo guardar: {error}",
   },
 };
 

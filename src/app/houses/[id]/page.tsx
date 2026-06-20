@@ -69,11 +69,10 @@ export default async function HouseDetailPage({
       <section className="mt-10 border-t pt-8">
         <div className="mb-4">
           <h2 className="text-lg font-semibold tracking-tight">
-            Positives vs. negatives
+            {t("prosCons.sectionTitle")}
           </h2>
           <p className="text-sm text-muted-foreground">
-            Note what counts for or against this house. Drag a line to reorder
-            it, or drag it across to the other list.
+            {t("prosCons.sectionDescription")}
           </p>
         </div>
         <ProsCons houseId={house.id} initialPoints={points} />
