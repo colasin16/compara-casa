@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { Locale } from "@/lib/i18n/config";
+
 export const criterionSchema = z.object({
   name: z
     .string()
@@ -52,11 +54,24 @@ export const housePointsSchema = z
 
 export type HousePointInput = z.infer<typeof housePointSchema>;
 
-export const DEFAULT_CRITERIA: { name: string; weight: number }[] = [
-  { name: "Location", weight: 9 },
-  { name: "Price", weight: 9 },
-  { name: "Condition", weight: 8 },
-  { name: "Lighting / Orientation", weight: 7 },
-  { name: "Parking", weight: 6 },
-  { name: "Terrace", weight: 5 },
-];
+export const DEFAULT_CRITERIA: Record<
+  Locale,
+  { name: string; weight: number }[]
+> = {
+  en: [
+    { name: "Location", weight: 9 },
+    { name: "Price", weight: 9 },
+    { name: "Condition", weight: 8 },
+    { name: "Lighting / Orientation", weight: 7 },
+    { name: "Parking", weight: 6 },
+    { name: "Terrace", weight: 5 },
+  ],
+  es: [
+    { name: "Ubicación", weight: 9 },
+    { name: "Precio", weight: 9 },
+    { name: "Estado", weight: 8 },
+    { name: "Iluminación / Orientación", weight: 7 },
+    { name: "Parking", weight: 6 },
+    { name: "Terraza", weight: 5 },
+  ],
+};
