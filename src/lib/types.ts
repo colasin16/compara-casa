@@ -23,3 +23,15 @@ export type Rating = {
   score: number;
   created_at: string;
 };
+
+export type HousePointKind = "pro" | "con";
+
+export type HousePoint = {
+  id: string;
+  user_id: string;
+  house_id: string;
+  kind: HousePointKind;
+  body: string;
+  position: number;
+  created_at: string;
+};

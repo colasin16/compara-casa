@@ -36,6 +36,22 @@ export const houseSchema = z.object({
 
 export type HouseInput = z.infer<typeof houseSchema>;
 
+export const housePointSchema = z.object({
+  id: z.string().uuid(),
+  kind: z.enum(["pro", "con"]),
+  body: z
+    .string()
+    .trim()
+    .min(1, "A line cannot be empty")
+    .max(300, "A line must be 300 characters or fewer"),
+});
+
+export const housePointsSchema = z
+  .array(housePointSchema)
+  .max(200, "Too many lines");
+
+export type HousePointInput = z.infer<typeof housePointSchema>;
+
 export const DEFAULT_CRITERIA: { name: string; weight: number }[] = [
   { name: "Location", weight: 9 },
   { name: "Price", weight: 9 },

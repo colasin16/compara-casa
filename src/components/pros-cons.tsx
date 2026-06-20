@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useSyncExternalStore } from "react";
+import { useId, useRef, useState, useTransition } from "react";
 import {
   ArrowDown,
   ArrowLeftRight,
@@ -11,7 +11,9 @@ import {
   ThumbsUp,
   Trash2,
 } from "lucide-react";
+import { toast } from "sonner";
 
+import { saveHousePoints } from "@/app/houses/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,12 +24,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import type { HousePoint, HousePointKind } from "@/lib/types";
 
 type Side = "pros" | "cons";
 
 type Item = {
   id: string;
-  text: string;
+  body: string;
 };
 
 type Lists = Record<Side, Item[]>;
@@ -37,7 +40,7 @@ type DragState = {
   index: number;
 };
 
-const STORAGE_KEY = "compara-casa:pros-cons";
+const SIDE_TO_KIND: Record<Side, HousePointKind> = { pros: "pro", cons: "con" };
 
 function emptyLists(): Lists {
   return { pros: [], cons: [] };
@@ -47,76 +50,34 @@ function createId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();
   }
-  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  // RFC 4122 version 4 fallback (the id column is a uuid).
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => {
+    const n = Number(c);
+    return (
+      n ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (n / 4)))
+    ).toString(16);
+  });
 }
 
-function loadLists(): Lists {
-  if (typeof window === "undefined") return emptyLists();
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return emptyLists();
-    const parsed = JSON.parse(raw) as Partial<Lists>;
-    const normalize = (items: unknown): Item[] =>
-      Array.isArray(items)
-        ? items
-            .filter(
-              (item): item is Item =>
-                typeof item === "object" &&
-                item !== null &&
-                typeof (item as Item).id === "string" &&
-                typeof (item as Item).text === "string",
-            )
-            .map((item) => ({ id: item.id, text: item.text }))
-        : [];
-    return { pros: normalize(parsed.pros), cons: normalize(parsed.cons) };
-  } catch {
-    return emptyLists();
+function pointsToLists(points: HousePoint[]): Lists {
+  const lists = emptyLists();
+  for (const point of [...points].sort((a, b) => a.position - b.position)) {
+    const side: Side = point.kind === "con" ? "cons" : "pros";
+    lists[side].push({ id: point.id, body: point.body });
   }
+  return lists;
 }
 
-// localStorage-backed store consumed via useSyncExternalStore. This keeps the
-// lists persistent across reloads and SSR-safe without calling setState in an
-// effect (server renders the stable empty snapshot, the client re-reads after
-// hydration).
-const SERVER_SNAPSHOT: Lists = emptyLists();
-const storeListeners = new Set<() => void>();
-let storeSnapshot: Lists | null = null;
-
-function getStoreSnapshot(): Lists {
-  if (storeSnapshot === null) {
-    storeSnapshot = loadLists();
-  }
-  return storeSnapshot;
-}
-
-function getServerSnapshot(): Lists {
-  return SERVER_SNAPSHOT;
-}
-
-function subscribeToStore(callback: () => void): () => void {
-  storeListeners.add(callback);
-  const onStorage = (event: StorageEvent) => {
-    if (event.key === STORAGE_KEY) {
-      storeSnapshot = null;
-      callback();
-    }
-  };
-  window.addEventListener("storage", onStorage);
-  return () => {
-    storeListeners.delete(callback);
-    window.removeEventListener("storage", onStorage);
-  };
-}
-
-function setStoreLists(updater: (current: Lists) => Lists) {
-  const next = updater(getStoreSnapshot());
-  storeSnapshot = next;
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Ignore storage failures (e.g. private mode / quota).
-  }
-  storeListeners.forEach((listener) => listener());
+// Flatten the two ordered lists into the snapshot the server expects.
+function listsToSnapshot(lists: Lists) {
+  return (Object.keys(SIDE_TO_KIND) as Side[]).flatMap((side) =>
+    lists[side].map((item) => ({
+      id: item.id,
+      kind: SIDE_TO_KIND[side],
+      body: item.body,
+    })),
+  );
 }
 
 const SIDE_META: Record<
@@ -137,45 +98,82 @@ const SIDE_META: Record<
   },
 };
 
-export function ProsCons() {
-  const lists = useSyncExternalStore(
-    subscribeToStore,
-    getStoreSnapshot,
-    getServerSnapshot,
-  );
+export function ProsCons({
+  houseId,
+  initialPoints,
+}: {
+  houseId: string;
+  initialPoints: HousePoint[];
+}) {
+  const [lists, setLists] = useState<Lists>(() => pointsToLists(initialPoints));
   const [drafts, setDrafts] = useState<Record<Side, string>>({
     pros: "",
     cons: "",
   });
   const [dragging, setDragging] = useState<DragState | null>(null);
   const [dropTarget, setDropTarget] = useState<DragState | null>(null);
+  const [, startTransition] = useTransition();
   const baseId = useId();
 
-  function setLists(updater: (current: Lists) => Lists) {
-    setStoreLists(updater);
+  // Snapshot of the body when an input gains focus, so blur only persists when
+  // the text actually changed.
+  const editingFrom = useRef<string | null>(null);
+
+  function persist(next: Lists) {
+    startTransition(async () => {
+      const result = await saveHousePoints(houseId, listsToSnapshot(next));
+      if (result?.error) {
+        toast.error(`Could not save: ${result.error}`);
+      }
+    });
+  }
+
+  // Apply a list change locally and persist the new snapshot.
+  function commit(updater: (current: Lists) => Lists) {
+    const next = updater(lists);
+    if (next === lists) return;
+    setLists(next);
+    persist(next);
   }
 
   function addItem(side: Side) {
-    const text = drafts[side].trim();
-    if (!text) return;
-    setLists((prev) => ({
+    const body = drafts[side].trim();
+    if (!body) return;
+    commit((prev) => ({
       ...prev,
-      [side]: [...prev[side], { id: createId(), text }],
+      [side]: [...prev[side], { id: createId(), body }],
     }));
     setDrafts((prev) => ({ ...prev, [side]: "" }));
   }
 
-  function updateItem(side: Side, id: string, text: string) {
-    setLists((prev) => ({
-      ...prev,
-      [side]: prev[side].map((item) =>
-        item.id === id ? { ...item, text } : item,
+  // Local-only text edit; persistence happens on blur (see commitTextIfChanged).
+  function editText(side: Side, id: string, body: string) {
+    setLists({
+      ...lists,
+      [side]: lists[side].map((item) =>
+        item.id === id ? { ...item, body } : item,
       ),
-    }));
+    });
+  }
+
+  function commitTextIfChanged(side: Side, id: string) {
+    const current = lists[side].find((item) => item.id === id);
+    const from = editingFrom.current;
+    editingFrom.current = null;
+    if (!current) return;
+    if (current.body.trim().length === 0) {
+      // Empty lines are removed rather than persisted (body has a min length).
+      commit((prev) => ({
+        ...prev,
+        [side]: prev[side].filter((item) => item.id !== id),
+      }));
+    } else if (from !== current.body) {
+      persist(lists);
+    }
   }
 
   function removeItem(side: Side, id: string) {
-    setLists((prev) => ({
+    commit((prev) => ({
       ...prev,
       [side]: prev[side].filter((item) => item.id !== id),
     }));
@@ -183,7 +181,7 @@ export function ProsCons() {
 
   // Move an item from one position to another (within or across lists).
   function moveItem(from: DragState, to: DragState) {
-    setLists((prev) => {
+    commit((prev) => {
       const next: Lists = { pros: [...prev.pros], cons: [...prev.cons] };
       const [moved] = next[from.side].splice(from.index, 1);
       if (!moved) return prev;
@@ -320,11 +318,15 @@ export function ProsCons() {
                       </span>
 
                       <Input
-                        value={item.text}
+                        value={item.body}
                         aria-label={`${meta.title} item ${index + 1}`}
+                        onFocus={() => {
+                          editingFrom.current = item.body;
+                        }}
                         onChange={(event) =>
-                          updateItem(side, item.id, event.target.value)
+                          editText(side, item.id, event.target.value)
                         }
+                        onBlur={() => commitTextIfChanged(side, item.id)}
                         className="h-7 border-transparent bg-transparent px-1 focus-visible:border-input"
                       />
 
