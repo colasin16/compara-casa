@@ -15,7 +15,7 @@ export default async function DashboardPage() {
   const { t } = await getTranslations();
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+    <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight">
           {t("dashboard.title")}

@@ -55,17 +55,19 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-4 rounded-2xl bg-primary/[0.08] px-6 py-5 ring-1 ring-primary/10">
+      <div className="flex items-center gap-4 rounded-2xl bg-primary/[0.08] px-4 py-4 ring-1 ring-primary/10 sm:px-6 sm:py-5">
         <div className="flex flex-col">
-          <span className="font-heading text-5xl font-extrabold text-primary tabular-nums">
+          <span className="font-heading text-4xl font-extrabold text-primary tabular-nums sm:text-5xl">
             {formatScore(result.finalScore)}
-            <span className="text-xl font-semibold text-primary/50">/10</span>
+            <span className="text-lg font-semibold text-primary/50 sm:text-xl">
+              /10
+            </span>
           </span>
           <span className="mt-1 text-xs font-medium text-muted-foreground">
             {t("ratings.finalScore")}
           </span>
         </div>
-        <div className="ml-auto text-right text-xs font-medium text-muted-foreground">
+        <div className="ml-auto max-w-[40%] text-right text-xs font-medium text-balance text-muted-foreground">
           {t("ratings.criteriaRated", {
             rated,
             total: criteria.length,
@@ -79,13 +81,15 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
           return (
             <li key={criterion.id} className="flex flex-col gap-2.5 py-5">
               <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold">{criterion.name}</span>
-                  <span className="rounded-full bg-muted-foreground/[0.12] px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="truncate font-semibold">
+                    {criterion.name}
+                  </span>
+                  <span className="shrink-0 rounded-full bg-muted-foreground/[0.12] px-2 py-0.5 text-xs font-medium text-muted-foreground">
                     {t("ratings.weight", { weight: Number(criterion.weight) })}
                   </span>
                 </div>
-                <span className="font-heading text-sm font-bold tabular-nums">
+                <span className="shrink-0 font-heading text-sm font-bold tabular-nums">
                   {score}
                 </span>
               </div>

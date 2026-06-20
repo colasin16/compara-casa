@@ -39,7 +39,7 @@ export default async function HouseDetailPage({
   const { t } = await getTranslations();
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
+    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-6">
         <Link
           href="/dashboard"
