@@ -111,6 +111,19 @@ export const en = {
 		empty: "Nothing yet — add a line below or drag one here.",
 		saveError: "Could not save: {error}",
 	},
+	houseNotes: {
+		sectionTitle: "Notes",
+		sectionDescription:
+			"Jot down anything you want to remember about this house that doesn't fit elsewhere.",
+		placeholder: "Add a note…",
+		addNoteLabel: "Add note",
+		itemLabel: "Note {index}",
+		moveUp: "Move up",
+		moveDown: "Move down",
+		remove: "Remove",
+		empty: "No notes yet — add one below.",
+		saveError: "Could not save: {error}",
+	},
 };
 
 export type Dictionary = typeof en;
@@ -224,6 +237,19 @@ export const es: Dictionary = {
 		remove: "Eliminar",
 		dropHere: "Suelta aquí",
 		empty: "Nada todavía — añade una línea abajo o arrastra una aquí.",
+		saveError: "No se pudo guardar: {error}",
+	},
+	houseNotes: {
+		sectionTitle: "Notas",
+		sectionDescription:
+			"Apunta cualquier cosa que quieras recordar sobre esta casa y que no encaje en otro sitio.",
+		placeholder: "Añadir una nota…",
+		addNoteLabel: "Añadir nota",
+		itemLabel: "Nota {index}",
+		moveUp: "Subir",
+		moveDown: "Bajar",
+		remove: "Eliminar",
+		empty: "Aún no hay notas — añade una abajo.",
 		saveError: "No se pudo guardar: {error}",
 	},
 };

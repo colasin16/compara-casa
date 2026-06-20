@@ -54,6 +54,21 @@ export const housePointsSchema = z
 
 export type HousePointInput = z.infer<typeof housePointSchema>;
 
+export const houseNoteSchema = z.object({
+  id: z.string().uuid(),
+  body: z
+    .string()
+    .trim()
+    .min(1, "A note cannot be empty")
+    .max(1000, "A note must be 1000 characters or fewer"),
+});
+
+export const houseNotesSchema = z
+  .array(houseNoteSchema)
+  .max(200, "Too many notes");
+
+export type HouseNoteInput = z.infer<typeof houseNoteSchema>;
+
 export const DEFAULT_CRITERIA: Record<
   Locale,
   { name: string; weight: number }[]
