@@ -125,7 +125,7 @@ cp .env.local.example .env.local
 # 3. Apply the database schema
 #   run the SQL files in supabase/migrations/ in order (0001, 0002, …)
 #   in the Supabase SQL editor (or via the Supabase CLI)
-#   migration 0003 also creates the private "house-covers" Storage bucket used
+#   migration 0004 also creates the private "house-covers" Storage bucket used
 #   for optional house cover images (no extra setup needed beyond running it)
 
 # 4. Start the dev server
