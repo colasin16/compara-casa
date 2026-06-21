@@ -2,6 +2,51 @@ import { z } from "zod";
 
 import type { Locale } from "@/lib/i18n/config";
 
+const emailField = z
+  .string()
+  .trim()
+  .min(1, "Email is required")
+  .email("Enter a valid email address");
+
+const passwordField = z
+  .string()
+  .min(6, "Password must be at least 6 characters")
+  .max(72, "Password must be 72 characters or fewer");
+
+export const authSchema = z.object({
+  email: emailField,
+  password: passwordField,
+});
+
+export type AuthInput = z.infer<typeof authSchema>;
+
+export const signUpSchema = z
+  .object({
+    email: emailField,
+    password: passwordField,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type SignUpInput = z.infer<typeof signUpSchema>;
+
+export const emailOnlySchema = z.object({ email: emailField });
+
+export const updatePasswordSchema = z
+  .object({
+    password: passwordField,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type UpdatePasswordInput = z.infer<typeof updatePasswordSchema>;
+
 export const criterionSchema = z.object({
   name: z
     .string()
@@ -83,6 +128,20 @@ export function validateCoverImage(file: File | null): CoverImageError | null {
   return null;
 }
 
+export const houseNoteSchema = z.object({
+  id: z.string().uuid(),
+  body: z
+    .string()
+    .trim()
+    .min(1, "A note cannot be empty")
+    .max(1000, "A note must be 1000 characters or fewer"),
+});
+
+export const houseNotesSchema = z
+  .array(houseNoteSchema)
+  .max(200, "Too many notes");
+
+export type HouseNoteInput = z.infer<typeof houseNoteSchema>;
 
 export const DEFAULT_CRITERIA: Record<
   Locale,

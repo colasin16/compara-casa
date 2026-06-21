@@ -36,3 +36,12 @@ export type HousePoint = {
   position: number;
   created_at: string;
 };
+
+export type HouseNote = {
+  id: string;
+  user_id: string;
+  house_id: string;
+  body: string;
+  position: number;
+  created_at: string;
+};

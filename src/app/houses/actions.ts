@@ -7,6 +7,7 @@ import { COVER_BUCKET } from "@/lib/storage";
 import {
   houseSchema,
   housePointsSchema,
+  houseNotesSchema,
   validateCoverImage,
   type CoverImageError,
 } from "@/lib/validation";
@@ -325,6 +326,88 @@ export async function saveHousePoints(
   if (toDelete.length > 0) {
     const { error: deleteError } = await supabase
       .from("house_points")
+      .delete()
+      .eq("house_id", houseId)
+      .eq("user_id", userId)
+      .in("id", toDelete);
+    if (deleteError) return { error: deleteError.message };
+  }
+
+  revalidatePath(`/houses/${houseId}`);
+  return { ok: true };
+}
+
+export type SaveHouseNotesState = { error?: string; ok?: boolean };
+
+/**
+ * Replaces the full set of free-form notes for a house with the supplied
+ * ordered snapshot. The client sends every note in display order; `position`
+ * is derived from each note's index, so reordering persists in one round trip.
+ */
+export async function saveHouseNotes(
+  houseId: string,
+  rawNotes: unknown,
+): Promise<SaveHouseNotesState> {
+  const { supabase, userId } = await requireUserId();
+  if (!userId) return { error: "You must be signed in." };
+
+  if (typeof houseId !== "string" || houseId.length === 0) {
+    return { error: "Missing house id." };
+  }
+
+  const parsed = houseNotesSchema.safeParse(rawNotes);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0].message };
+  }
+  const notes = parsed.data;
+
+  // Ensure the house belongs to the current user before attaching notes.
+  const { data: house } = await supabase
+    .from("houses")
+    .select("id")
+    .eq("id", houseId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!house) return { error: "House not found." };
+
+  // Reject duplicate ids in the snapshot to keep positions deterministic.
+  const ids = notes.map((n) => n.id);
+  if (new Set(ids).size !== ids.length) {
+    return { error: "Duplicate note ids." };
+  }
+
+  // Derive a stable position from the incoming order.
+  const rows = notes.map((n, index) => ({
+    id: n.id,
+    user_id: userId,
+    house_id: houseId,
+    body: n.body,
+    position: index,
+  }));
+
+  if (rows.length > 0) {
+    const { error } = await supabase
+      .from("house_notes")
+      .upsert(rows, { onConflict: "id" });
+    if (error) return { error: error.message };
+  }
+
+  // Delete any of this house's notes that are no longer present.
+  const { data: existing, error: existingError } = await supabase
+    .from("house_notes")
+    .select("id")
+    .eq("house_id", houseId)
+    .eq("user_id", userId);
+  if (existingError) return { error: existingError.message };
+
+  const keep = new Set(ids);
+  const toDelete = (existing ?? [])
+    .map((row) => row.id as string)
+    .filter((id) => !keep.has(id));
+
+  if (toDelete.length > 0) {
+    const { error: deleteError } = await supabase
+      .from("house_notes")
       .delete()
       .eq("house_id", houseId)
       .eq("user_id", userId)

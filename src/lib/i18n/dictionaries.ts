@@ -34,8 +34,33 @@ export const en = {
 	login: {
 		title: "Welcome to ComparaCasa",
 		description:
-			"Jump straight in as a guest. Your houses and criteria are saved to this session — you can add a permanent login later.",
+			"Sign in with your email, or jump straight in as a guest. Your houses and criteria are saved to your account.",
+		email: "Email",
+		emailPlaceholder: "you@example.com",
+		password: "Password",
+		passwordPlaceholder: "At least 6 characters",
+		signIn: "Sign in",
+		signUp: "Sign up",
+		createAccount: "Create account",
+		confirmPassword: "Confirm password",
+		confirmPasswordPlaceholder: "Re-enter your password",
+		forgotPassword: "Forgot your password?",
+		emailSent:
+			"Check your inbox — we've sent you a link to confirm your email and finish signing up.",
+		or: "or",
 		continueAsGuest: "Continue as guest",
+		forgotPasswordTitle: "Reset your password",
+		forgotPasswordDescription:
+			"Enter the email for your account and we'll send you a link to set a new password.",
+		sendResetLink: "Send reset link",
+		resetEmailSent:
+			"If an account exists for that email, we've sent a link to reset your password. Check your inbox.",
+		backToSignIn: "Back to sign in",
+		updatePasswordTitle: "Set a new password",
+		updatePasswordDescription:
+			"Choose a new password for your account. You'll be signed in once it's saved.",
+		newPassword: "New password",
+		savePassword: "Save password",
 	},
 	dashboard: {
 		title: "Your houses",
@@ -124,6 +149,19 @@ export const en = {
 		empty: "Nothing yet — add a line below or drag one here.",
 		saveError: "Could not save: {error}",
 	},
+	houseNotes: {
+		sectionTitle: "Notes",
+		sectionDescription:
+			"Jot down anything you want to remember about this house that doesn't fit elsewhere.",
+		placeholder: "Add a note…",
+		addNoteLabel: "Add note",
+		itemLabel: "Note {index}",
+		moveUp: "Move up",
+		moveDown: "Move down",
+		remove: "Remove",
+		empty: "No notes yet — add one below.",
+		saveError: "Could not save: {error}",
+	},
 };
 
 export type Dictionary = typeof en;
@@ -162,8 +200,33 @@ export const es: Dictionary = {
 	login: {
 		title: "Bienvenido a ComparaCasa",
 		description:
-			"Entra directamente como invitado. Tus casas y criterios se guardan en esta sesión — más adelante puedes crear un acceso permanente.",
+			"Inicia sesión con tu email o entra directamente como invitado. Tus casas y criterios se guardan en tu cuenta.",
+		email: "Email",
+		emailPlaceholder: "tu@ejemplo.com",
+		password: "Contraseña",
+		passwordPlaceholder: "Al menos 6 caracteres",
+		signIn: "Iniciar sesión",
+		signUp: "Registrarse",
+		createAccount: "Crear cuenta",
+		confirmPassword: "Confirmar contraseña",
+		confirmPasswordPlaceholder: "Vuelve a escribir tu contraseña",
+		forgotPassword: "¿Olvidaste tu contraseña?",
+		emailSent:
+			"Revisa tu correo — te hemos enviado un enlace para confirmar tu email y terminar el registro.",
+		or: "o",
 		continueAsGuest: "Continuar como invitado",
+		forgotPasswordTitle: "Restablece tu contraseña",
+		forgotPasswordDescription:
+			"Introduce el email de tu cuenta y te enviaremos un enlace para crear una nueva contraseña.",
+		sendResetLink: "Enviar enlace",
+		resetEmailSent:
+			"Si existe una cuenta con ese email, te hemos enviado un enlace para restablecer tu contraseña. Revisa tu correo.",
+		backToSignIn: "Volver a iniciar sesión",
+		updatePasswordTitle: "Crea una nueva contraseña",
+		updatePasswordDescription:
+			"Elige una nueva contraseña para tu cuenta. Iniciarás sesión en cuanto se guarde.",
+		newPassword: "Nueva contraseña",
+		savePassword: "Guardar contraseña",
 	},
 	dashboard: {
 		title: "Tus casas",
@@ -250,6 +313,19 @@ export const es: Dictionary = {
 		remove: "Eliminar",
 		dropHere: "Suelta aquí",
 		empty: "Nada todavía — añade una línea abajo o arrastra una aquí.",
+		saveError: "No se pudo guardar: {error}",
+	},
+	houseNotes: {
+		sectionTitle: "Notas",
+		sectionDescription:
+			"Apunta cualquier cosa que quieras recordar sobre esta casa y que no encaje en otro sitio.",
+		placeholder: "Añadir una nota…",
+		addNoteLabel: "Añadir nota",
+		itemLabel: "Nota {index}",
+		moveUp: "Subir",
+		moveDown: "Bajar",
+		remove: "Eliminar",
+		empty: "Aún no hay notas — añade una abajo.",
 		saveError: "No se pudo guardar: {error}",
 	},
 };
