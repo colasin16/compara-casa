@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -51,6 +52,7 @@ export default async function RootLayout({
           <SiteHeader />
           {children}
           <Toaster />
+          <Analytics />
         </I18nProvider>
       </body>
     </html>
