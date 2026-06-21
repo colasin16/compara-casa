@@ -17,6 +17,7 @@ export const en = {
 	header: {
 		houses: "Houses",
 		criteria: "Criteria",
+		compare: "Compare",
 		guest: "Guest {id}",
 		signOut: "Sign out",
 		logIn: "Log in",
@@ -149,6 +150,20 @@ export const en = {
 		empty: "No notes yet — add one below.",
 		saveError: "Could not save: {error}",
 	},
+	compare: {
+		title: "Compare houses",
+		subtitle:
+			"Side-by-side view of every house scored against each criterion. The best score in each row is highlighted.",
+		criterionColumn: "Criterion",
+		weightColumn: "Weight",
+		finalScore: "Final score",
+		unrated: "—",
+		emptyTitle: "Nothing to compare yet",
+		emptyBodyBefore:
+			"Add at least one house and rate it against your ",
+		emptyBodyLink: "criteria",
+		emptyBodyAfter: " to see a comparison here.",
+	},
 };
 
 export type Dictionary = typeof en;
@@ -170,6 +185,7 @@ export const es: Dictionary = {
 	header: {
 		houses: "Casas",
 		criteria: "Criterios",
+		compare: "Comparar",
 		guest: "Invitado {id}",
 		signOut: "Cerrar sesión",
 		logIn: "Iniciar sesión",
@@ -301,6 +317,20 @@ export const es: Dictionary = {
 		remove: "Eliminar",
 		empty: "Aún no hay notas — añade una abajo.",
 		saveError: "No se pudo guardar: {error}",
+	},
+	compare: {
+		title: "Comparar casas",
+		subtitle:
+			"Vista comparativa de cada casa puntuada según cada criterio. La mejor puntuación de cada fila aparece resaltada.",
+		criterionColumn: "Criterio",
+		weightColumn: "Peso",
+		finalScore: "Puntuación final",
+		unrated: "—",
+		emptyTitle: "Nada que comparar todavía",
+		emptyBodyBefore:
+			"Añade al menos una casa y puntúala según tus ",
+		emptyBodyLink: "criterios",
+		emptyBodyAfter: " para ver una comparativa aquí.",
 	},
 };
 

@@ -54,3 +54,78 @@ export async function getHousesWithScores(): Promise<HouseWithScore[]> {
       return b.finalScore - a.finalScore;
     });
 }
+
+export type ComparisonCriterion = Criterion & {
+  /** score per house_id (undefined when no rating exists) */
+  scoreByHouseId: Record<string, number>;
+};
+
+export type ComparisonData = {
+  /** Criteria sorted by weight descending, then name */
+  criteria: ComparisonCriterion[];
+  /** Houses sorted by final score descending */
+  houses: HouseWithScore[];
+};
+
+/**
+ * Loads everything needed for the comparison table:
+ * criteria (with per-house scores), and houses (with final scores),
+ * all sorted for display.
+ */
+export async function getComparisonData(): Promise<ComparisonData> {
+  const supabase = await createClient();
+
+  const [housesRes, criteriaRes, ratingsRes] = await Promise.all([
+    supabase.from("houses").select("*").order("created_at", { ascending: true }),
+    supabase
+      .from("criteria")
+      .select("*")
+      .order("weight", { ascending: false })
+      .order("name", { ascending: true }),
+    supabase.from("ratings").select("*"),
+  ]);
+
+  const houses = (housesRes.data ?? []) as House[];
+  const criteria = (criteriaRes.data ?? []) as Criterion[];
+  const ratings = (ratingsRes.data ?? []) as Rating[];
+
+  const weightById = new Map(criteria.map((c) => [c.id, Number(c.weight)]));
+
+  // Build scored houses (same logic as getHousesWithScores)
+  const scoredHouses: HouseWithScore[] = houses
+    .map((house) => {
+      const houseRatings = ratings.filter((r) => r.house_id === house.id);
+      const scored = houseRatings
+        .filter((r) => weightById.has(r.criterion_id))
+        .map((r) => ({
+          weight: weightById.get(r.criterion_id)!,
+          score: Number(r.score),
+        }));
+      const { finalScore } = computeFinalScore(scored);
+      return {
+        ...house,
+        finalScore,
+        rated: houseRatings.length,
+        totalCriteria: criteria.length,
+      };
+    })
+    .sort((a, b) => {
+      if (a.finalScore === null && b.finalScore === null) return 0;
+      if (a.finalScore === null) return 1;
+      if (b.finalScore === null) return -1;
+      return b.finalScore - a.finalScore;
+    });
+
+  // Build criteria with per-house score maps
+  const comparisonCriteria: ComparisonCriterion[] = criteria.map((c) => {
+    const scoreByHouseId: Record<string, number> = {};
+    for (const r of ratings) {
+      if (r.criterion_id === c.id) {
+        scoreByHouseId[r.house_id] = Number(r.score);
+      }
+    }
+    return { ...c, scoreByHouseId };
+  });
+
+  return { criteria: comparisonCriteria, houses: scoredHouses };
+}
