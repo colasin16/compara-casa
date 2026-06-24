@@ -3,14 +3,17 @@ import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { deleteHouse } from "@/app/dashboard/houses/actions";
 import { HouseDetailHeader } from "@/components/house-detail-header";
+import { HouseChecklist } from "@/components/house-checklist";
 import { HouseNotes } from "@/components/house-notes";
 import { HouseRatings } from "@/components/house-ratings";
 import { ProsCons } from "@/components/pros-cons";
 import { buttonVariants } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import type {
+	ChecklistItem,
 	Criterion,
 	House,
+	HouseCheck,
 	HouseNote,
 	HousePoint,
 	Rating,
@@ -25,7 +28,7 @@ export default async function HouseDetailPage({
 	const { id } = await params;
 	const supabase = await createClient();
 
-	const [houseRes, criteriaRes, ratingsRes, pointsRes, notesRes] =
+	const [houseRes, criteriaRes, ratingsRes, pointsRes, notesRes, itemsRes, checksRes] =
 		await Promise.all([
 			supabase.from("houses").select("*").eq("id", id).maybeSingle(),
 			supabase
@@ -44,6 +47,12 @@ export default async function HouseDetailPage({
 				.select("*")
 				.eq("house_id", id)
 				.order("position", { ascending: true }),
+			supabase
+				.from("checklist_items")
+				.select("*")
+				.order("created_at", { ascending: true })
+				.order("name", { ascending: true }),
+			supabase.from("house_checks").select("*").eq("house_id", id),
 		]);
 
 	const house = houseRes.data as House | null;
@@ -53,9 +62,15 @@ export default async function HouseDetailPage({
 	const ratings = (ratingsRes.data ?? []) as Rating[];
 	const points = (pointsRes.data ?? []) as HousePoint[];
 	const notes = (notesRes.data ?? []) as HouseNote[];
+	const checklistItems = (itemsRes.data ?? []) as ChecklistItem[];
+	const checks = (checksRes.data ?? []) as HouseCheck[];
 
 	const initialScores: Record<string, number> = Object.fromEntries(
 		ratings.map((r) => [r.criterion_id, Number(r.score)]),
+	);
+
+	const initialChecked: Record<string, boolean> = Object.fromEntries(
+		checks.map((c) => [c.item_id, c.checked]),
 	);
 
 	const { t } = await getTranslations();
@@ -81,6 +96,22 @@ export default async function HouseDetailPage({
 					initialScores={initialScores}
 				/>
 			</div>
+
+			<section className="mt-10 border-t pt-8">
+				<div className="mb-4">
+					<h2 className="text-lg font-semibold tracking-tight">
+						{t("houseChecklist.sectionTitle")}
+					</h2>
+					<p className="text-sm text-muted-foreground">
+						{t("houseChecklist.sectionDescription")}
+					</p>
+				</div>
+				<HouseChecklist
+					houseId={house.id}
+					items={checklistItems}
+					initialChecked={initialChecked}
+				/>
+			</section>
 
 			<section className="mt-10 border-t pt-8">
 				<div className="mb-4">

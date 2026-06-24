@@ -8,6 +8,7 @@ import {
 	ChevronRight,
 	GitCompareArrows,
 	Home,
+	ListChecks,
 	LogOut,
 	Menu,
 	SlidersHorizontal,
@@ -54,6 +55,11 @@ export function DashboardShell({
 			href: "/dashboard/criteria",
 			label: t("header.criteria"),
 			icon: SlidersHorizontal,
+		},
+		{
+			href: "/dashboard/checklist",
+			label: t("header.checklist"),
+			icon: ListChecks,
 		},
 		{
 			href: "/dashboard/compare",
