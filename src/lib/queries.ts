@@ -1,6 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { computeFinalScore } from "@/lib/scoring";
-import type { Criterion, House, HouseNote, HousePoint, Rating } from "@/lib/types";
+import type {
+  ChecklistItem,
+  Criterion,
+  House,
+  HouseCheck,
+  HouseNote,
+  HousePoint,
+  Rating,
+} from "@/lib/types";
 
 export type HouseWithScore = House & {
   finalScore: number | null;
@@ -66,6 +74,14 @@ export type HousePointsList = {
   cons: string[];
 };
 
+/** A single feature with whether each house has it. */
+export type ComparisonFeature = {
+  id: string;
+  name: string;
+  /** true/false per house_id; missing entry means not yet recorded (false). */
+  checkedByHouseId: Record<string, boolean>;
+};
+
 export type ComparisonData = {
   /** Criteria sorted by weight descending, then name */
   criteria: ComparisonCriterion[];
@@ -75,6 +91,8 @@ export type ComparisonData = {
   pointsByHouseId: Record<string, HousePointsList>;
   /** Free-form notes per house_id, in display order */
   notesByHouseId: Record<string, string[]>;
+  /** Features (checklist items) with per-house checked state, in display order */
+  features: ComparisonFeature[];
 };
 
 /**
@@ -85,7 +103,7 @@ export type ComparisonData = {
 export async function getComparisonData(): Promise<ComparisonData> {
   const supabase = await createClient();
 
-  const [housesRes, criteriaRes, ratingsRes, pointsRes, notesRes] =
+  const [housesRes, criteriaRes, ratingsRes, pointsRes, notesRes, itemsRes, checksRes] =
     await Promise.all([
       supabase.from("houses").select("*").order("created_at", { ascending: true }),
       supabase
@@ -102,6 +120,12 @@ export async function getComparisonData(): Promise<ComparisonData> {
         .from("house_notes")
         .select("*")
         .order("position", { ascending: true }),
+      supabase
+        .from("checklist_items")
+        .select("*")
+        .order("created_at", { ascending: true })
+        .order("name", { ascending: true }),
+      supabase.from("house_checks").select("*"),
     ]);
 
   const houses = (housesRes.data ?? []) as House[];
@@ -109,6 +133,8 @@ export async function getComparisonData(): Promise<ComparisonData> {
   const ratings = (ratingsRes.data ?? []) as Rating[];
   const points = (pointsRes.data ?? []) as HousePoint[];
   const notes = (notesRes.data ?? []) as HouseNote[];
+  const checklistItems = (itemsRes.data ?? []) as ChecklistItem[];
+  const checks = (checksRes.data ?? []) as HouseCheck[];
 
   const weightById = new Map(criteria.map((c) => [c.id, Number(c.weight)]));
 
@@ -173,10 +199,28 @@ export async function getComparisonData(): Promise<ComparisonData> {
     list.push(note.body);
   }
 
+  // Build features (checklist items) with per-house checked maps. Items are
+  // already sorted by created_at then name from the query above.
+  const checkedByItemId: Record<string, Record<string, boolean>> = {};
+  for (const item of checklistItems) {
+    checkedByItemId[item.id] = {};
+  }
+  for (const check of checks) {
+    const map = checkedByItemId[check.item_id];
+    if (!map) continue;
+    map[check.house_id] = check.checked;
+  }
+  const features: ComparisonFeature[] = checklistItems.map((item) => ({
+    id: item.id,
+    name: item.name,
+    checkedByHouseId: checkedByItemId[item.id] ?? {},
+  }));
+
   return {
     criteria: comparisonCriteria,
     houses: scoredHouses,
     pointsByHouseId,
     notesByHouseId,
+    features,
   };
 }
