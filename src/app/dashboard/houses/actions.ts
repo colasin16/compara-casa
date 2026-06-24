@@ -78,7 +78,7 @@ export async function updateHouse(
   if (error) return { error: error.message };
 
   revalidatePath("/dashboard");
-  revalidatePath(`/houses/${id}`);
+  revalidatePath(`/dashboard/houses/${id}`);
   return { ok: true };
 }
 
@@ -127,7 +127,7 @@ export async function rateCriterion(formData: FormData) {
     { onConflict: "house_id,criterion_id" },
   );
 
-  revalidatePath(`/houses/${houseId}`);
+  revalidatePath(`/dashboard/houses/${houseId}`);
   revalidatePath("/dashboard");
 }
 
@@ -212,7 +212,7 @@ export async function saveHousePoints(
     if (deleteError) return { error: deleteError.message };
   }
 
-  revalidatePath(`/houses/${houseId}`);
+  revalidatePath(`/dashboard/houses/${houseId}`);
   return { ok: true };
 }
 
@@ -294,6 +294,6 @@ export async function saveHouseNotes(
     if (deleteError) return { error: deleteError.message };
   }
 
-  revalidatePath(`/houses/${houseId}`);
+  revalidatePath(`/dashboard/houses/${houseId}`);
   return { ok: true };
 }

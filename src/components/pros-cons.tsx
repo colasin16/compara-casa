@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { saveHousePoints } from "@/app/houses/actions";
+import { saveHousePoints } from "@/app/dashboard/houses/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

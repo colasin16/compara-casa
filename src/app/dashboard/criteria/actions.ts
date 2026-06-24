@@ -43,7 +43,7 @@ export async function createCriterion(
     return { error: error.message };
   }
 
-  revalidatePath("/criteria");
+  revalidatePath("/dashboard/criteria");
   return { ok: true };
 }
 
@@ -80,7 +80,7 @@ export async function updateCriterion(
     return { error: error.message };
   }
 
-  revalidatePath("/criteria");
+  revalidatePath("/dashboard/criteria");
   return { ok: true };
 }
 
@@ -92,7 +92,7 @@ export async function deleteCriterion(formData: FormData) {
   if (typeof id !== "string" || id.length === 0) return;
 
   await supabase.from("criteria").delete().eq("id", id).eq("user_id", userId);
-  revalidatePath("/criteria");
+  revalidatePath("/dashboard/criteria");
 }
 
 export async function seedDefaultCriteria() {
@@ -106,5 +106,5 @@ export async function seedDefaultCriteria() {
     .from("criteria")
     .upsert(rows, { onConflict: "user_id,name", ignoreDuplicates: true });
 
-  revalidatePath("/criteria");
+  revalidatePath("/dashboard/criteria");
 }

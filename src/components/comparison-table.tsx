@@ -30,7 +30,7 @@ export function ComparisonTable({ criteria, houses }: Props) {
     return (
       <p className="text-sm text-muted-foreground">
         {t("compare.emptyBodyBefore")}
-        <Link href="/criteria" className="underline">
+        <Link href="/dashboard/criteria" className="underline">
           {t("compare.emptyBodyLink")}
         </Link>
         {t("compare.emptyBodyAfter")}
@@ -55,7 +55,7 @@ export function ComparisonTable({ criteria, houses }: Props) {
                 className="min-w-[8rem] px-3 py-3 text-center font-semibold text-foreground"
               >
                 <Link
-                  href={`/houses/${house.id}`}
+                  href={`/dashboard/houses/${house.id}`}
                   className="group flex flex-col items-center gap-0.5 hover:text-primary"
                 >
                   <span className="inline-flex size-6 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">

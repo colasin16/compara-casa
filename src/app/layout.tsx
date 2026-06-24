@@ -3,14 +3,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { DashboardShell } from "@/components/dashboard-shell";
 import { SiteHeader } from "@/components/site-header";
+import { SiteHeaderGate } from "@/components/site-header-gate";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/translate";
 import { getLocale } from "@/lib/i18n/server";
-import { createClient } from "@/lib/supabase/server";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -46,11 +45,6 @@ export default async function RootLayout({
   const locale = await getLocale();
   const dictionary = getDictionary(locale);
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   return (
     <html
       lang={locale}
@@ -65,19 +59,10 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <I18nProvider locale={locale} dictionary={dictionary}>
-            {user ? (
-              <DashboardShell
-                email={user.email}
-                guestId={user.id.slice(0, 8)}
-              >
-                {children}
-              </DashboardShell>
-            ) : (
-              <>
-                <SiteHeader />
-                {children}
-              </>
-            )}
+            <SiteHeaderGate>
+              <SiteHeader />
+            </SiteHeaderGate>
+            {children}
             <Toaster />
             <Analytics />
             <SpeedInsights />

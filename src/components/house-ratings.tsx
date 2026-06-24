@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { rateCriterion } from "@/app/houses/actions";
+import { rateCriterion } from "@/app/dashboard/houses/actions";
 import { Slider } from "@/components/ui/slider";
 import { computeFinalScore, formatScore } from "@/lib/scoring";
 import type { Criterion } from "@/lib/types";
@@ -45,7 +45,7 @@ export function HouseRatings({ houseId, criteria, initialScores }: Props) {
     return (
       <p className="text-sm text-muted-foreground">
         {t("ratings.noCriteriaBefore")}
-        <a href="/criteria" className="underline">
+        <a href="/dashboard/criteria" className="underline">
           {t("ratings.noCriteriaLink")}
         </a>
         {t("ratings.noCriteriaAfter")}
