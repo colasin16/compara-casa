@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, useTransition } from "react";
-import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { saveHouseNotes } from "@/app/houses/actions";
@@ -100,17 +100,6 @@ export function HouseNotes({
     commit((prev) => prev.filter((item) => item.id !== id));
   }
 
-  function reorder(index: number, direction: -1 | 1) {
-    const target = index + direction;
-    if (target < 0 || target >= items.length) return;
-    commit((prev) => {
-      const next = [...prev];
-      const [moved] = next.splice(index, 1);
-      next.splice(target, 0, moved);
-      return next;
-    });
-  }
-
   const draftInputId = `${baseId}-draft`;
 
   return (
@@ -138,27 +127,8 @@ export function HouseNotes({
                 type="button"
                 variant="ghost"
                 size="icon-xs"
-                aria-label={t("houseNotes.moveUp")}
-                disabled={index === 0}
-                onClick={() => reorder(index, -1)}
-              >
-                <ArrowUp />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-xs"
-                aria-label={t("houseNotes.moveDown")}
-                disabled={index === items.length - 1}
-                onClick={() => reorder(index, 1)}
-              >
-                <ArrowDown />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-xs"
                 aria-label={t("houseNotes.remove")}
+                className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                 onClick={() => removeItem(item.id)}
               >
                 <Trash2 />

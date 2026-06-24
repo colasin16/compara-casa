@@ -97,6 +97,13 @@ compared on the same axes. New criteria can be added later; houses simply have n
 - Side-by-side comparison table (criteria × houses).
 - Visual cues (color scale, best-in-category highlight).
 
+> **Status:** Implemented. `/compare` shows a side-by-side table (criteria ×
+> houses) with houses ordered by weighted final score. Each cell uses a 0–10
+> color scale (red → green) and the best house per criterion is highlighted.
+> Below the table, positives, negatives, and notes are compared across houses
+> side by side. An empty state links to `/criteria` when there is nothing to
+> compare yet, and the header gains a "Compare" nav entry.
+
 ### Phase 6 — Polish
 - Empty states, loading/skeletons, mobile responsiveness.
 - Edit weights → scores recompute everywhere.
