@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
-import { deleteHouse } from "@/app/dashboard/houses/actions";
 import { HouseDetailHeader } from "@/components/house-detail-header";
 import { HouseChecklist } from "@/components/house-checklist";
 import { HouseNotes } from "@/components/house-notes";
 import { HouseRatings } from "@/components/house-ratings";
 import { ProsCons } from "@/components/pros-cons";
-import { buttonVariants } from "@/components/ui/button";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { DeleteHouseDialog } from "@/components/delete-house-dialog";
 import { createClient } from "@/lib/supabase/server";
 import type {
 	ChecklistItem,
@@ -139,18 +137,7 @@ export default async function HouseDetailPage({
 			</section>
 
 			<div className="mt-10 border-t pt-6">
-				<form action={deleteHouse}>
-					<input type="hidden" name="id" value={house.id} />
-					<SubmitButton
-						className={buttonVariants({
-							size: "sm",
-							variant: "ghost",
-							className: "text-destructive",
-						})}
-					>
-						{t("houseDetail.deleteHouse")}
-					</SubmitButton>
-				</form>
+				<DeleteHouseDialog houseId={house.id} />
 			</div>
 		</main>
 	);

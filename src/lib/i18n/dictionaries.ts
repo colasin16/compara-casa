@@ -109,6 +109,10 @@ export const en = {
 	houseDetail: {
 		back: "Back to houses",
 		deleteHouse: "Delete this house",
+		deleteConfirmTitle: "Delete this house?",
+		deleteConfirmDescription:
+			"This will permanently delete this house and all of its ratings, notes and checklist progress. This action cannot be undone.",
+		deleteConfirm: "Delete house",
 	},
 	houseForm: {
 		name: "Name",
@@ -328,6 +332,10 @@ export const es: Dictionary = {
 	houseDetail: {
 		back: "Volver a las casas",
 		deleteHouse: "Eliminar esta casa",
+		deleteConfirmTitle: "¿Eliminar esta casa?",
+		deleteConfirmDescription:
+			"Esto eliminará permanentemente esta casa y todas sus valoraciones, notas y progreso de la lista de comprobación. Esta acción no se puede deshacer.",
+		deleteConfirm: "Eliminar casa",
 	},
 	houseForm: {
 		name: "Nombre",
