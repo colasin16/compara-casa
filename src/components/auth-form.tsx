@@ -11,6 +11,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useTranslations } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
 
@@ -123,8 +124,10 @@ export function AuthForm() {
         <button
           type="submit"
           disabled={pending}
+          aria-busy={pending}
           className={buttonVariants({ size: "lg", className: "w-full" })}
         >
+          {pending ? <Spinner /> : null}
           {mode === "signIn" ? t("login.signIn") : t("login.createAccount")}
         </button>
       </form>
