@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { saveHousePoints } from "@/app/dashboard/houses/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Card,
   CardContent,
@@ -100,6 +101,8 @@ export function ProsCons({
     cons: "",
   });
   const [, startTransition] = useTransition();
+  const [isAdding, startAdding] = useTransition();
+  const [addingSide, setAddingSide] = useState<Side | null>(null);
   const baseId = useId();
   const t = useTranslations();
 
@@ -139,11 +142,20 @@ export function ProsCons({
   function addItem(side: Side) {
     const body = drafts[side].trim();
     if (!body) return;
-    commit((prev) => ({
-      ...prev,
-      [side]: [...prev[side], { id: createId(), body }],
-    }));
+    const next: Lists = {
+      ...lists,
+      [side]: [...lists[side], { id: createId(), body }],
+    };
+    setLists(next);
     setDrafts((prev) => ({ ...prev, [side]: "" }));
+    setAddingSide(side);
+    startAdding(async () => {
+      const result = await saveHousePoints(houseId, listsToSnapshot(next));
+      if (result?.error) {
+        toast.error(t("prosCons.saveError", { error: result.error }));
+      }
+      setAddingSide(null);
+    });
   }
 
   // Local-only text edit; persistence happens on blur (see commitTextIfChanged).
@@ -299,9 +311,13 @@ export function ProsCons({
                   size="icon"
                   variant="outline"
                   aria-label={t("prosCons.addItemLabel", { label: text.title })}
-                  disabled={drafts[side].trim().length === 0}
+                  aria-busy={isAdding && addingSide === side}
+                  disabled={
+                    (isAdding && addingSide === side) ||
+                    drafts[side].trim().length === 0
+                  }
                 >
-                  <Plus />
+                  {isAdding && addingSide === side ? <Spinner /> : <Plus />}
                 </Button>
               </form>
             </CardContent>

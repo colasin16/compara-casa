@@ -6,6 +6,7 @@ import { updatePassword, type AuthFormState } from "@/app/auth/actions";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useTranslations } from "@/lib/i18n/context";
 
 const initialState: AuthFormState = {};
@@ -57,8 +58,10 @@ export function UpdatePasswordForm() {
       <button
         type="submit"
         disabled={pending}
+        aria-busy={pending}
         className={buttonVariants({ size: "lg", className: "w-full" })}
       >
+        {pending ? <Spinner /> : null}
         {t("login.savePassword")}
       </button>
     </form>

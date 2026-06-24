@@ -7,6 +7,7 @@ import { HouseNotes } from "@/components/house-notes";
 import { HouseRatings } from "@/components/house-ratings";
 import { ProsCons } from "@/components/pros-cons";
 import { buttonVariants } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { createClient } from "@/lib/supabase/server";
 import type {
 	Criterion,
@@ -109,8 +110,7 @@ export default async function HouseDetailPage({
 			<div className="mt-10 border-t pt-6">
 				<form action={deleteHouse}>
 					<input type="hidden" name="id" value={house.id} />
-					<button
-						type="submit"
+					<SubmitButton
 						className={buttonVariants({
 							size: "sm",
 							variant: "ghost",
@@ -118,7 +118,7 @@ export default async function HouseDetailPage({
 						})}
 					>
 						{t("houseDetail.deleteHouse")}
-					</button>
+					</SubmitButton>
 				</form>
 			</div>
 		</main>

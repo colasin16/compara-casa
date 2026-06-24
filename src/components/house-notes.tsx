@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import { saveHouseNotes } from "@/app/dashboard/houses/actions";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useTranslations } from "@/lib/i18n/context";
 import type { HouseNote } from "@/lib/types";
@@ -45,6 +46,7 @@ export function HouseNotes({
   const [items, setItems] = useState<Item[]>(() => notesToItems(initialNotes));
   const [draft, setDraft] = useState("");
   const [, startTransition] = useTransition();
+  const [isAdding, startAdding] = useTransition();
   const baseId = useId();
   const t = useTranslations();
 
@@ -52,8 +54,8 @@ export function HouseNotes({
   // the text actually changed.
   const editingFrom = useRef<string | null>(null);
 
-  function persist(next: Item[]) {
-    startTransition(async () => {
+  function persist(next: Item[], start: typeof startTransition = startTransition) {
+    start(async () => {
       const result = await saveHouseNotes(
         houseId,
         next.map((item) => ({ id: item.id, body: item.body })),
@@ -64,17 +66,20 @@ export function HouseNotes({
     });
   }
 
-  function commit(updater: (current: Item[]) => Item[]) {
+  function commit(
+    updater: (current: Item[]) => Item[],
+    start: typeof startTransition = startTransition,
+  ) {
     const next = updater(items);
     if (next === items) return;
     setItems(next);
-    persist(next);
+    persist(next, start);
   }
 
   function addItem() {
     const body = draft.trim();
     if (!body) return;
-    commit((prev) => [...prev, { id: createId(), body }]);
+    commit((prev) => [...prev, { id: createId(), body }], startAdding);
     setDraft("");
   }
 
@@ -173,9 +178,10 @@ export function HouseNotes({
           size="icon"
           variant="outline"
           aria-label={t("houseNotes.addNoteLabel")}
-          disabled={draft.trim().length === 0}
+          aria-busy={isAdding}
+          disabled={isAdding || draft.trim().length === 0}
         >
-          <Plus />
+          {isAdding ? <Spinner /> : <Plus />}
         </Button>
       </form>
     </div>

@@ -18,6 +18,7 @@ import {
 import { signOut } from "@/app/auth/actions";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { useTranslations } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
 
@@ -157,17 +158,16 @@ export function DashboardShell({
 					</>
 				)}
 				<form action={signOut} className={isCollapsed ? "" : "mt-2"}>
-					<button
-						type="submit"
+					<SubmitButton
+						icon={<LogOut className="size-4 shrink-0" />}
 						title={isCollapsed ? t("header.signOut") : undefined}
 						className={cn(
 							"flex w-full items-center gap-3 rounded-lg py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
 							isCollapsed ? "justify-center px-2" : "px-3",
 						)}
 					>
-						<LogOut className="size-4 shrink-0" />
 						{isCollapsed ? null : t("header.signOut")}
-					</button>
+					</SubmitButton>
 				</form>
 			</div>
 		</div>

@@ -9,6 +9,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useTranslations } from "@/lib/i18n/context";
 
 const initialState: HouseFormState = {};
@@ -81,8 +82,10 @@ export function HouseForm({ mode, house, onDone }: Props) {
         <button
           type="submit"
           disabled={pending}
+          aria-busy={pending}
           className={buttonVariants({ size: "sm" })}
         >
+          {pending ? <Spinner className="size-3.5" /> : null}
           {mode === "create" ? t("houseForm.add") : t("common.save")}
         </button>
         {mode === "edit" && onDone ? (

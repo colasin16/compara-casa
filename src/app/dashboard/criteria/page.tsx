@@ -2,6 +2,7 @@ import { seedDefaultCriteria } from "@/app/dashboard/criteria/actions";
 import { CriterionForm } from "@/components/criterion-form";
 import { CriterionItem } from "@/components/criterion-item";
 import { buttonVariants } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import {
   Card,
   CardContent,
@@ -48,9 +49,9 @@ export default async function CriteriaPage() {
               <CardContent className="flex flex-col items-start gap-3 text-sm text-muted-foreground">
                 <p>{t("criteria.emptyBody")}</p>
                 <form action={seedDefaultCriteria}>
-                  <button type="submit" className={buttonVariants({ size: "sm" })}>
+                  <SubmitButton className={buttonVariants({ size: "sm" })}>
                     {t("criteria.addStarter")}
-                  </button>
+                  </SubmitButton>
                 </form>
               </CardContent>
             </Card>

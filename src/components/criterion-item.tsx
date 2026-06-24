@@ -4,6 +4,7 @@ import { useState } from "react";
 import { deleteCriterion } from "@/app/dashboard/criteria/actions";
 import { CriterionForm } from "@/components/criterion-form";
 import { buttonVariants } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Criterion } from "@/lib/types";
 import { useTranslations } from "@/lib/i18n/context";
@@ -46,8 +47,7 @@ export function CriterionItem({ criterion }: { criterion: Criterion }) {
               </button>
               <form action={deleteCriterion}>
                 <input type="hidden" name="id" value={criterion.id} />
-                <button
-                  type="submit"
+                <SubmitButton
                   className={buttonVariants({
                     size: "sm",
                     variant: "ghost",
@@ -55,7 +55,7 @@ export function CriterionItem({ criterion }: { criterion: Criterion }) {
                   })}
                 >
                   {t("common.delete")}
-                </button>
+                </SubmitButton>
               </form>
             </div>
           </div>
