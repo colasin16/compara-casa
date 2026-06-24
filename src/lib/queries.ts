@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { computeFinalScore } from "@/lib/scoring";
-import type { Criterion, House, HousePoint, Rating } from "@/lib/types";
+import type { Criterion, House, HouseNote, HousePoint, Rating } from "@/lib/types";
 
 export type HouseWithScore = House & {
   finalScore: number | null;
@@ -73,6 +73,8 @@ export type ComparisonData = {
   houses: HouseWithScore[];
   /** Positives/negatives per house_id, in display order */
   pointsByHouseId: Record<string, HousePointsList>;
+  /** Free-form notes per house_id, in display order */
+  notesByHouseId: Record<string, string[]>;
 };
 
 /**
@@ -83,24 +85,30 @@ export type ComparisonData = {
 export async function getComparisonData(): Promise<ComparisonData> {
   const supabase = await createClient();
 
-  const [housesRes, criteriaRes, ratingsRes, pointsRes] = await Promise.all([
-    supabase.from("houses").select("*").order("created_at", { ascending: true }),
-    supabase
-      .from("criteria")
-      .select("*")
-      .order("weight", { ascending: false })
-      .order("name", { ascending: true }),
-    supabase.from("ratings").select("*"),
-    supabase
-      .from("house_points")
-      .select("*")
-      .order("position", { ascending: true }),
-  ]);
+  const [housesRes, criteriaRes, ratingsRes, pointsRes, notesRes] =
+    await Promise.all([
+      supabase.from("houses").select("*").order("created_at", { ascending: true }),
+      supabase
+        .from("criteria")
+        .select("*")
+        .order("weight", { ascending: false })
+        .order("name", { ascending: true }),
+      supabase.from("ratings").select("*"),
+      supabase
+        .from("house_points")
+        .select("*")
+        .order("position", { ascending: true }),
+      supabase
+        .from("house_notes")
+        .select("*")
+        .order("position", { ascending: true }),
+    ]);
 
   const houses = (housesRes.data ?? []) as House[];
   const criteria = (criteriaRes.data ?? []) as Criterion[];
   const ratings = (ratingsRes.data ?? []) as Rating[];
   const points = (pointsRes.data ?? []) as HousePoint[];
+  const notes = (notesRes.data ?? []) as HouseNote[];
 
   const weightById = new Map(criteria.map((c) => [c.id, Number(c.weight)]));
 
@@ -153,9 +161,22 @@ export async function getComparisonData(): Promise<ComparisonData> {
     else list.pros.push(point.body);
   }
 
+  // Group free-form notes per house in display order (notes are already sorted
+  // by position from the query above).
+  const notesByHouseId: Record<string, string[]> = {};
+  for (const house of houses) {
+    notesByHouseId[house.id] = [];
+  }
+  for (const note of notes) {
+    const list = notesByHouseId[note.house_id];
+    if (!list) continue;
+    list.push(note.body);
+  }
+
   return {
     criteria: comparisonCriteria,
     houses: scoredHouses,
     pointsByHouseId,
+    notesByHouseId,
   };
 }

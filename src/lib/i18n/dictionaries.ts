@@ -165,6 +165,8 @@ export const en = {
 		positivesSubtitle: "What counts in each house's favour.",
 		negativesTitle: "Negatives",
 		negativesSubtitle: "What counts against each house.",
+		notesTitle: "Notes",
+		notesSubtitle: "Anything else worth remembering about each house.",
 		noPoints: "—",
 	},
 };
@@ -336,6 +338,8 @@ export const es: Dictionary = {
 		positivesSubtitle: "Lo que juega a favor de cada casa.",
 		negativesTitle: "Negativos",
 		negativesSubtitle: "Lo que juega en contra de cada casa.",
+		notesTitle: "Notas",
+		notesSubtitle: "Cualquier otra cosa que valga la pena recordar de cada casa.",
 		noPoints: "—",
 	},
 };

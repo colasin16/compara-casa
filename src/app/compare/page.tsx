@@ -11,7 +11,8 @@ import { getComparisonData } from "@/lib/queries";
 import { getTranslations } from "@/lib/i18n/server";
 
 export default async function ComparePage() {
-  const { criteria, houses, pointsByHouseId } = await getComparisonData();
+  const { criteria, houses, pointsByHouseId, notesByHouseId } =
+    await getComparisonData();
   const { t } = await getTranslations();
 
   const isEmpty = houses.length === 0 || criteria.length === 0;
@@ -52,6 +53,7 @@ export default async function ComparePage() {
           <PointsComparison
             houses={houses}
             pointsByHouseId={pointsByHouseId}
+            notesByHouseId={notesByHouseId}
           />
         </div>
       )}
