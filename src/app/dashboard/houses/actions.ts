@@ -24,6 +24,8 @@ export async function createHouse(
 
   const parsed = houseSchema.safeParse({
     name: formData.get("name"),
+    price: formData.get("price"),
+    currency: formData.get("currency"),
     address: formData.get("address"),
     notes: formData.get("notes"),
   });
@@ -34,6 +36,8 @@ export async function createHouse(
   const { error } = await supabase.from("houses").insert({
     user_id: userId,
     name: parsed.data.name,
+    price: parsed.data.price,
+    currency: parsed.data.currency,
     address: parsed.data.address || null,
     notes: parsed.data.notes || null,
   });
@@ -58,6 +62,8 @@ export async function updateHouse(
 
   const parsed = houseSchema.safeParse({
     name: formData.get("name"),
+    price: formData.get("price"),
+    currency: formData.get("currency"),
     address: formData.get("address"),
     notes: formData.get("notes"),
   });
@@ -69,6 +75,8 @@ export async function updateHouse(
     .from("houses")
     .update({
       name: parsed.data.name,
+      price: parsed.data.price,
+      currency: parsed.data.currency,
       address: parsed.data.address || null,
       notes: parsed.data.notes || null,
     })

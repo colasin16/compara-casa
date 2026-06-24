@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/card";
 import { getHousesWithScores } from "@/lib/queries";
 import { formatScore } from "@/lib/scoring";
+import { formatPrice } from "@/lib/currency";
 import { getTranslations } from "@/lib/i18n/server";
 
 export default async function DashboardPage() {
   const houses = await getHousesWithScores();
-  const { t } = await getTranslations();
+  const { t, locale } = await getTranslations();
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
@@ -54,6 +55,9 @@ export default async function DashboardPage() {
                     </span>
                     <div className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate font-semibold">{house.name}</span>
+                      <span className="truncate text-xs font-semibold text-primary">
+                        {formatPrice(Number(house.price), house.currency, locale)}
+                      </span>
                       {house.address ? (
                         <span className="truncate text-xs text-muted-foreground">
                           {house.address}
