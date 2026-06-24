@@ -21,6 +21,7 @@ export const en = {
 		signOut: "Sign out",
 		logIn: "Log in",
 		selectLanguage: "Select language",
+		toggleTheme: "Toggle theme",
 	},
 	home: {
 		badge: "ComparaCasa",
@@ -174,6 +175,7 @@ export const es: Dictionary = {
 		signOut: "Cerrar sesión",
 		logIn: "Iniciar sesión",
 		selectLanguage: "Seleccionar idioma",
+		toggleTheme: "Cambiar tema",
 	},
 	home: {
 		badge: "ComparaCasa",

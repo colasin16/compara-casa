@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 
 import { signOut } from "@/app/auth/actions";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useTranslations } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
 
@@ -57,11 +58,13 @@ export function MainNav({
           </>
         ) : null}
         <LanguageSwitcher />
+        <ThemeToggle />
       </nav>
 
       {/* Mobile nav */}
       <div className="flex items-center gap-1 sm:hidden">
         <LanguageSwitcher />
+        <ThemeToggle />
         <button
           type="button"
           aria-label="Menu"
