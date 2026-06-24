@@ -42,3 +42,8 @@ export function useI18n(): I18nContextValue {
 export function useTranslations(): Translator {
   return useI18n().t;
 }
+
+/** Convenience hook returning the active locale. */
+export function useLocale(): Locale {
+  return useI18n().locale;
+}

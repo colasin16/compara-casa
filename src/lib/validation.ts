@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import type { Locale } from "@/lib/i18n/config";
+import { SUPPORTED_CURRENCIES } from "@/lib/currency";
 
 const emailField = z
   .string()
@@ -67,6 +68,13 @@ export const houseSchema = z.object({
     .trim()
     .min(1, "Name is required")
     .max(80, "Name must be 80 characters or fewer"),
+  price: z.coerce
+    .number({ message: "Price is required" })
+    .positive("Price must be greater than 0")
+    .max(1_000_000_000_000, "Price is too large"),
+  currency: z.enum(SUPPORTED_CURRENCIES, {
+    message: "Choose a supported currency",
+  }),
   address: z
     .string()
     .trim()

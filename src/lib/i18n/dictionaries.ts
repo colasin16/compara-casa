@@ -101,6 +101,9 @@ export const en = {
 	houseForm: {
 		name: "Name",
 		namePlaceholder: "e.g. Sunny flat on Main St",
+		price: "Price",
+		pricePlaceholder: "e.g. 250000",
+		currency: "Currency",
 		address: "Address (optional)",
 		addressPlaceholder: "Street, city…",
 		notes: "Notes (optional)",
@@ -280,6 +283,9 @@ export const es: Dictionary = {
 	houseForm: {
 		name: "Nombre",
 		namePlaceholder: "p. ej. Piso luminoso en la calle Mayor",
+		price: "Precio",
+		pricePlaceholder: "p. ej. 250000",
+		currency: "Moneda",
 		address: "Dirección (opcional)",
 		addressPlaceholder: "Calle, ciudad…",
 		notes: "Notas (opcional)",
