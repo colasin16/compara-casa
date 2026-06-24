@@ -88,7 +88,7 @@ export const en = {
 		addCriterion: "Add a criterion",
 	},
 	houseDetail: {
-		back: "← Back to houses",
+		back: "Back to houses",
 		deleteHouse: "Delete this house",
 	},
 	houseForm: {
@@ -156,8 +156,7 @@ export const en = {
 		finalScore: "Final score",
 		unrated: "—",
 		emptyTitle: "Nothing to compare yet",
-		emptyBodyBefore:
-			"Add at least one house and rate it against your ",
+		emptyBodyBefore: "Add at least one house and rate it against your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
 		scoresTitle: "Scores",
@@ -261,7 +260,7 @@ export const es: Dictionary = {
 		addCriterion: "Añadir un criterio",
 	},
 	houseDetail: {
-		back: "← Volver a las casas",
+		back: "Volver a las casas",
 		deleteHouse: "Eliminar esta casa",
 	},
 	houseForm: {
@@ -329,8 +328,7 @@ export const es: Dictionary = {
 		finalScore: "Puntuación final",
 		unrated: "—",
 		emptyTitle: "Nada que comparar todavía",
-		emptyBodyBefore:
-			"Añade al menos una casa y puntúala según tus ",
+		emptyBodyBefore: "Añade al menos una casa y puntúala según tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
 		scoresTitle: "Puntuaciones",
@@ -339,7 +337,8 @@ export const es: Dictionary = {
 		negativesTitle: "Negativos",
 		negativesSubtitle: "Lo que juega en contra de cada casa.",
 		notesTitle: "Notas",
-		notesSubtitle: "Cualquier otra cosa que valga la pena recordar de cada casa.",
+		notesSubtitle:
+			"Cualquier otra cosa que valga la pena recordar de cada casa.",
 		noPoints: "—",
 	},
 };
