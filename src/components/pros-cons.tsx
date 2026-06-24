@@ -139,11 +139,13 @@ export function ProsCons({
   function addItem(side: Side) {
     const body = drafts[side].trim();
     if (!body) return;
-    commit((prev) => ({
-      ...prev,
-      [side]: [...prev[side], { id: createId(), body }],
-    }));
+    const next: Lists = {
+      ...lists,
+      [side]: [...lists[side], { id: createId(), body }],
+    };
+    setLists(next);
     setDrafts((prev) => ({ ...prev, [side]: "" }));
+    persist(next);
   }
 
   // Local-only text edit; persistence happens on blur (see commitTextIfChanged).

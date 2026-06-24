@@ -17,6 +17,7 @@ export const en = {
 	header: {
 		houses: "Houses",
 		criteria: "Criteria",
+		checklist: "Features",
 		compare: "Compare",
 		guest: "Guest {id}",
 		signOut: "Sign out",
@@ -94,6 +95,17 @@ export const en = {
 		addStarter: "Add starter criteria",
 		addCriterion: "Add a criterion",
 	},
+	checklist: {
+		title: "Your features",
+		subtitle:
+			"Define the features you want to verify on every house. The same list is reused so you can tick off what each house actually has.",
+		loadError: "Couldn't load features: {message}",
+		emptyTitle: "No features yet",
+		emptyBody:
+			"Start from a common set of features to check when house-hunting, then tweak the list to match what matters to you.",
+		addStarter: "Add starter features",
+		addItem: "Add an item",
+	},
 	houseDetail: {
 		back: "Back to houses",
 		deleteHouse: "Delete this house",
@@ -117,6 +129,11 @@ export const en = {
 		weightTitle: "Weight",
 		add: "Add criterion",
 	},
+	checklistItemForm: {
+		name: "Name",
+		namePlaceholder: "e.g. Lift, Storage room, Parking…",
+		add: "Add item",
+	},
 	ratings: {
 		noCriteriaBefore:
 			"You haven't defined any criteria yet. Add some on the ",
@@ -125,6 +142,16 @@ export const en = {
 		finalScore: "Weighted final score",
 		criteriaRated: "{rated} of {total} criteria rated",
 		weight: "weight {weight}",
+	},
+	houseChecklist: {
+		sectionTitle: "Features",
+		sectionDescription:
+			"Tick the items this house actually has. The list is shared across every house.",
+		noItemsBefore:
+			"You haven't defined any features yet. Add some on the ",
+		noItemsLink: "Features",
+		noItemsAfter: " page first, then come back to tick what this house has.",
+		checkedCount: "{checked} of {total} items checked",
 	},
 	prosCons: {
 		sectionTitle: "Positives vs. negatives",
@@ -170,6 +197,15 @@ export const en = {
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
 		scoresTitle: "Scores",
+		featuresTitle: "Features",
+		featuresSubtitle:
+			"Which features each house actually has, side by side.",
+		featureColumn: "Feature",
+		featureHas: "Has it",
+		featureMissing: "Doesn't have it",
+		featuresEmptyBefore: "You haven't defined any features yet. Add some on the ",
+		featuresEmptyLink: "Features",
+		featuresEmptyAfter: " page to compare them here.",
 		positivesTitle: "Positives",
 		positivesSubtitle: "What counts in each house's favour.",
 		negativesTitle: "Negatives",
@@ -199,6 +235,7 @@ export const es: Dictionary = {
 	header: {
 		houses: "Casas",
 		criteria: "Criterios",
+		checklist: "Características",
 		compare: "Comparar",
 		guest: "Invitado {id}",
 		signOut: "Cerrar sesión",
@@ -276,6 +313,17 @@ export const es: Dictionary = {
 		addStarter: "Añadir criterios iniciales",
 		addCriterion: "Añadir un criterio",
 	},
+	checklist: {
+		title: "Tus características",
+		subtitle:
+			"Define las características que quieres verificar en cada casa. La misma lista se reutiliza para marcar lo que cada casa tiene de verdad.",
+		loadError: "No se pudieron cargar las características: {message}",
+		emptyTitle: "Aún no hay características",
+		emptyBody:
+			"Empieza con un conjunto habitual de características a comprobar al buscar casa y luego ajusta la lista a lo que más te importa.",
+		addStarter: "Añadir características iniciales",
+		addItem: "Añadir un elemento",
+	},
 	houseDetail: {
 		back: "Volver a las casas",
 		deleteHouse: "Eliminar esta casa",
@@ -299,6 +347,11 @@ export const es: Dictionary = {
 		weightTitle: "Peso",
 		add: "Añadir criterio",
 	},
+	checklistItemForm: {
+		name: "Nombre",
+		namePlaceholder: "p. ej. Ascensor, Trastero, Garaje…",
+		add: "Añadir elemento",
+	},
 	ratings: {
 		noCriteriaBefore:
 			"Aún no has definido ningún criterio. Añade algunos en la página de ",
@@ -307,6 +360,16 @@ export const es: Dictionary = {
 		finalScore: "Puntuación final ponderada",
 		criteriaRated: "{rated} de {total} criterios puntuados",
 		weight: "peso {weight}",
+	},
+	houseChecklist: {
+		sectionTitle: "Características",
+		sectionDescription:
+			"Marca los elementos que esta casa tiene de verdad. La lista es la misma para todas las casas.",
+		noItemsBefore:
+			"Aún no has definido ninguna característica. Añade algunas en la página de ",
+		noItemsLink: "Características",
+		noItemsAfter: " primero y luego vuelve para marcar lo que tiene esta casa.",
+		checkedCount: "{checked} de {total} elementos marcados",
 	},
 	prosCons: {
 		sectionTitle: "Puntos positivos y negativos",
@@ -352,6 +415,16 @@ export const es: Dictionary = {
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
 		scoresTitle: "Puntuaciones",
+		featuresTitle: "Características",
+		featuresSubtitle:
+			"Qué características tiene de verdad cada casa, una al lado de la otra.",
+		featureColumn: "Característica",
+		featureHas: "La tiene",
+		featureMissing: "No la tiene",
+		featuresEmptyBefore:
+			"Aún no has definido ninguna característica. Añade algunas en la página de ",
+		featuresEmptyLink: "Características",
+		featuresEmptyAfter: " para compararlas aquí.",
 		positivesTitle: "Positivos",
 		positivesSubtitle: "Lo que juega a favor de cada casa.",
 		negativesTitle: "Negativos",

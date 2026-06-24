@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { signOut } from "@/app/auth/actions";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { useTranslations } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
 
@@ -39,9 +40,14 @@ export function MainNav({
 							{accountLabel}
 						</span>
 						<form action={signOut}>
-							<button type="submit" className={linkClass}>
+							<SubmitButton
+								className={cn(
+									linkClass,
+									"inline-flex items-center gap-1.5",
+								)}
+							>
 								{t("header.signOut")}
-							</button>
+							</SubmitButton>
 						</form>
 					</>
 				) : null}
@@ -84,15 +90,14 @@ export function MainNav({
 									{accountLabel}
 								</span>
 								<form action={signOut} onSubmit={close}>
-									<button
-										type="submit"
+									<SubmitButton
 										className={cn(
 											linkClass,
-											"w-full py-2.5 text-left",
+											"inline-flex w-full items-center gap-1.5 py-2.5 text-left",
 										)}
 									>
 										{t("header.signOut")}
-									</button>
+									</SubmitButton>
 								</form>
 							</>
 						) : null}

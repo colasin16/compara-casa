@@ -1,6 +1,7 @@
 import { signInGuest } from "@/app/auth/actions";
 import { AuthForm } from "@/components/auth-form";
 import { buttonVariants } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import {
   Card,
   CardContent,
@@ -41,8 +42,7 @@ export default async function LoginPage({
           </div>
 
           <form action={signInGuest}>
-            <button
-              type="submit"
+            <SubmitButton
               className={buttonVariants({
                 size: "lg",
                 variant: "outline",
@@ -50,7 +50,7 @@ export default async function LoginPage({
               })}
             >
               {t("login.continueAsGuest")}
-            </button>
+            </SubmitButton>
           </form>
         </CardContent>
       </Card>

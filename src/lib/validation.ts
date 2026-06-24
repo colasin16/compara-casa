@@ -62,6 +62,16 @@ export const criterionSchema = z.object({
 
 export type CriterionInput = z.infer<typeof criterionSchema>;
 
+export const checklistItemSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "Name is required")
+    .max(60, "Name must be 60 characters or fewer"),
+});
+
+export type ChecklistItemInput = z.infer<typeof checklistItemSchema>;
+
 export const houseSchema = z.object({
   name: z
     .string()
@@ -141,5 +151,28 @@ export const DEFAULT_CRITERIA: Record<
     { name: "Iluminación / Orientación", weight: 7 },
     { name: "Parking", weight: 6 },
     { name: "Terraza", weight: 5 },
+  ],
+};
+
+export const DEFAULT_CHECKLIST: Record<Locale, { name: string }[]> = {
+  en: [
+    { name: "Lift" },
+    { name: "Storage room" },
+    { name: "Parking space" },
+    { name: "Air conditioning" },
+    { name: "Heating" },
+    { name: "Balcony / Terrace" },
+    { name: "Built-in wardrobes" },
+    { name: "Communal pool" },
+  ],
+  es: [
+    { name: "Ascensor" },
+    { name: "Trastero" },
+    { name: "Plaza de garaje" },
+    { name: "Aire acondicionado" },
+    { name: "Calefacción" },
+    { name: "Balcón / Terraza" },
+    { name: "Armarios empotrados" },
+    { name: "Piscina comunitaria" },
   ],
 };
