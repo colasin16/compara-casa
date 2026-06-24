@@ -119,7 +119,7 @@ export const en = {
 	prosCons: {
 		sectionTitle: "Positives vs. negatives",
 		sectionDescription:
-			"Note what counts for or against this house. Drag a line to reorder it, or drag it across to the other list.",
+			"Note what counts for or against this house. Use the switch button to move a line to the other list.",
 		prosTitle: "Positives",
 		prosDescription: "Things that count in this house's favour.",
 		prosPlaceholder: "Add a positive…",
@@ -128,13 +128,10 @@ export const en = {
 		consPlaceholder: "Add a negative…",
 		itemLabel: "{label} item {index}",
 		addItemLabel: "Add {label} item",
-		moveUp: "Move up",
-		moveDown: "Move down",
 		moveToPros: "Move to positives",
 		moveToCons: "Move to negatives",
 		remove: "Remove",
-		dropHere: "Drop here",
-		empty: "Nothing yet — add a line below or drag one here.",
+		empty: "Nothing yet — add a line below.",
 		saveError: "Could not save: {error}",
 	},
 	houseNotes: {
@@ -163,6 +160,12 @@ export const en = {
 			"Add at least one house and rate it against your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
+		scoresTitle: "Scores",
+		positivesTitle: "Positives",
+		positivesSubtitle: "What counts in each house's favour.",
+		negativesTitle: "Negatives",
+		negativesSubtitle: "What counts against each house.",
+		noPoints: "—",
 	},
 };
 
@@ -287,7 +290,7 @@ export const es: Dictionary = {
 	prosCons: {
 		sectionTitle: "Puntos positivos y negativos",
 		sectionDescription:
-			"Anota lo que cuenta a favor o en contra de esta casa. Arrastra una línea para reordenarla, o muévela a la otra lista.",
+			"Anota lo que cuenta a favor o en contra de esta casa. Usa el botón de cambio para mover una línea a la otra lista.",
 		prosTitle: "Positivos",
 		prosDescription: "Cosas que juegan a favor de esta casa.",
 		prosPlaceholder: "Añadir un punto positivo…",
@@ -296,13 +299,10 @@ export const es: Dictionary = {
 		consPlaceholder: "Añadir un punto negativo…",
 		itemLabel: "{label}: elemento {index}",
 		addItemLabel: "Añadir elemento a {label}",
-		moveUp: "Subir",
-		moveDown: "Bajar",
 		moveToPros: "Mover a puntos positivos",
 		moveToCons: "Mover a puntos negativos",
 		remove: "Eliminar",
-		dropHere: "Suelta aquí",
-		empty: "Nada todavía — añade una línea abajo o arrastra una aquí.",
+		empty: "Nada todavía — añade una línea abajo.",
 		saveError: "No se pudo guardar: {error}",
 	},
 	houseNotes: {
@@ -331,6 +331,12 @@ export const es: Dictionary = {
 			"Añade al menos una casa y puntúala según tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
+		scoresTitle: "Puntuaciones",
+		positivesTitle: "Positivos",
+		positivesSubtitle: "Lo que juega a favor de cada casa.",
+		negativesTitle: "Negativos",
+		negativesSubtitle: "Lo que juega en contra de cada casa.",
+		noPoints: "—",
 	},
 };
 

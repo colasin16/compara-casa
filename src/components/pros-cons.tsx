@@ -2,10 +2,7 @@
 
 import { useId, useRef, useState, useTransition } from "react";
 import {
-  ArrowDown,
   ArrowLeftRight,
-  ArrowUp,
-  GripVertical,
   Plus,
   ThumbsDown,
   ThumbsUp,
@@ -35,11 +32,6 @@ type Item = {
 };
 
 type Lists = Record<Side, Item[]>;
-
-type DragState = {
-  side: Side;
-  index: number;
-};
 
 const SIDE_TO_KIND: Record<Side, HousePointKind> = { pros: "pro", cons: "con" };
 
@@ -107,8 +99,6 @@ export function ProsCons({
     pros: "",
     cons: "",
   });
-  const [dragging, setDragging] = useState<DragState | null>(null);
-  const [dropTarget, setDropTarget] = useState<DragState | null>(null);
   const [, startTransition] = useTransition();
   const baseId = useId();
   const t = useTranslations();
@@ -189,45 +179,19 @@ export function ProsCons({
     }));
   }
 
-  // Move an item from one position to another (within or across lists).
-  function moveItem(from: DragState, to: DragState) {
+  // Move a line to the other list (positive ↔ negative), appended at the end.
+  function switchSide(side: Side, id: string) {
+    const other: Side = side === "pros" ? "cons" : "pros";
     commit((prev) => {
-      const next: Lists = { pros: [...prev.pros], cons: [...prev.cons] };
-      const [moved] = next[from.side].splice(from.index, 1);
+      const moved = prev[side].find((item) => item.id === id);
       if (!moved) return prev;
-
-      let targetIndex = to.index;
-      // Removing from the same list before the insertion point shifts it left.
-      if (from.side === to.side && from.index < targetIndex) {
-        targetIndex -= 1;
-      }
-      targetIndex = Math.max(0, Math.min(targetIndex, next[to.side].length));
-      next[to.side].splice(targetIndex, 0, moved);
-      return next;
+      return {
+        ...prev,
+        [side]: prev[side].filter((item) => item.id !== id),
+        [other]: [...prev[other], moved],
+      };
     });
   }
-
-  function switchSide(side: Side, index: number) {
-    const other: Side = side === "pros" ? "cons" : "pros";
-    moveItem({ side, index }, { side: other, index: lists[other].length });
-  }
-
-  function reorder(side: Side, index: number, direction: -1 | 1) {
-    const target = index + direction;
-    if (target < 0 || target >= lists[side].length) return;
-    moveItem(
-      { side, index },
-      { side, index: direction === 1 ? target + 1 : target },
-    );
-  }
-
-  function handleDrop(to: DragState) {
-    if (dragging) moveItem(dragging, to);
-    setDragging(null);
-    setDropTarget(null);
-  }
-
-  const isDragging = dragging !== null;
 
   return (
     <div className="grid gap-4">
@@ -237,29 +201,9 @@ export function ProsCons({
         const Icon = visuals.icon;
         const items = lists[side];
         const draftInputId = `${baseId}-${side}-draft`;
-        const isColumnDropTarget =
-          isDragging &&
-          dropTarget?.side === side &&
-          dropTarget.index >= items.length;
 
         return (
-          <Card
-            key={side}
-            className={cn(
-              "transition-colors",
-              isColumnDropTarget && "ring-2 ring-ring",
-            )}
-            onDragOver={(event) => {
-              if (!isDragging) return;
-              event.preventDefault();
-              setDropTarget({ side, index: items.length });
-            }}
-            onDrop={(event) => {
-              if (!isDragging) return;
-              event.preventDefault();
-              handleDrop({ side, index: items.length });
-            }}
-          >
+          <Card key={side}>
             <CardHeader>
               <CardTitle className={cn("flex items-center gap-2", visuals.accent)}>
                 <Icon className="size-4" aria-hidden />
@@ -273,130 +217,57 @@ export function ProsCons({
 
             <CardContent className="flex flex-col gap-2">
               <ul className="flex flex-col gap-2">
-                {items.map((item, index) => {
-                  const showIndicator =
-                    isDragging &&
-                    dropTarget?.side === side &&
-                    dropTarget.index === index;
+                {items.map((item, index) => (
+                  <li
+                    key={item.id}
+                    className="group/item flex items-center gap-1 rounded-lg border bg-background px-1.5 py-1 transition-shadow"
+                  >
+                    <Input
+                      value={item.body}
+                      aria-label={t("prosCons.itemLabel", {
+                        label: text.title,
+                        index: index + 1,
+                      })}
+                      onFocus={() => {
+                        editingFrom.current = item.body;
+                      }}
+                      onChange={(event) =>
+                        editText(side, item.id, event.target.value)
+                      }
+                      onBlur={() => commitTextIfChanged(side, item.id)}
+                      className="h-7 border-transparent bg-transparent px-1 focus-visible:border-input"
+                    />
 
-                  return (
-                    <li
-                      key={item.id}
-                      draggable
-                      onDragStart={(event) => {
-                        event.dataTransfer.effectAllowed = "move";
-                        setDragging({ side, index });
-                      }}
-                      onDragEnd={() => {
-                        setDragging(null);
-                        setDropTarget(null);
-                      }}
-                      onDragOver={(event) => {
-                        if (!isDragging) return;
-                        event.preventDefault();
-                        const rect =
-                          event.currentTarget.getBoundingClientRect();
-                        const after =
-                          event.clientY - rect.top > rect.height / 2;
-                        setDropTarget({
-                          side,
-                          index: after ? index + 1 : index,
-                        });
-                      }}
-                      onDrop={(event) => {
-                        if (!isDragging) return;
-                        event.preventDefault();
-                        event.stopPropagation();
-                        const rect =
-                          event.currentTarget.getBoundingClientRect();
-                        const after =
-                          event.clientY - rect.top > rect.height / 2;
-                        handleDrop({ side, index: after ? index + 1 : index });
-                      }}
-                      className={cn(
-                        "group/item flex items-center gap-1 rounded-lg border bg-background px-1.5 py-1 transition-shadow",
-                        showIndicator && "border-t-2 border-t-ring",
-                        dragging?.side === side &&
-                          dragging.index === index &&
-                          "opacity-50",
-                      )}
-                    >
-                      <span
-                        className="flex size-7 cursor-grab items-center justify-center text-muted-foreground active:cursor-grabbing"
-                        aria-hidden
-                      >
-                        <GripVertical className="size-4" />
-                      </span>
-
-                      <Input
-                        value={item.body}
-                        aria-label={t("prosCons.itemLabel", {
-                          label: text.title,
-                          index: index + 1,
-                        })}
-                        onFocus={() => {
-                          editingFrom.current = item.body;
-                        }}
-                        onChange={(event) =>
-                          editText(side, item.id, event.target.value)
+                    <div className="flex items-center opacity-100 md:opacity-0 md:transition-opacity md:group-hover/item:opacity-100 md:group-focus-within/item:opacity-100">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        aria-label={
+                          side === "pros"
+                            ? t("prosCons.moveToCons")
+                            : t("prosCons.moveToPros")
                         }
-                        onBlur={() => commitTextIfChanged(side, item.id)}
-                        className="h-7 border-transparent bg-transparent px-1 focus-visible:border-input"
-                      />
-
-                      <div className="flex items-center opacity-100 md:opacity-0 md:transition-opacity md:group-hover/item:opacity-100 md:group-focus-within/item:opacity-100">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          aria-label={t("prosCons.moveUp")}
-                          disabled={index === 0}
-                          onClick={() => reorder(side, index, -1)}
-                        >
-                          <ArrowUp />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          aria-label={t("prosCons.moveDown")}
-                          disabled={index === items.length - 1}
-                          onClick={() => reorder(side, index, 1)}
-                        >
-                          <ArrowDown />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          aria-label={
-                            side === "pros"
-                              ? t("prosCons.moveToCons")
-                              : t("prosCons.moveToPros")
-                          }
-                          onClick={() => switchSide(side, index)}
-                        >
-                          <ArrowLeftRight />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          aria-label={t("prosCons.remove")}
-                          onClick={() => removeItem(side, item.id)}
-                        >
-                          <Trash2 />
-                        </Button>
-                      </div>
-                    </li>
-                  );
-                })}
+                        onClick={() => switchSide(side, item.id)}
+                      >
+                        <ArrowLeftRight />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-xs"
+                        aria-label={t("prosCons.remove")}
+                        onClick={() => removeItem(side, item.id)}
+                      >
+                        <Trash2 />
+                      </Button>
+                    </div>
+                  </li>
+                ))}
 
                 {items.length === 0 ? (
                   <li className="rounded-lg border border-dashed px-3 py-4 text-center text-xs text-muted-foreground">
-                    {isDragging
-                      ? t("prosCons.dropHere")
-                      : t("prosCons.empty")}
+                    {t("prosCons.empty")}
                   </li>
                 ) : null}
               </ul>

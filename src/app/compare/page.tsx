@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ComparisonTable } from "@/components/comparison-table";
+import { PointsComparison } from "@/components/points-comparison";
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import { getComparisonData } from "@/lib/queries";
 import { getTranslations } from "@/lib/i18n/server";
 
 export default async function ComparePage() {
-  const { criteria, houses } = await getComparisonData();
+  const { criteria, houses, pointsByHouseId } = await getComparisonData();
   const { t } = await getTranslations();
 
   const isEmpty = houses.length === 0 || criteria.length === 0;
@@ -40,7 +41,19 @@ export default async function ComparePage() {
           </CardContent>
         </Card>
       ) : (
-        <ComparisonTable criteria={criteria} houses={houses} />
+        <div className="flex flex-col gap-12">
+          <section>
+            <h2 className="mb-4 text-lg font-semibold tracking-tight">
+              {t("compare.scoresTitle")}
+            </h2>
+            <ComparisonTable criteria={criteria} houses={houses} />
+          </section>
+
+          <PointsComparison
+            houses={houses}
+            pointsByHouseId={pointsByHouseId}
+          />
+        </div>
       )}
     </main>
   );
