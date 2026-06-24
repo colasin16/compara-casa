@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ComparisonTable } from "@/components/comparison-table";
 import { FeaturesComparison } from "@/components/features-comparison";
 import { PointsComparison } from "@/components/points-comparison";
+import { PriceComparison } from "@/components/price-comparison";
 import {
   Card,
   CardContent,
@@ -44,6 +45,13 @@ export default async function ComparePage() {
         </Card>
       ) : (
         <div className="flex flex-col gap-12">
+          <section>
+            <h2 className="mb-4 text-lg font-semibold tracking-tight">
+              {t("compare.priceTitle")}
+            </h2>
+            <PriceComparison houses={houses} />
+          </section>
+
           <section>
             <h2 className="mb-4 text-lg font-semibold tracking-tight">
               {t("compare.scoresTitle")}

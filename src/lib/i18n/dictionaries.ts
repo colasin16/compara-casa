@@ -196,6 +196,7 @@ export const en = {
 		emptyBodyBefore: "Add at least one house and rate it against your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
+		priceTitle: "Price",
 		scoresTitle: "Scores",
 		featuresTitle: "Features",
 		featuresSubtitle:
@@ -414,6 +415,7 @@ export const es: Dictionary = {
 		emptyBodyBefore: "Añade al menos una casa y puntúala según tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
+		priceTitle: "Precio",
 		scoresTitle: "Puntuaciones",
 		featuresTitle: "Características",
 		featuresSubtitle:
