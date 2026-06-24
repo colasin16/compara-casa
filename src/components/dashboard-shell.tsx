@@ -8,6 +8,8 @@ import {
   Home,
   LogOut,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   SlidersHorizontal,
   X,
   type LucideIcon,
@@ -39,6 +41,7 @@ export function DashboardShell({
   const t = useTranslations();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   const items: NavItem[] = [
     { href: "/dashboard", label: t("header.houses"), icon: Home, match: ["/houses"] },
@@ -54,18 +57,30 @@ export function DashboardShell({
     return prefixes.some((prefix) => pathname.startsWith(`${prefix}/`));
   };
 
-  const sidebar = (
+  /**
+   * Renders the sidebar contents. When `isCollapsed` is true the sidebar shows
+   * an icon-only rail; this is only used on desktop. The mobile drawer always
+   * renders the full (expanded) version.
+   */
+  const renderSidebar = (isCollapsed: boolean) => (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
-      <div className="flex h-16 items-center justify-between gap-2 px-4">
+      <div
+        className={cn(
+          "flex h-16 items-center gap-2",
+          isCollapsed ? "justify-center px-2" : "justify-between px-4",
+        )}
+      >
         <Link
           href="/dashboard"
+          aria-label={t("common.brand")}
           className="flex items-center gap-2 font-heading text-base font-extrabold tracking-tight"
         >
           <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary/10 text-base">
             🏠
           </span>
-          {t("common.brand")}
+          {isCollapsed ? null : t("common.brand")}
         </Link>
+        {/* Close button — mobile drawer only */}
         <button
           type="button"
           aria-label={t("header.closeMenu")}
@@ -77,9 +92,11 @@ export function DashboardShell({
       </div>
 
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4">
-        <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {t("header.navigation")}
-        </p>
+        {isCollapsed ? null : (
+          <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            {t("header.navigation")}
+          </p>
+        )}
         {items.map((item) => {
           const Icon = item.icon;
           const active = isActive(item);
@@ -89,41 +106,51 @@ export function DashboardShell({
               href={item.href}
               onClick={() => setOpen(false)}
               aria-current={active ? "page" : undefined}
+              title={isCollapsed ? item.label : undefined}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors",
+                "flex items-center gap-3 rounded-lg py-2 text-sm font-semibold transition-colors",
+                isCollapsed ? "justify-center px-2" : "px-3",
                 active
                   ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
               )}
             >
               <Icon className="size-4 shrink-0" />
-              {item.label}
+              {isCollapsed ? null : item.label}
             </Link>
           );
         })}
       </nav>
 
       <div className="border-t border-sidebar-border px-3 py-4">
-        <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {t("header.account")}
-        </p>
-        <p
-          title={accountLabel}
-          className="truncate px-3 py-1 text-sm font-medium text-sidebar-foreground"
-        >
-          {accountLabel}
-        </p>
-        <div className="mt-2 flex items-center gap-1 px-1">
-          <LanguageSwitcher />
-          <ThemeToggle />
-        </div>
-        <form action={signOut} className="mt-2">
+        {isCollapsed ? null : (
+          <>
+            <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              {t("header.account")}
+            </p>
+            <p
+              title={accountLabel}
+              className="truncate px-3 py-1 text-sm font-medium text-sidebar-foreground"
+            >
+              {accountLabel}
+            </p>
+            <div className="mt-2 flex items-center gap-1 px-1">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
+          </>
+        )}
+        <form action={signOut} className={isCollapsed ? "" : "mt-2"}>
           <button
             type="submit"
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            title={isCollapsed ? t("header.signOut") : undefined}
+            className={cn(
+              "flex w-full items-center gap-3 rounded-lg py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+              isCollapsed ? "justify-center px-2" : "px-3",
+            )}
           >
             <LogOut className="size-4 shrink-0" />
-            {t("header.signOut")}
+            {isCollapsed ? null : t("header.signOut")}
           </button>
         </form>
       </div>
@@ -133,8 +160,34 @@ export function DashboardShell({
   return (
     <div className="flex min-h-screen flex-1">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-sidebar-border md:block">
-        {sidebar}
+      <aside
+        className={cn(
+          "sticky top-0 hidden h-screen shrink-0 border-r border-sidebar-border transition-[width] duration-200 md:block",
+          collapsed ? "w-16" : "w-64",
+        )}
+      >
+        <div className="relative h-full">
+          {renderSidebar(collapsed)}
+          {/* Collapse / expand toggle */}
+          <button
+            type="button"
+            aria-label={
+              collapsed ? t("header.expandSidebar") : t("header.collapseSidebar")
+            }
+            aria-expanded={!collapsed}
+            title={
+              collapsed ? t("header.expandSidebar") : t("header.collapseSidebar")
+            }
+            onClick={() => setCollapsed((value) => !value)}
+            className="absolute -right-3 top-5 z-10 hidden size-6 place-items-center rounded-full border border-sidebar-border bg-background text-muted-foreground shadow-sm transition-colors hover:text-foreground md:grid"
+          >
+            {collapsed ? (
+              <PanelLeftOpen className="size-3.5" />
+            ) : (
+              <PanelLeftClose className="size-3.5" />
+            )}
+          </button>
+        </div>
       </aside>
 
       {/* Mobile drawer */}
@@ -148,7 +201,7 @@ export function DashboardShell({
             className="absolute inset-0 bg-foreground/40"
           />
           <div className="absolute inset-y-0 left-0 w-64 max-w-[80%] border-r border-sidebar-border shadow-dropdown">
-            {sidebar}
+            {renderSidebar(false)}
           </div>
         </div>
       ) : null}

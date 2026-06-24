@@ -27,6 +27,8 @@ export const en = {
 		account: "Account",
 		openMenu: "Open menu",
 		closeMenu: "Close menu",
+		collapseSidebar: "Collapse sidebar",
+		expandSidebar: "Expand sidebar",
 	},
 	home: {
 		badge: "ComparaCasa",
@@ -204,6 +206,8 @@ export const es: Dictionary = {
 		account: "Cuenta",
 		openMenu: "Abrir menú",
 		closeMenu: "Cerrar menú",
+		collapseSidebar: "Contraer barra lateral",
+		expandSidebar: "Expandir barra lateral",
 	},
 	home: {
 		badge: "ComparaCasa",
