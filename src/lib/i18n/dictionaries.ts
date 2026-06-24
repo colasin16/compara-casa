@@ -23,6 +23,10 @@ export const en = {
 		logIn: "Log in",
 		selectLanguage: "Select language",
 		toggleTheme: "Toggle theme",
+		navigation: "Navigation",
+		account: "Account",
+		openMenu: "Open menu",
+		closeMenu: "Close menu",
 	},
 	home: {
 		badge: "ComparaCasa",
@@ -196,6 +200,10 @@ export const es: Dictionary = {
 		logIn: "Iniciar sesión",
 		selectLanguage: "Seleccionar idioma",
 		toggleTheme: "Cambiar tema",
+		navigation: "Navegación",
+		account: "Cuenta",
+		openMenu: "Abrir menú",
+		closeMenu: "Cerrar menú",
 	},
 	home: {
 		badge: "ComparaCasa",
