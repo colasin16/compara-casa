@@ -5,7 +5,7 @@ import {
   createCriterion,
   updateCriterion,
   type CriterionFormState,
-} from "@/app/criteria/actions";
+} from "@/app/dashboard/criteria/actions";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

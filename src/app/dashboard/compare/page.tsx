@@ -35,7 +35,7 @@ export default async function ComparePage() {
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
             {t("compare.emptyBodyBefore")}
-            <Link href="/criteria" className="underline">
+            <Link href="/dashboard/criteria" className="underline">
               {t("compare.emptyBodyLink")}
             </Link>
             {t("compare.emptyBodyAfter")}

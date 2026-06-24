@@ -5,7 +5,7 @@ import {
   createHouse,
   updateHouse,
   type HouseFormState,
-} from "@/app/houses/actions";
+} from "@/app/dashboard/houses/actions";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

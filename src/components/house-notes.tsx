@@ -4,7 +4,7 @@ import { useId, useRef, useState, useTransition } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-import { saveHouseNotes } from "@/app/houses/actions";
+import { saveHouseNotes } from "@/app/dashboard/houses/actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useTranslations } from "@/lib/i18n/context";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { deleteCriterion } from "@/app/criteria/actions";
+import { deleteCriterion } from "@/app/dashboard/criteria/actions";
 import { CriterionForm } from "@/components/criterion-form";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

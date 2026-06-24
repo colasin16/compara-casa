@@ -54,7 +54,7 @@ function PointsSection({
               className="flex flex-col gap-2 rounded-xl border border-border p-4"
             >
               <Link
-                href={`/houses/${house.id}`}
+                href={`/dashboard/houses/${house.id}`}
                 className="truncate font-semibold hover:text-primary"
               >
                 {house.name}
@@ -114,7 +114,7 @@ function NotesSection({
               className="flex flex-col gap-2 rounded-xl border border-border p-4"
             >
               <Link
-                href={`/houses/${house.id}`}
+                href={`/dashboard/houses/${house.id}`}
                 className="truncate font-semibold hover:text-primary"
               >
                 {house.name}

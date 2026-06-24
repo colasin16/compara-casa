@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { SiteHeaderGate } from "@/components/site-header-gate";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n/context";
@@ -58,7 +59,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <I18nProvider locale={locale} dictionary={dictionary}>
-            <SiteHeader />
+            <SiteHeaderGate>
+              <SiteHeader />
+            </SiteHeaderGate>
             {children}
             <Toaster />
             <Analytics />
