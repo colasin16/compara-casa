@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/translate";
@@ -46,16 +47,24 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
+      suppressHydrationWarning
       className={`${publicSans.variable} ${barlow.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background">
-        <I18nProvider locale={locale} dictionary={dictionary}>
-          <SiteHeader />
-          {children}
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
-        </I18nProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <I18nProvider locale={locale} dictionary={dictionary}>
+            <SiteHeader />
+            {children}
+            <Toaster />
+            <Analytics />
+            <SpeedInsights />
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
