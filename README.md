@@ -46,9 +46,16 @@ Next.js + Prisma + Postgres (Neon) + Auth.js — more manual control if you'd ra
 - `house_points`: `id, user_id, house_id, kind ('pro' | 'con'), body, position, created_at` —
   per-house positives/negatives that users can add, edit, remove, reorder, and
   drag between the two lists on the house detail page.
+- `house_notes`: `id, user_id, house_id, body, position, created_at` —
+  per-house free-form notes the user can add, edit, remove, and reorder.
+- `checklist_items` (user-level templates): `id, user_id, name, created_at`, unique on (user_id, name) —
+  features the user wants to verify, defined once and reused across houses.
+- `house_checks`: `id, user_id, house_id, item_id, checked (boolean), created_at`, unique on (house_id, item_id) —
+  whether a given house has a given checklist item.
 
-Design choice: criteria are defined once per user and reused across houses, so houses are
-compared on the same axes. New criteria can be added later; houses simply have no rating yet.
+Design choice: criteria and checklist items are defined once per user and reused across houses, so
+houses are compared on the same axes. New criteria/items can be added later; houses simply have no
+rating or check yet.
 
 ## Development plan
 
@@ -81,6 +88,18 @@ compared on the same axes. New criteria can be added later; houses simply have n
 > add form, inline edit, and delete — all via Server Actions with Zod validation.
 > Empty state offers a one-click "Add starter criteria" seed. Duplicate names are
 > rejected (DB unique constraint surfaced as a friendly error).
+
+### Phase 3b — Checklist
+- CRUD for checklist items (name only), defined once per user and reused across houses.
+- House detail page: tick the items each house actually has (per-house checks).
+- Optional starter template (Lift, Storage room, Parking, A/C, Heating, etc.).
+
+> **Status:** Implemented. `/checklist` lists items, with an add form, inline edit,
+> and delete — all via Server Actions with Zod validation, mirroring criteria.
+> Empty state offers a one-click "Add starter checklist" seed and duplicate names
+> are rejected. On `/houses/[id]` a "Checklist" section lets you tick which items
+> the house has; each toggle persists via the `house_checks` table
+> (`0004_checklist.sql`). The header gains a "Checklist" nav entry.
 
 ### Phase 4 — Houses & scoring
 - CRUD for houses (name, address, notes).
@@ -118,6 +137,7 @@ compared on the same axes. New criteria can be added later; houses simply have n
 - All weights = 0 → avoid divide-by-zero (treat as unweighted average or block save).
 - Criterion with no rating on a house → exclude from denominator or treat as unrated.
 - Deleting a criterion → cascade-delete its ratings.
+- Deleting a checklist item → cascade-delete its house checks.
 
 ## Local setup
 

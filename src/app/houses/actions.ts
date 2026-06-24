@@ -131,6 +131,41 @@ export async function rateCriterion(formData: FormData) {
   revalidatePath("/dashboard");
 }
 
+/**
+ * Saves whether a house has a single checklist item (upsert on house+item).
+ */
+export async function checkChecklistItem(formData: FormData) {
+  const { supabase, userId } = await requireUserId();
+  if (!userId) return;
+
+  const houseId = formData.get("houseId");
+  const itemId = formData.get("itemId");
+  const rawChecked = formData.get("checked");
+
+  if (
+    typeof houseId !== "string" ||
+    typeof itemId !== "string" ||
+    typeof rawChecked !== "string"
+  ) {
+    return;
+  }
+
+  const checked = rawChecked === "true";
+
+  await supabase.from("house_checks").upsert(
+    {
+      user_id: userId,
+      house_id: houseId,
+      item_id: itemId,
+      checked,
+    },
+    { onConflict: "house_id,item_id" },
+  );
+
+  revalidatePath(`/houses/${houseId}`);
+  revalidatePath("/dashboard");
+}
+
 export type SaveHousePointsState = { error?: string; ok?: boolean };
 
 /**

@@ -33,6 +33,7 @@ export function MainNav({
     ? [
         { href: "/dashboard", label: t("header.houses") },
         { href: "/criteria", label: t("header.criteria") },
+        { href: "/checklist", label: t("header.checklist") },
         { href: "/compare", label: t("header.compare") },
       ]
     : [{ href: "/login", label: t("header.logIn") }];
