@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Check } from "lucide-react";
-import { checkChecklistItem } from "@/app/houses/actions";
+import { checkChecklistItem } from "@/app/dashboard/houses/actions";
 import type { ChecklistItem } from "@/lib/types";
 import { useTranslations } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
@@ -37,7 +37,7 @@ export function HouseChecklist({ houseId, items, initialChecked }: Props) {
     return (
       <p className="text-sm text-muted-foreground">
         {t("houseChecklist.noItemsBefore")}
-        <a href="/checklist" className="underline">
+        <a href="/dashboard/checklist" className="underline">
           {t("houseChecklist.noItemsLink")}
         </a>
         {t("houseChecklist.noItemsAfter")}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
-import { deleteHouse } from "@/app/houses/actions";
+import { deleteHouse } from "@/app/dashboard/houses/actions";
 import { HouseDetailHeader } from "@/components/house-detail-header";
 import { HouseChecklist } from "@/components/house-checklist";
 import { HouseNotes } from "@/components/house-notes";

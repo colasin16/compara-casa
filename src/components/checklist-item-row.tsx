@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ListChecks } from "lucide-react";
-import { deleteChecklistItem } from "@/app/checklist/actions";
+import { deleteChecklistItem } from "@/app/dashboard/checklist/actions";
 import { ChecklistItemForm } from "@/components/checklist-item-form";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

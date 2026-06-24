@@ -1,4 +1,4 @@
-import { seedDefaultCriteria } from "@/app/criteria/actions";
+import { seedDefaultCriteria } from "@/app/dashboard/criteria/actions";
 import { CriterionForm } from "@/components/criterion-form";
 import { CriterionItem } from "@/components/criterion-item";
 import { buttonVariants } from "@/components/ui/button";

@@ -41,7 +41,7 @@ export async function createChecklistItem(
     return { error: error.message };
   }
 
-  revalidatePath("/checklist");
+  revalidatePath("/dashboard/checklist");
   return { ok: true };
 }
 
@@ -77,7 +77,7 @@ export async function updateChecklistItem(
     return { error: error.message };
   }
 
-  revalidatePath("/checklist");
+  revalidatePath("/dashboard/checklist");
   return { ok: true };
 }
 
@@ -93,7 +93,7 @@ export async function deleteChecklistItem(formData: FormData) {
     .delete()
     .eq("id", id)
     .eq("user_id", userId);
-  revalidatePath("/checklist");
+  revalidatePath("/dashboard/checklist");
 }
 
 export async function seedDefaultChecklist() {
@@ -107,5 +107,5 @@ export async function seedDefaultChecklist() {
     .from("checklist_items")
     .upsert(rows, { onConflict: "user_id,name", ignoreDuplicates: true });
 
-  revalidatePath("/checklist");
+  revalidatePath("/dashboard/checklist");
 }

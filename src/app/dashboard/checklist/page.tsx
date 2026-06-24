@@ -1,4 +1,4 @@
-import { seedDefaultChecklist } from "@/app/checklist/actions";
+import { seedDefaultChecklist } from "@/app/dashboard/checklist/actions";
 import { ChecklistItemForm } from "@/components/checklist-item-form";
 import { ChecklistItemRow } from "@/components/checklist-item-row";
 import { buttonVariants } from "@/components/ui/button";

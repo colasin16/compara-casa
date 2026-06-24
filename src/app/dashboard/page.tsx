@@ -34,7 +34,7 @@ export default async function DashboardPage() {
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
                 {t("dashboard.emptyBodyBefore")}
-                <Link href="/criteria" className="underline">
+                <Link href="/dashboard/criteria" className="underline">
                   {t("dashboard.emptyBodyLink")}
                 </Link>
                 {t("dashboard.emptyBodyAfter")}
@@ -44,7 +44,7 @@ export default async function DashboardPage() {
             houses.map((house, index) => (
               <Link
                 key={house.id}
-                href={`/houses/${house.id}`}
+                href={`/dashboard/houses/${house.id}`}
                 className="group"
               >
                 <Card className="transition-shadow group-hover:shadow-dropdown">

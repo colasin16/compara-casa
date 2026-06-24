@@ -5,7 +5,7 @@ import {
   createChecklistItem,
   updateChecklistItem,
   type ChecklistItemFormState,
-} from "@/app/checklist/actions";
+} from "@/app/dashboard/checklist/actions";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
