@@ -257,6 +257,7 @@ export function ProsCons({
                         variant="ghost"
                         size="icon-xs"
                         aria-label={t("prosCons.remove")}
+                        className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                         onClick={() => removeItem(side, item.id)}
                       >
                         <Trash2 />
