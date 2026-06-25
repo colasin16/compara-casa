@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Public_Sans, Barlow, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { I18nProvider } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/translate";
 import { getLocale } from "@/lib/i18n/server";
+import { getSiteUrl, ogLocale, SITE_NAME, THEME_COLOR } from "@/lib/seo";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
@@ -30,12 +31,58 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const dictionary = getDictionary(await getLocale());
+  const locale = await getLocale();
+  const { metadata } = getDictionary(locale);
+  const siteUrl = getSiteUrl();
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
   return {
-    title: dictionary.metadata.title,
-    description: dictionary.metadata.description,
+    metadataBase: new URL(siteUrl),
+    applicationName: SITE_NAME,
+    title: {
+      default: metadata.title,
+      template: `%s · ${SITE_NAME}`,
+    },
+    description: metadata.description,
+    keywords: metadata.keywords,
+    authors: [{ name: SITE_NAME }],
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
+    alternates: {
+      canonical: "/",
+      languages: {
+        en: "/",
+        es: "/",
+        "x-default": "/",
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      title: metadata.title,
+      description: metadata.description,
+      url: "/",
+      locale: ogLocale(locale),
+      alternateLocale: locale === "es" ? "en_US" : "es_ES",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    ...(googleVerification
+      ? { verification: { google: googleVerification } }
+      : {}),
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: THEME_COLOR,
+};
 
 export default async function RootLayout({
   children,
