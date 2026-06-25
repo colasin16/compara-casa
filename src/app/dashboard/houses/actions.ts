@@ -28,6 +28,8 @@ export async function createHouse(
     currency: formData.get("currency"),
     address: formData.get("address"),
     notes: formData.get("notes"),
+    latitude: formData.get("latitude"),
+    longitude: formData.get("longitude"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0].message };
@@ -40,6 +42,8 @@ export async function createHouse(
     currency: parsed.data.currency,
     address: parsed.data.address || null,
     notes: parsed.data.notes || null,
+    latitude: parsed.data.latitude ?? null,
+    longitude: parsed.data.longitude ?? null,
   });
 
   if (error) return { error: error.message };
@@ -66,6 +70,8 @@ export async function updateHouse(
     currency: formData.get("currency"),
     address: formData.get("address"),
     notes: formData.get("notes"),
+    latitude: formData.get("latitude"),
+    longitude: formData.get("longitude"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0].message };
@@ -79,6 +85,8 @@ export async function updateHouse(
       currency: parsed.data.currency,
       address: parsed.data.address || null,
       notes: parsed.data.notes || null,
+      latitude: parsed.data.latitude ?? null,
+      longitude: parsed.data.longitude ?? null,
     })
     .eq("id", id)
     .eq("user_id", userId);

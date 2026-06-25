@@ -83,6 +83,8 @@ export const en = {
 		criteriaRated: "{rated} of {total} criteria rated",
 		score: "score",
 		addHouse: "Add a house",
+		mapTitle: "Locations",
+		mapNoCoordinates: "None of your houses have a location yet. Select an address from the autocomplete when adding or editing a house.",
 	},
 	criteria: {
 		title: "Your criteria",
@@ -306,6 +308,8 @@ export const es: Dictionary = {
 		criteriaRated: "{rated} de {total} criterios puntuados",
 		score: "puntuación",
 		addHouse: "Añadir una casa",
+		mapTitle: "Ubicaciones",
+		mapNoCoordinates: "Ninguna de tus casas tiene ubicación todavía. Selecciona una dirección del autocompletado al añadir o editar una casa.",
 	},
 	criteria: {
 		title: "Tus criterios",

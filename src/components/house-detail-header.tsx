@@ -24,6 +24,8 @@ export function HouseDetailHeader({ house }: { house: House }) {
             currency: house.currency,
             address: house.address,
             notes: house.notes,
+            latitude: house.latitude,
+            longitude: house.longitude,
           }}
           onDone={() => setEditing(false)}
         />

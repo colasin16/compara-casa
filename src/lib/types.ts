@@ -14,6 +14,8 @@ export type House = {
   currency: string;
   address: string | null;
   notes: string | null;
+  latitude: number | null;
+  longitude: number | null;
   created_at: string;
 };
 
