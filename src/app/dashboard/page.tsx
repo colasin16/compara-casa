@@ -1,5 +1,4 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { AddHouseDialog } from "@/components/add-house-dialog";
 import {
   Card,
@@ -11,11 +10,7 @@ import { getHousesWithScores } from "@/lib/queries";
 import { formatScore } from "@/lib/scoring";
 import { formatPrice } from "@/lib/currency";
 import { getTranslations } from "@/lib/i18n/server";
-
-const HousesMap = dynamic(
-  () => import("@/components/houses-map").then((m) => m.HousesMap),
-  { ssr: false },
-);
+import { HousesMapClient } from "@/components/houses-map-client";
 
 export default async function DashboardPage() {
   const houses = await getHousesWithScores();
@@ -33,7 +28,7 @@ export default async function DashboardPage() {
         <AddHouseDialog />
       </div>
 
-      {houses.length > 0 && <HousesMap houses={houses} />}
+      {houses.length > 0 && <HousesMapClient houses={houses} />}
 
       <div className="flex flex-col gap-3">
         {houses.length === 0 ? (
