@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useMemo } from "react";
 import {
   Map,
   MapControls,
   MapMarker,
   MarkerContent,
   MarkerTooltip,
-  type MapRef,
 } from "@/components/ui/map";
 import { formatPrice } from "@/lib/currency";
 import { useLocale, useTranslations } from "@/lib/i18n/context";
@@ -29,21 +28,19 @@ function hasCoords(house: HouseWithScore): house is HouseWithCoords {
 export function HousesMap({ houses }: Props) {
   const t = useTranslations();
   const locale = useLocale();
-  const mapRef = useRef<MapRef>(null);
 
   const located = houses.filter(hasCoords);
 
-  // Fit map to all markers on first render
-  useEffect(() => {
-    if (located.length === 0 || !mapRef.current) return;
+  // Compute initial viewport from all located houses synchronously so the map
+  // starts at the correct position with no post-mount jump.
+  const initialViewport = useMemo(() => {
+    if (located.length === 0) return null;
 
     if (located.length === 1) {
-      mapRef.current.flyTo({
-        center: [located[0].longitude, located[0].latitude],
+      return {
+        center: [located[0].longitude, located[0].latitude] as [number, number],
         zoom: 13,
-        duration: 0,
-      });
-      return;
+      };
     }
 
     let minLon = Infinity,
@@ -58,15 +55,11 @@ export function HousesMap({ houses }: Props) {
       if (h.latitude > maxLat) maxLat = h.latitude;
     }
 
-    mapRef.current.fitBounds(
-      [
-        [minLon, minLat],
-        [maxLon, maxLat],
-      ],
-      { padding: 60, maxZoom: 14, duration: 0 },
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return {
+      bounds: [[minLon, minLat], [maxLon, maxLat]] as [[number, number], [number, number]],
+      fitBoundsOptions: { padding: 60, maxZoom: 14 },
+    };
+  }, [located]);
 
   return (
     <div className="mb-8">
@@ -79,10 +72,8 @@ export function HousesMap({ houses }: Props) {
       ) : (
         <div className="overflow-hidden rounded-xl border border-border" style={{ height: 320 }}>
           <Map
-            ref={mapRef}
             className="h-full w-full"
-            center={[located[0].longitude, located[0].latitude]}
-            zoom={12}
+            {...initialViewport}
           >
             <MapControls position="bottom-right" />
 
