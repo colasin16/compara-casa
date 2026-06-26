@@ -20,10 +20,11 @@ jobs:
     permissions:
       contents: read
 
-    # Secrets and variables stored in the `copilot` Actions environment are
+    # Secrets and variables are stored in the `copilot` Actions environment and
     # automatically injected here, making them available to the agent at runtime.
     #
-    # Required secrets to add under Settings → Environments → copilot:
+    # Create the `copilot` environment under Settings → Environments → New environment,
+    # then add the following secrets:
     #
     #   SUPABASE_ACCESS_TOKEN   – Personal access token from https://supabase.com/dashboard/account/tokens
     #                             Used by the Supabase CLI to authenticate (`supabase login`).
@@ -49,6 +50,7 @@ jobs:
     env:
       # Expose Supabase CLI credentials so every step (and the agent) can use them.
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
       # App-level connection values (safe to expose as env vars; anon key is public by design).
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
@@ -73,6 +75,6 @@ jobs:
           version: latest
 
       - name: Link Supabase project
-        # Skipped gracefully when the secret is absent (e.g. local forks / open PRs).
-        if: ${{ env.SUPABASE_ACCESS_TOKEN != '' && secrets.SUPABASE_PROJECT_REF != '' }}
-        run: supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+        # Skipped gracefully when the secrets are absent (e.g. local forks / open PRs).
+        if: env.SUPABASE_ACCESS_TOKEN != '' && env.SUPABASE_PROJECT_REF != ''
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF"
