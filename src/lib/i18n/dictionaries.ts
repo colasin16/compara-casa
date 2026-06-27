@@ -202,6 +202,14 @@ export const en = {
 		emptyBodyBefore: "Add at least one house and rate it against your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
+		emptyNoHousesTitle: "Start by adding your first house",
+		emptyNoHousesBody:
+			"Once you have two or more houses, you'll be able to compare them side by side. Add your first one to get started!",
+		emptyNoHousesCTA: "Add your first house",
+		emptyOneHouseTitle: "Almost there — add one more house",
+		emptyOneHouseBody:
+			"You've added one house — great start! Add at least one more and the comparison will appear here automatically.",
+		emptyOneHousesCTA: "Add another house",
 		priceTitle: "Price",
 		scoresTitle: "Scores",
 		featuresTitle: "Features",
@@ -427,6 +435,14 @@ export const es: Dictionary = {
 		emptyBodyBefore: "Añade al menos una casa y puntúala según tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
+		emptyNoHousesTitle: "Empieza añadiendo tu primera casa",
+		emptyNoHousesBody:
+			"Cuando tengas dos o más casas podrás compararlas una al lado de la otra. ¡Añade la primera para comenzar!",
+		emptyNoHousesCTA: "Añadir tu primera casa",
+		emptyOneHouseTitle: "Casi está — añade una casa más",
+		emptyOneHouseBody:
+			"Ya tienes una casa añadida, ¡buen comienzo! Añade al menos una más y la comparativa aparecerá aquí automáticamente.",
+		emptyOneHousesCTA: "Añadir otra casa",
 		priceTitle: "Precio",
 		scoresTitle: "Puntuaciones",
 		featuresTitle: "Características",

@@ -1,12 +1,12 @@
-import Link from "next/link";
+import { Home } from "lucide-react";
 import { ComparisonTable } from "@/components/comparison-table";
 import { FeaturesComparison } from "@/components/features-comparison";
 import { PointsComparison } from "@/components/points-comparison";
 import { PriceComparison } from "@/components/price-comparison";
+import { AddHouseDialog } from "@/components/add-house-dialog";
 import {
   Card,
   CardContent,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { getComparisonData } from "@/lib/queries";
@@ -17,7 +17,7 @@ export default async function ComparePage() {
     await getComparisonData();
   const { t } = await getTranslations();
 
-  const isEmpty = houses.length === 0 || criteria.length === 0;
+  const hasEnoughHouses = houses.length >= 2;
 
   return (
     <main className="mx-auto w-full max-w-screen-xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
@@ -28,21 +28,42 @@ export default async function ComparePage() {
         <p className="text-sm text-muted-foreground">{t("compare.subtitle")}</p>
       </div>
 
-      {isEmpty ? (
-        <Card className="border border-dashed border-border bg-transparent shadow-none">
-          <CardHeader>
-            <CardTitle className="text-base font-medium text-muted-foreground">
-              {t("compare.emptyTitle")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t("compare.emptyBodyBefore")}
-            <Link href="/dashboard/criteria" className="underline">
-              {t("compare.emptyBodyLink")}
-            </Link>
-            {t("compare.emptyBodyAfter")}
-          </CardContent>
-        </Card>
+      {!hasEnoughHouses ? (
+        houses.length === 0 ? (
+          <Card className="border border-dashed border-border bg-transparent shadow-none">
+            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
+              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
+                <Home className="size-7 text-muted-foreground" aria-hidden />
+              </span>
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-base font-semibold">
+                  {t("compare.emptyNoHousesTitle")}
+                </CardTitle>
+                <p className="max-w-sm text-sm text-muted-foreground">
+                  {t("compare.emptyNoHousesBody")}
+                </p>
+              </div>
+              <AddHouseDialog label={t("compare.emptyNoHousesCTA")} />
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="border border-dashed border-border bg-transparent shadow-none">
+            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
+              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
+                <Home className="size-7 text-muted-foreground" aria-hidden />
+              </span>
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-base font-semibold">
+                  {t("compare.emptyOneHouseTitle")}
+                </CardTitle>
+                <p className="max-w-sm text-sm text-muted-foreground">
+                  {t("compare.emptyOneHouseBody")}
+                </p>
+              </div>
+              <AddHouseDialog label={t("compare.emptyOneHousesCTA")} />
+            </CardContent>
+          </Card>
+        )
       ) : (
         <div className="flex flex-col gap-12">
           <section>
