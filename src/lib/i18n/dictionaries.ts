@@ -80,6 +80,7 @@ export const en = {
 			"Add your first house using the form, then open it to score each criterion. Make sure you've set up your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " first.",
+		emptyCreateCTA: "Add your first house",
 		criteriaRated: "{rated} of {total} criteria rated",
 		score: "score",
 		addHouse: "Add a house",
@@ -91,10 +92,11 @@ export const en = {
 		subtitle:
 			"Define the aspects you care about and how much each one matters (weight 0–10). These are reused to score every house.",
 		loadError: "Couldn't load criteria: {message}",
-		emptyTitle: "No criteria yet",
+		emptyTitle: "Set up the criteria you will score",
 		emptyBody:
-			"Start from a common set of house-hunting criteria, then tweak the weights to match what matters to you.",
-		addStarter: "Add starter criteria",
+			"Create your first criterion from scratch or start with a few example criteria you can tweak later.",
+		emptyCreateCTA: "Create your first criterion",
+		addStarter: "Add example criteria",
 		addCriterion: "Add a criterion",
 	},
 	checklist: {
@@ -102,10 +104,11 @@ export const en = {
 		subtitle:
 			"Define the features you want to verify on every house. The same list is reused so you can tick off what each house actually has.",
 		loadError: "Couldn't load features: {message}",
-		emptyTitle: "No features yet",
+		emptyTitle: "Set up the features you want to check",
 		emptyBody:
-			"Start from a common set of features to check when house-hunting, then tweak the list to match what matters to you.",
-		addStarter: "Add starter features",
+			"Create your first feature from scratch or start with a few example features you can adjust later.",
+		emptyCreateCTA: "Create your first feature",
+		addStarter: "Add example features",
 		addItem: "Add an item",
 	},
 	houseDetail: {
@@ -313,6 +316,7 @@ export const es: Dictionary = {
 			"Añade tu primera casa con el formulario y luego ábrela para puntuar cada criterio. Asegúrate de haber configurado tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " primero.",
+		emptyCreateCTA: "Añadir tu primera casa",
 		criteriaRated: "{rated} de {total} criterios puntuados",
 		score: "puntuación",
 		addHouse: "Añadir una casa",
@@ -324,10 +328,11 @@ export const es: Dictionary = {
 		subtitle:
 			"Define los aspectos que te importan y cuánto pesa cada uno (peso 0–10). Se reutilizan para puntuar cada casa.",
 		loadError: "No se pudieron cargar los criterios: {message}",
-		emptyTitle: "Aún no hay criterios",
+		emptyTitle: "Configura los criterios que vas a puntuar",
 		emptyBody:
-			"Empieza con un conjunto habitual de criterios para buscar casa y luego ajusta los pesos a lo que más te importa.",
-		addStarter: "Añadir criterios iniciales",
+			"Crea tu primer criterio desde cero o empieza con algunos criterios de ejemplo que podrás ajustar después.",
+		emptyCreateCTA: "Crear tu primer criterio",
+		addStarter: "Añadir criterios de ejemplo",
 		addCriterion: "Añadir un criterio",
 	},
 	checklist: {
@@ -335,10 +340,11 @@ export const es: Dictionary = {
 		subtitle:
 			"Define las características que quieres verificar en cada casa. La misma lista se reutiliza para marcar lo que cada casa tiene de verdad.",
 		loadError: "No se pudieron cargar las características: {message}",
-		emptyTitle: "Aún no hay características",
+		emptyTitle: "Configura las características que quieres revisar",
 		emptyBody:
-			"Empieza con un conjunto habitual de características a comprobar al buscar casa y luego ajusta la lista a lo que más te importa.",
-		addStarter: "Añadir características iniciales",
+			"Crea tu primera característica desde cero o empieza con algunas características de ejemplo que podrás ajustar después.",
+		emptyCreateCTA: "Crear tu primera característica",
+		addStarter: "Añadir características de ejemplo",
 		addItem: "Añadir un elemento",
 	},
 	houseDetail: {
