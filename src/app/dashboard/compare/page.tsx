@@ -1,14 +1,10 @@
 import { Home } from "lucide-react";
 import { ComparisonTable } from "@/components/comparison-table";
+import { EmptyStateCard } from "@/components/empty-state-card";
 import { FeaturesComparison } from "@/components/features-comparison";
 import { PointsComparison } from "@/components/points-comparison";
 import { PriceComparison } from "@/components/price-comparison";
 import { AddHouseDialog } from "@/components/add-house-dialog";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
 import { getComparisonData } from "@/lib/queries";
 import { getTranslations } from "@/lib/i18n/server";
 
@@ -30,39 +26,19 @@ export default async function ComparePage() {
 
       {!hasEnoughHouses ? (
         houses.length === 0 ? (
-          <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
-              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
-                <Home className="size-7 text-muted-foreground" aria-hidden />
-              </span>
-              <div className="flex flex-col gap-1">
-                <CardTitle className="text-base font-semibold">
-                  {t("compare.emptyNoHousesTitle")}
-                </CardTitle>
-                <p className="max-w-sm text-sm text-muted-foreground">
-                  {t("compare.emptyNoHousesBody")}
-                </p>
-              </div>
-              <AddHouseDialog label={t("compare.emptyNoHousesCTA")} />
-            </CardContent>
-          </Card>
+          <EmptyStateCard
+            icon={Home}
+            title={t("compare.emptyNoHousesTitle")}
+            description={t("compare.emptyNoHousesBody")}
+            actions={<AddHouseDialog label={t("compare.emptyNoHousesCTA")} />}
+          />
         ) : (
-          <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
-              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
-                <Home className="size-7 text-muted-foreground" aria-hidden />
-              </span>
-              <div className="flex flex-col gap-1">
-                <CardTitle className="text-base font-semibold">
-                  {t("compare.emptyOneHouseTitle")}
-                </CardTitle>
-                <p className="max-w-sm text-sm text-muted-foreground">
-                  {t("compare.emptyOneHouseBody")}
-                </p>
-              </div>
-              <AddHouseDialog label={t("compare.emptyOneHousesCTA")} />
-            </CardContent>
-          </Card>
+          <EmptyStateCard
+            icon={Home}
+            title={t("compare.emptyOneHouseTitle")}
+            description={t("compare.emptyOneHouseBody")}
+            actions={<AddHouseDialog label={t("compare.emptyOneHousesCTA")} />}
+          />
         )
       ) : (
         <div className="flex flex-col gap-12">
