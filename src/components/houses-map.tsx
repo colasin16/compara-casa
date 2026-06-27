@@ -85,7 +85,7 @@ export function HousesMap({ houses }: Props) {
                 latitude={house.latitude}
               >
                 <MarkerContent>
-                  <div className="rounded bg-sidebar-accent p-1">
+                  <div className="rounded bg-primary p-1">
                     <House className="size-4" />
                   </div>
                 </MarkerContent>
