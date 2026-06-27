@@ -1,3 +1,4 @@
+import { SlidersHorizontal } from "lucide-react";
 import { seedDefaultCriteria } from "@/app/dashboard/criteria/actions";
 import { AddCriterionDialog } from "@/components/add-criterion-dialog";
 import { CriterionItem } from "@/components/criterion-item";
@@ -6,7 +7,6 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import {
   Card,
   CardContent,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
@@ -43,18 +43,31 @@ export default async function CriteriaPage() {
           </p>
         ) : criteria.length === 0 ? (
           <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardHeader>
-              <CardTitle className="text-base font-medium text-muted-foreground">
-                {t("criteria.emptyTitle")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-start gap-3 text-sm text-muted-foreground">
-              <p>{t("criteria.emptyBody")}</p>
-              <form action={seedDefaultCriteria}>
-                <SubmitButton className={buttonVariants({ size: "sm" })}>
-                  {t("criteria.addStarter")}
-                </SubmitButton>
-              </form>
+            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
+              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
+                <SlidersHorizontal
+                  className="size-7 text-muted-foreground"
+                  aria-hidden
+                />
+              </span>
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-base font-semibold">
+                  {t("criteria.emptyTitle")}
+                </CardTitle>
+                <p className="max-w-sm text-sm text-muted-foreground">
+                  {t("criteria.emptyBody")}
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                <AddCriterionDialog label={t("criteria.emptyCreateCTA")} />
+                <form action={seedDefaultCriteria}>
+                  <SubmitButton
+                    className={buttonVariants({ size: "sm", variant: "outline" })}
+                  >
+                    {t("criteria.addStarter")}
+                  </SubmitButton>
+                </form>
+              </div>
             </CardContent>
           </Card>
         ) : (

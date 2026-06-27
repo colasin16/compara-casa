@@ -1,3 +1,4 @@
+import { ListChecks } from "lucide-react";
 import { seedDefaultChecklist } from "@/app/dashboard/checklist/actions";
 import { AddChecklistItemDialog } from "@/components/add-checklist-item-dialog";
 import { ChecklistItemRow } from "@/components/checklist-item-row";
@@ -5,7 +6,6 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
@@ -44,18 +44,29 @@ export default async function ChecklistPage() {
           </p>
         ) : items.length === 0 ? (
           <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardHeader>
-              <CardTitle className="text-base font-medium text-muted-foreground">
-                {t("checklist.emptyTitle")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-start gap-3 text-sm text-muted-foreground">
-              <p>{t("checklist.emptyBody")}</p>
-              <form action={seedDefaultChecklist}>
-                <button type="submit" className={buttonVariants({ size: "sm" })}>
-                  {t("checklist.addStarter")}
-                </button>
-              </form>
+            <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
+              <span className="flex size-14 items-center justify-center rounded-full bg-muted">
+                <ListChecks className="size-7 text-muted-foreground" aria-hidden />
+              </span>
+              <div className="flex flex-col gap-1">
+                <CardTitle className="text-base font-semibold">
+                  {t("checklist.emptyTitle")}
+                </CardTitle>
+                <p className="max-w-sm text-sm text-muted-foreground">
+                  {t("checklist.emptyBody")}
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                <AddChecklistItemDialog label={t("checklist.emptyCreateCTA")} />
+                <form action={seedDefaultChecklist}>
+                  <button
+                    type="submit"
+                    className={buttonVariants({ size: "sm", variant: "outline" })}
+                  >
+                    {t("checklist.addStarter")}
+                  </button>
+                </form>
+              </div>
             </CardContent>
           </Card>
         ) : (

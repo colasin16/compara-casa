@@ -13,15 +13,20 @@ import {
 } from "@/components/ui/dialog";
 import { useTranslations } from "@/lib/i18n/context";
 
-export function AddCriterionDialog() {
+interface AddCriterionDialogProps {
+  label?: string;
+}
+
+export function AddCriterionDialog({ label }: AddCriterionDialogProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations();
+  const triggerLabel = label ?? t("criteria.addCriterion");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className={buttonVariants({ size: "sm" })}>
         <Plus className="size-3.5" aria-hidden />
-        {t("criteria.addCriterion")}
+        {triggerLabel}
       </DialogTrigger>
       <DialogPopup>
         <DialogHeader>
