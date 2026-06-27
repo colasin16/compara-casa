@@ -8,9 +8,9 @@ import {
 	ChevronRight,
 	GitCompareArrows,
 	Home,
-	ListChecks,
 	LogOut,
 	Menu,
+	NotepadText,
 	SlidersHorizontal,
 	X,
 	type LucideIcon,
@@ -60,7 +60,7 @@ export function DashboardShell({
 		{
 			href: "/dashboard/checklist",
 			label: t("header.checklist"),
-			icon: ListChecks,
+			icon: NotepadText,
 		},
 		{
 			href: "/dashboard/compare",
