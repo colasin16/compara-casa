@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { House } from "lucide-react";
 import {
   Map,
   MapControls,
@@ -83,7 +84,11 @@ export function HousesMap({ houses }: Props) {
                 longitude={house.longitude}
                 latitude={house.latitude}
               >
-                <MarkerContent />
+                <MarkerContent>
+                  <div className="rounded bg-primary p-1">
+                    <House className="size-4" />
+                  </div>
+                </MarkerContent>
                 <MarkerTooltip>
                   <span className="font-semibold">{house.name}</span>
                   <br />
