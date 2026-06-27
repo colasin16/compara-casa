@@ -13,15 +13,20 @@ import {
 } from "@/components/ui/dialog";
 import { useTranslations } from "@/lib/i18n/context";
 
-export function AddChecklistItemDialog() {
+interface AddChecklistItemDialogProps {
+  label?: string;
+}
+
+export function AddChecklistItemDialog({ label }: AddChecklistItemDialogProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations();
+  const triggerLabel = label ?? t("checklist.addItem");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className={buttonVariants({ size: "sm" })}>
         <Plus className="size-3.5" aria-hidden />
-        {t("checklist.addItem")}
+        {triggerLabel}
       </DialogTrigger>
       <DialogPopup>
         <DialogHeader>

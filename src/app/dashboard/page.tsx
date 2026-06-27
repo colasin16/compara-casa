@@ -1,11 +1,8 @@
 import Link from "next/link";
+import { Home } from "lucide-react";
 import { AddHouseDialog } from "@/components/add-house-dialog";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { EmptyStateCard } from "@/components/empty-state-card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getHousesWithScores } from "@/lib/queries";
 import { formatScore } from "@/lib/scoring";
 import { formatPrice } from "@/lib/currency";
@@ -15,6 +12,7 @@ import { HousesMapClient } from "@/components/houses-map-client";
 export default async function DashboardPage() {
   const houses = await getHousesWithScores();
   const { t, locale } = await getTranslations();
+  const hasHouses = houses.length > 0;
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
@@ -25,27 +23,27 @@ export default async function DashboardPage() {
           </h1>
           <p className="text-sm text-muted-foreground">{t("dashboard.subtitle")}</p>
         </div>
-        <AddHouseDialog />
+        {hasHouses ? <AddHouseDialog /> : null}
       </div>
 
-      {houses.length > 0 && <HousesMapClient houses={houses} />}
+      {hasHouses && <HousesMapClient houses={houses} />}
 
       <div className="flex flex-col gap-3">
-        {houses.length === 0 ? (
-          <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardHeader>
-              <CardTitle className="text-base font-medium text-muted-foreground">
-                {t("dashboard.emptyTitle")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              {t("dashboard.emptyBodyBefore")}
-              <Link href="/dashboard/criteria" className="underline">
-                {t("dashboard.emptyBodyLink")}
-              </Link>
-              {t("dashboard.emptyBodyAfter")}
-            </CardContent>
-          </Card>
+        {!hasHouses ? (
+          <EmptyStateCard
+            icon={Home}
+            title={t("dashboard.emptyTitle")}
+            description={
+              <>
+                {t("dashboard.emptyBodyBefore")}
+                <Link href="/dashboard/criteria" className="font-medium underline">
+                  {t("dashboard.emptyBodyLink")}
+                </Link>
+                {t("dashboard.emptyBodyAfter")}
+              </>
+            }
+            actions={<AddHouseDialog label={t("dashboard.emptyCreateCTA")} />}
+          />
         ) : (
           houses.map((house, index) => (
             <Link
