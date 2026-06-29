@@ -1,4 +1,4 @@
-import { Home, HomePlus } from "lucide-react";
+import { Home, HousePlus } from "lucide-react";
 import { ComparisonTable } from "@/components/comparison-table";
 import { EmptyStateCard } from "@/components/empty-state-card";
 import { FeaturesComparison } from "@/components/features-comparison";
