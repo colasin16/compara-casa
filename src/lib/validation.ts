@@ -97,16 +97,14 @@ export const houseSchema = z.object({
     .max(1000, "Notes must be 1000 characters or fewer")
     .optional()
     .or(z.literal("")),
-  latitude: z.coerce
-    .number()
-    .optional()
-    .nullable()
-    .or(z.literal("").transform(() => null)),
-  longitude: z.coerce
-    .number()
-    .optional()
-    .nullable()
-    .or(z.literal("").transform(() => null)),
+  latitude: z
+    .literal("")
+    .transform(() => null)
+    .or(z.coerce.number().optional().nullable()),
+  longitude: z
+    .literal("")
+    .transform(() => null)
+    .or(z.coerce.number().optional().nullable()),
 });
 
 export type HouseInput = z.infer<typeof houseSchema>;
