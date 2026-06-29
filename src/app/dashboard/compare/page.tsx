@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { Home, HousePlus } from "lucide-react";
 import { ComparisonTable } from "@/components/comparison-table";
 import { EmptyStateCard } from "@/components/empty-state-card";
 import { FeaturesComparison } from "@/components/features-comparison";
@@ -34,7 +34,7 @@ export default async function ComparePage() {
           />
         ) : (
           <EmptyStateCard
-            icon={Home}
+            icon={HousePlus}
             title={t("compare.emptyOneHouseTitle")}
             description={t("compare.emptyOneHouseBody")}
             actions={<AddHouseDialog label={t("compare.emptyOneHousesCTA")} />}

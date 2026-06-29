@@ -147,18 +147,12 @@ export const DEFAULT_CRITERIA: Record<
   en: [
     { name: "Location", weight: 9 },
     { name: "Price", weight: 9 },
-    { name: "Condition", weight: 8 },
     { name: "Lighting / Orientation", weight: 7 },
-    { name: "Parking", weight: 6 },
-    { name: "Terrace", weight: 5 },
   ],
   es: [
     { name: "Ubicación", weight: 9 },
     { name: "Precio", weight: 9 },
-    { name: "Estado", weight: 8 },
     { name: "Iluminación / Orientación", weight: 7 },
-    { name: "Parking", weight: 6 },
-    { name: "Terraza", weight: 5 },
   ],
 };
 
