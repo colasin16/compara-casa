@@ -285,6 +285,22 @@ max_frequency = "5s"
 # enabled = true
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
+# Send Email Hook — delegates all Auth emails to the send-email Edge Function.
+# The function renders localised React Email templates and delivers via Resend.
+#
+# Setup:
+#   1. Deploy the function:  supabase functions deploy send-email --no-verify-jwt
+#   2. In Supabase Dashboard → Auth → Hooks, create a "Send Email" HTTPS hook
+#      pointing at the function URL and generate a webhook secret.
+#   3. Store the secrets:    supabase secrets set --env-file supabase/functions/.env
+#   4. For local dev, replace the URI below with the local function URL and
+#      run `supabase start` + `supabase functions serve`.
+#
+# [auth.hook.send_email]
+# enabled = true
+# uri = "https://<project-ref>.supabase.co/functions/v1/send-email"
+# secrets = "env(SEND_EMAIL_HOOK_SECRET)"
+
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]
 enabled = false

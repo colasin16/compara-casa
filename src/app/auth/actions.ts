@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getLocale } from "@/lib/i18n/server";
 import {
   authSchema,
   emailOnlySchema,
@@ -75,11 +76,15 @@ export async function signUpWithEmail(
 
   const supabase = await createClient();
   const origin = await getOrigin();
+  const locale = await getLocale();
 
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
-    options: origin ? { emailRedirectTo: `${origin}/auth/confirm` } : undefined,
+    options: {
+      ...(origin ? { emailRedirectTo: `${origin}/auth/confirm` } : {}),
+      data: { locale },
+    },
   });
 
   if (error) {
