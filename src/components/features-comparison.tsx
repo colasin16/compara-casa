@@ -89,7 +89,7 @@ export function FeaturesComparison({ houses, features }: Props) {
 												title={t(
 													"compare.featureMissing",
 												)}
-												className="inline-flex size-7 items-center justify-center rounded-full bg-muted text-muted-foreground/60"
+												className="inline-flex size-7 items-center justify-center rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
 											>
 												<X
 													className="size-4"
