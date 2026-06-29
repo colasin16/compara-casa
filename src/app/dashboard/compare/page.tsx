@@ -34,7 +34,7 @@ export default async function ComparePage() {
           />
         ) : (
           <EmptyStateCard
-            icon={HomePlus}
+            icon={HousePlus}
             title={t("compare.emptyOneHouseTitle")}
             description={t("compare.emptyOneHouseBody")}
             actions={<AddHouseDialog label={t("compare.emptyOneHousesCTA")} />}
