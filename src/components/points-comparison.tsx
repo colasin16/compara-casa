@@ -60,9 +60,15 @@ function PointsSection({
                 {house.name}
               </Link>
               {items.length === 0 ? (
-                <p className="text-sm text-muted-foreground/50">
-                  {t("compare.noPoints")}
-                </p>
+                <div className="flex flex-1 flex-col items-center justify-center gap-1.5 py-5 text-center">
+                  <Icon
+                    className="size-5 text-muted-foreground/20"
+                    aria-hidden
+                  />
+                  <p className="text-xs text-muted-foreground/40">
+                    {t("compare.noPoints")}
+                  </p>
+                </div>
               ) : (
                 <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
                   {items.map((body, index) => (
@@ -120,9 +126,15 @@ function NotesSection({
                 {house.name}
               </Link>
               {items.length === 0 ? (
-                <p className="text-sm text-muted-foreground/50">
-                  {t("compare.noPoints")}
-                </p>
+                <div className="flex flex-1 flex-col items-center justify-center gap-1.5 py-5 text-center">
+                  <NotebookPen
+                    className="size-5 text-muted-foreground/20"
+                    aria-hidden
+                  />
+                  <p className="text-xs text-muted-foreground/40">
+                    {t("compare.noPoints")}
+                  </p>
+                </div>
               ) : (
                 <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
                   {items.map((body, index) => (

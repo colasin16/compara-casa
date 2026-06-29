@@ -230,7 +230,7 @@ export const en = {
 		negativesSubtitle: "What counts against each house.",
 		notesTitle: "Notes",
 		notesSubtitle: "Anything else worth remembering about each house.",
-		noPoints: "—",
+		noPoints: "Nothing here yet",
 	},
 };
 
@@ -468,7 +468,7 @@ export const es: Dictionary = {
 		notesTitle: "Notas",
 		notesSubtitle:
 			"Cualquier otra cosa que valga la pena recordar de cada casa.",
-		noPoints: "—",
+		noPoints: "Nada aquí todavía",
 	},
 };
 
