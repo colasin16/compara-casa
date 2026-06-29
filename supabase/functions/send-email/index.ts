@@ -180,8 +180,9 @@ Deno.serve(async (req) => {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`Failed to send ${email_action_type} email:`, message);
+    // Return a generic error body to avoid leaking internal details.
     return new Response(
-      JSON.stringify({ error: { http_code: 500, message } }),
+      JSON.stringify({ error: { http_code: 500, message: "Internal server error" } }),
       { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
