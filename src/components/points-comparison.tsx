@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { NotebookPen, ThumbsDown, ThumbsUp } from "lucide-react";
+import { Check, CircleSmall, NotebookPen, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { useTranslations } from "@/lib/i18n/context";
 import type { HousePointsList, HouseWithScore } from "@/lib/queries";
 
@@ -33,6 +33,7 @@ function PointsSection({
     ? t("compare.positivesSubtitle")
     : t("compare.negativesSubtitle");
   const Icon = isPros ? ThumbsUp : ThumbsDown;
+  const BulletIcon = isPros ? Check : X;
   const accent = isPros
     ? "text-emerald-600 dark:text-emerald-400"
     : "text-rose-600 dark:text-rose-400";
@@ -70,9 +71,10 @@ function PointsSection({
                   </p>
                 </div>
               ) : (
-                <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
+                <ul className="flex flex-col gap-1.5 text-sm">
                   {items.map((body, index) => (
-                    <li key={index} className="text-pretty">
+                    <li key={index} className="flex items-start gap-1.5 text-pretty">
+                      <BulletIcon className={`mt-0.5 size-3.5 shrink-0 ${accent}`} aria-hidden />
                       {body}
                     </li>
                   ))}
@@ -136,9 +138,10 @@ function NotesSection({
                   </p>
                 </div>
               ) : (
-                <ul className="flex list-disc flex-col gap-1.5 pl-4 text-sm">
+                <ul className="flex flex-col gap-1.5 text-sm">
                   {items.map((body, index) => (
-                    <li key={index} className="text-pretty">
+                    <li key={index} className="flex items-start gap-1.5 text-pretty">
+                      <CircleSmall className="mt-0.5 size-3.5 shrink-0 text-sky-600 dark:text-sky-400" aria-hidden />
                       {body}
                     </li>
                   ))}
