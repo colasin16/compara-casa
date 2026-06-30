@@ -118,7 +118,7 @@ export const en = {
 		deleteConfirmDescription:
 			"This will permanently delete this house and all of its ratings, notes and checklist progress. This action cannot be undone.",
 		deleteConfirm: "Delete house",
-		visitHousePage: "Visit house page",
+		visitHousePage: "Visit listing",
 	},
 	houseForm: {
 		name: "Name",
@@ -355,7 +355,7 @@ export const es: Dictionary = {
 		deleteConfirmDescription:
 			"Esto eliminará permanentemente esta casa y todas sus valoraciones, notas y progreso de la lista de comprobación. Esta acción no se puede deshacer.",
 		deleteConfirm: "Eliminar casa",
-		visitHousePage: "Visitar página del anuncio",
+		visitHousePage: "Visitar anuncio",
 	},
 	houseForm: {
 		name: "Nombre",
