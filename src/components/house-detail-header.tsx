@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BadgeDollarSign, ExternalLink, MapPin } from "lucide-react";
+import { Banknote, ExternalLink, MapPin } from "lucide-react";
 import { HouseForm } from "@/components/house-form";
 import { buttonVariants } from "@/components/ui/button";
 import { formatPrice } from "@/lib/currency";
