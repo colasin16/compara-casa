@@ -118,6 +118,7 @@ export const en = {
 		deleteConfirmDescription:
 			"This will permanently delete this house and all of its ratings, notes and checklist progress. This action cannot be undone.",
 		deleteConfirm: "Delete house",
+		visitHousePage: "Visit house page",
 	},
 	houseForm: {
 		name: "Name",
@@ -127,8 +128,8 @@ export const en = {
 		currency: "Currency",
 		address: "Address (optional)",
 		addressPlaceholder: "Street, city…",
-		notes: "Notes (optional)",
-		notesPlaceholder: "Anything to remember…",
+		link: "Listing link (optional)",
+		linkPlaceholder: "https://…",
 		add: "Add house",
 	},
 	criterionForm: {
@@ -354,6 +355,7 @@ export const es: Dictionary = {
 		deleteConfirmDescription:
 			"Esto eliminará permanentemente esta casa y todas sus valoraciones, notas y progreso de la lista de comprobación. Esta acción no se puede deshacer.",
 		deleteConfirm: "Eliminar casa",
+		visitHousePage: "Visitar página del anuncio",
 	},
 	houseForm: {
 		name: "Nombre",
@@ -363,8 +365,8 @@ export const es: Dictionary = {
 		currency: "Moneda",
 		address: "Dirección (opcional)",
 		addressPlaceholder: "Calle, ciudad…",
-		notes: "Notas (opcional)",
-		notesPlaceholder: "Algo que recordar…",
+		link: "Enlace al anuncio (opcional)",
+		linkPlaceholder: "https://…",
 		add: "Añadir casa",
 	},
 	criterionForm: {

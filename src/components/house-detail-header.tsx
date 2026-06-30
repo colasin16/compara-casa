@@ -23,7 +23,7 @@ export function HouseDetailHeader({ house }: { house: House }) {
             price: house.price,
             currency: house.currency,
             address: house.address,
-            notes: house.notes,
+            link: house.link,
             latitude: house.latitude,
             longitude: house.longitude,
           }}
@@ -45,8 +45,15 @@ export function HouseDetailHeader({ house }: { house: House }) {
         {house.address ? (
           <p className="text-sm text-muted-foreground">{house.address}</p>
         ) : null}
-        {house.notes ? (
-          <p className="mt-2 text-sm text-muted-foreground">{house.notes}</p>
+        {house.link ? (
+          <a
+            href={house.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 text-sm text-primary underline-offset-4 hover:underline"
+          >
+            {t("houseDetail.visitHousePage")}
+          </a>
         ) : null}
       </div>
       <button
