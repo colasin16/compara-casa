@@ -91,10 +91,11 @@ export const houseSchema = z.object({
     .max(200, "Address must be 200 characters or fewer")
     .optional()
     .or(z.literal("")),
-  notes: z
+  link: z
     .string()
     .trim()
-    .max(1000, "Notes must be 1000 characters or fewer")
+    .max(500, "Link must be 500 characters or fewer")
+    .url("Enter a valid URL")
     .optional()
     .or(z.literal("")),
   latitude: z

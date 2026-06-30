@@ -13,7 +13,7 @@ export type House = {
   price: number;
   currency: string;
   address: string | null;
-  notes: string | null;
+  link: string | null;
   latitude: number | null;
   longitude: number | null;
   created_at: string;
