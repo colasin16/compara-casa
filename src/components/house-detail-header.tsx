@@ -41,7 +41,7 @@ export function HouseDetailHeader({ house }: { house: House }) {
           {house.name}
         </h1>
         <p className="flex items-center gap-1.5 text-sm font-semibold text-primary">
-          <BadgeDollarSign className="size-4 shrink-0" aria-hidden />
+          <Banknote className="size-4 shrink-0" aria-hidden />
           {formatPrice(Number(house.price), house.currency, locale)}
         </p>
         {house.address ? (
