@@ -246,14 +246,14 @@ export function LandingPage({ locale }: LandingPageProps) {
           {copy.walkthrough.steps.map((step, index) => (
             <article
               key={step.title}
-              className="grid gap-5 lg:grid-cols-2 lg:items-start"
+              className="grid gap-5 lg:grid-cols-2 lg:items-center"
             >
               <div className={cn(index % 2 === 1 && "lg:order-2")}>
                 <ScreenFrame caption={step.caption} placeholder={step.placeholder}>
                   <WalkthroughShot kind={step.kind} />
                 </ScreenFrame>
               </div>
-              <div className={cn("space-y-3 self-start", index % 2 === 1 && "lg:order-1")}>
+              <div className={cn("space-y-3", index % 2 === 1 && "lg:order-1")}>
                 <h3 className="text-2xl font-bold tracking-tight text-balance">{step.title}</h3>
                 <p className="text-base text-muted-foreground">{step.description}</p>
               </div>
