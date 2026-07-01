@@ -54,9 +54,10 @@ business/positioning decision that the code can't settle, it is marked
   - Losing a partner's input in a scroll of chat messages.
 
 - **Have you personally experienced this problem?**
-  **❓ NEEDS YOUR INPUT** — a first-person founder story is the strongest version
-  of this section. Please share your own house-hunting anecdote (how many houses,
-  what you forgot, what tipped the decision) so we can quote it.
+  **❓ NEEDS YOUR INPUT (deferred by you)** — a first-person founder story is the
+  strongest version of this section. You'll add your own house-hunting anecdote
+  (how many houses, what you forgot, what tipped the decision) later, once you
+  recall the details, so we can quote it.
 
 - **Example pain points to feature on the page** (confirm which ring true):
   - "After visiting 8 houses I couldn't remember which one had the bigger kitchen."
@@ -67,23 +68,21 @@ business/positioning decision that the code can't settle, it is marked
 
 ## 2. Who is the product for?
 
-**Primary (ideal) customer:**
+**Primary (ideal) customers:**
 - First-time home buyers actively visiting properties.
 - Couples/partners buying or renting *together* who need a shared, objective view.
-
-**Also a good fit:**
 - Families comparing several homes.
 - People renting a flat and shortlisting options.
 
-**Who is NOT the customer (today):**
+**Who is NOT the customer:**
 - Real estate agents / professionals managing listings for clients (the app is
   built around one person's/household's own shortlist, not a CRM).
-- Property investors needing yield/ROI/financial modelling (not built yet — see
-  §19 Future vision).
+- Property investors needing yield/ROI/financial modelling.
 - Someone comparing a single property (no comparison to make).
 
-> **❓ NEEDS YOUR INPUT** — Confirm the primary target. Proposed default:
-> *couples and first-time buyers comparing homes they've visited.*
+> **Confirmed:** the target is regular home seekers — couples, first-time buyers,
+> renters and families comparing homes they've visited. Agents and investors are
+> explicitly out of scope.
 
 ---
 
@@ -153,14 +152,14 @@ Alternate one-liner already used on the site:
 - **Bilingual UI: English + Spanish** (language switcher).
 - SEO-ready (metadata, sitemap, Open Graph images, structured data).
 
-**Not yet available (so we don't over-promise):** photo uploads per house,
-sharing/collaborating with a partner on the *same* account/board, charts (radar),
-export.
+**Not yet available — "coming soon" on the landing page:**
+- Photo uploads per house.
+- Sharing the house hunt with a partner (collaborate on the same shortlist).
+- Integration with house-listing sites like **Idealista** and **Fotocasa**
+  (import a listing directly instead of typing it in).
 
-> **❓ NEEDS YOUR INPUT** — Two commonly expected features are **not built yet**:
-> **photo upload** and **real-time sharing with a partner** (today a couple would
-> share one login). Do you want these on the roadmap/landing page as
-> "coming soon", or omitted entirely?
+> **Confirmed:** show photo upload, partner sharing and Idealista/Fotocasa
+> integration as **"coming soon"**.
 
 ---
 
@@ -218,12 +217,9 @@ thing a notes app or blank spreadsheet can't give you without real work.
 ## 9. Typical user journey
 
 - **How many houses does a normal person compare?**
-  Typically **3–10**; some go higher (15–25) in a hot market.
-  **❓ NEEDS YOUR INPUT** — confirm the number you want to anchor on (proposed
-  default: "most people compare 5–10 homes").
+  **5–10 homes** is the sweet spot we anchor on (some go higher in a hot market).
 - **How often do they visit?**
   Often several viewings clustered over a few weekends during an active search.
-  **❓ NEEDS YOUR INPUT** — confirm typical cadence if you have a view.
 
 ---
 
@@ -239,14 +235,13 @@ After using ComparaCasa, users should feel:
 
 ## 11. Pricing
 
-- Today the app is **free**, including a **guest mode** (the home FAQ and the
-  structured-data on the landing page both state price €0).
-- No subscription, one-time payment, or usage limit is implemented today.
+- The app is **free while it's in active development, until the official
+  release** — including **guest mode**. There is no subscription, one-time
+  payment, or usage limit today.
+- On the landing page this reads as: **"Free during early access."**
 
-> **❓ NEEDS YOUR INPUT** — Is "**Free**" the intended long-term model, or is this
-> free-during-beta with a future **freemium / subscription** plan? This changes
-> the CTA and the pricing section. Proposed default for launch: **Free**, with an
-> optional "more features coming" note.
+> **Confirmed:** free during initial development until release. A paid model may
+> come later, but it is not decided yet, so we won't promise any specific plan.
 
 ---
 
@@ -255,12 +250,13 @@ After using ComparaCasa, users should feel:
 - Available today: **live product screenshots** (dashboard with map, house detail,
   comparison table), and a working **guest mode** so people can try before
   signing up.
-- Not available yet: user counts, testimonials, reviews, press mentions, case
+- Not available: user counts, testimonials, reviews, press mentions, case
   studies.
 
-> **❓ NEEDS YOUR INPUT** — Do you have any of the following we can show: number of
-> users, testimonials/quotes, reviews, or a founder story (§1)? If not, we'll
-> lead with screenshots + "try as guest" as the trust signals for launch.
+> **Confirmed:** the app is **brand new** — so far just the founder and one friend
+> have used it. There are no trust metrics yet, so for launch we lead with
+> **product screenshots + "try as guest"** as the trust signals, and keep the
+> honest "early access / newly built" framing rather than inventing social proof.
 
 ---
 
@@ -279,8 +275,8 @@ After using ComparaCasa, users should feel:
   ComparaCasa keeps one shared, objective record.
 - **"I'm buying with my partner."**
   You can capture both people's pros/cons and criteria weights in one place so
-  you decide from the same facts. *(Note: real-time multi-user sharing isn't
-  built yet — see §5 / §19.)*
+  you decide from the same facts. *(Sharing the hunt with a partner on the same
+  shortlist is coming soon — see §5 / §19.)*
 
 ---
 
@@ -307,9 +303,8 @@ Not available yet: charts/radar graphs (not built).
   wall). This matches the current home page.
 - **Secondary CTA:** *Log in.*
 
-> **❓ NEEDS YOUR INPUT** — Confirm the primary CTA. Options: "Start free",
-> "Try as guest", "Create free account", or "Join waitlist" (only if you plan to
-> gate access). Proposed default: **"Get started — free, no signup"**.
+> **Confirmed:** the primary CTA is simply **"Get started"** — do **not** mention
+> "free" in the button label.
 
 ---
 
@@ -334,8 +329,7 @@ FAQ/WebApplication structured data.)
 Proposed brand tone: **Practical + Friendly + Modern**, with a **Minimalist**
 visual style (matches the current clean UI and green accent).
 
-> **❓ NEEDS YOUR INPUT** — Confirm or adjust. Is it more **Premium** or more
-> **Playful** than the above? Proposed default: practical, friendly, modern.
+> **Confirmed:** keep the tone **practical + friendly + modern + minimalist**.
 
 ---
 
@@ -348,21 +342,21 @@ language switcher, so the landing page should be bilingual too.
 
 ## 19. Future vision *(2 years)*
 
-The long-term direction (influences positioning today). **❓ NEEDS YOUR INPUT** —
-please confirm which of these you actually want to signal on the landing page:
+The long-term direction (influences positioning today).
 
-- Photo uploads per house.
-- Real-time sharing / collaboration with a partner.
+**Confirmed near-term roadmap — the "coming soon" features to signal now:**
+- **Sharing the house hunt** with a partner (collaborate on the same shortlist).
+- **Photo uploads** per house.
+- **House-listing site integrations** (import from **Idealista**, **Fotocasa**,
+  etc.).
+
+**Longer-term ideas (not promised, keep in mind for positioning):**
 - Richer **map / location context** (transport, schools, crime, points of
   interest) — a basic map of your houses already exists today.
 - Charts (radar per house) and export/share of results.
 - Budget / value analysis and mortgage comparison.
 - Renovation cost estimation.
 - AI recommendations ("based on your weights, House B is your best fit").
-
-Proposed near-term roadmap to hint at: **photos**, **partner sharing**, and
-**richer map context** — the most requested and most on-brand for the current
-product.
 
 ---
 
@@ -376,12 +370,13 @@ product.
 
 ## Open questions for you *(quick checklist)*
 
-- [ ] §1 — Your personal house-hunting story (first-person founder anecdote).
-- [ ] §2 — Confirm the primary target customer.
-- [ ] §5 — Include photo upload & partner sharing as "coming soon", or omit?
-- [ ] §9 — Number of houses / visit cadence to anchor on.
-- [ ] §11 — Pricing model: free forever, free beta, or future freemium?
-- [ ] §12 — Any trust assets (users, testimonials, reviews)?
-- [ ] §15 — Preferred primary CTA wording.
-- [ ] §17 — Confirm brand tone.
-- [ ] §19 — Which future features to signal now.
+- [ ] **§1 — Your personal house-hunting story** (first-person founder anecdote).
+      *Still pending — you'll add this once you recall the details.*
+- [x] §2 — Target: couples, first-time buyers, renters, families. Exclude agents/investors.
+- [x] §5 — Photos, partner sharing and Idealista/Fotocasa integration shown as "coming soon".
+- [x] §9 — Anchor on 5–10 homes.
+- [x] §11 — Free during initial development until release.
+- [x] §12 — Brand new; no trust metrics yet. Lead with screenshots + "try as guest".
+- [x] §15 — Primary CTA: "Get started" (no "free" in the label).
+- [x] §17 — Tone: practical + friendly + modern + minimalist.
+- [x] §19 — Signal: partner sharing, photo uploads, listing-site integrations.
