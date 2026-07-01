@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -324,8 +324,17 @@ export function LandingPage({ locale }: LandingPageProps) {
         <SectionHeading title={copy.faq.title} description="" centered />
         <div className="mt-6 space-y-3">
           {copy.faq.items.map((item) => (
-            <details key={item.question} className="rounded-2xl border border-border/70 bg-card p-4 shadow-card">
-              <summary className="cursor-pointer list-none text-base font-semibold">{item.question}</summary>
+            <details
+              key={item.question}
+              className="group rounded-2xl border border-border/70 bg-card p-4 shadow-card"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-base font-semibold">
+                <span>{item.question}</span>
+                <ChevronDown
+                  className="size-5 shrink-0 text-muted-foreground transition-transform duration-300 ease-in-out group-open:rotate-180 motion-reduce:transition-none"
+                  aria-hidden
+                />
+              </summary>
               <p className="mt-2 text-sm text-muted-foreground">{item.answer}</p>
             </details>
           ))}
