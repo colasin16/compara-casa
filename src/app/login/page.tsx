@@ -1,4 +1,5 @@
 import { signInGuest } from "@/app/auth/actions";
+import type { Metadata } from "next";
 import { AuthForm } from "@/components/auth-form";
 import { buttonVariants } from "@/components/ui/button";
 import { SubmitButton } from "@/components/ui/submit-button";
@@ -10,6 +11,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getTranslations } from "@/lib/i18n/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslations();
+  return {
+    title: t("home.logIn"),
+    description: t("login.description"),
+    alternates: { canonical: "/login" },
+  };
+}
 
 export default async function LoginPage({
   searchParams,

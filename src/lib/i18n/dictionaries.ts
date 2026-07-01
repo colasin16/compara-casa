@@ -2,9 +2,22 @@ import type { Locale } from "./config";
 
 export const en = {
 	metadata: {
-		title: "ComparaCasa — Score and compare houses your way",
+		title: "ComparaCasa — Compare houses & flats with weighted criteria",
 		description:
-			"Define your own weighted criteria and score houses to find the one that truly fits you.",
+			"Compare houses and flats side by side. Score each on weighted criteria that matter to you — location, condition, parking, light — with a checklist and pros & cons.",
+		keywords: [
+			"compare houses",
+			"house comparison tool",
+			"compare apartments",
+			"compare flats",
+			"house hunting checklist",
+			"home buying decision matrix",
+			"weighted scoring",
+			"rate houses",
+			"side-by-side house comparison",
+			"decide between houses",
+		],
+		ogImageAlt: "ComparaCasa — compare houses and flats with weighted criteria",
 	},
 	common: {
 		brand: "ComparaCasa",
@@ -33,12 +46,48 @@ export const en = {
 	},
 	home: {
 		badge: "ComparaCasa",
-		titleLead: "Score and compare houses",
-		titleHighlight: "your way",
+		titleLead: "Compare houses and flats and",
+		titleHighlight: "decide with confidence",
 		description:
-			"Define the aspects that matter to you — location, condition, parking, terrace, lighting — give each one a weight, and let ComparaCasa rank every house by what you value most.",
+			"Score every house on the criteria that matter to you — location, condition, parking, light — then compare them side by side with a checklist and pros & cons to decide with confidence.",
 		getStarted: "Get started",
 		logIn: "Log in",
+		howItWorks: {
+			title: "How it works",
+			step1Title: "Define your criteria",
+			step1Desc:
+				"Choose what matters — location, condition, parking, light — and weight each one by importance.",
+			step2Title: "Score each house",
+			step2Desc:
+				"Rate every house and flat against your criteria and tick off your checklist of must-have features.",
+			step3Title: "Compare and decide",
+			step3Desc:
+				"See houses ranked by weighted score, side by side with pros & cons, and pick with confidence.",
+		},
+		features: {
+			title: "Everything you need to choose a home",
+			weightedTitle: "Weighted criteria",
+			weightedDesc:
+				"Build your own decision matrix so the criteria you value most drive the final score.",
+			checklistTitle: "House-hunting checklist",
+			checklistDesc:
+				"Reuse one checklist across every visit and tick which features each house actually has.",
+			prosConsTitle: "Pros & cons",
+			prosConsDesc:
+				"Capture the positives and negatives of each house while the details are still fresh.",
+			compareTitle: "Side-by-side comparison",
+			compareDesc:
+				"Compare houses and flats in one table, ranked by the score that matters to you.",
+		},
+		faq: {
+			title: "Frequently asked questions",
+			q1: "How do I decide between two houses?",
+			a1: "List the criteria that matter to you, weight each by importance, score both houses, and ComparaCasa ranks them so the right choice is clear.",
+			q2: "What criteria should I compare?",
+			a2: "Common ones are location, condition, price, parking, terrace and natural light — but you define your own and weight them however you like.",
+			q3: "Is ComparaCasa free to use?",
+			a3: "Yes. Create an account or continue as a guest, add your houses and start comparing right away.",
+		},
 	},
 	login: {
 		title: "Welcome to ComparaCasa",
@@ -239,9 +288,22 @@ export type Dictionary = typeof en;
 
 export const es: Dictionary = {
 	metadata: {
-		title: "ComparaCasa — Puntúa y compara casas a tu manera",
+		title: "ComparaCasa — Compara pisos y casas con criterios ponderados",
 		description:
-			"Define tus propios criterios ponderados y puntúa casas para encontrar la que de verdad encaja contigo.",
+			"Compara pisos y casas en paralelo. Puntúa cada uno con criterios ponderados — ubicación, estado, aparcamiento, luz — con checklist y pros y contras.",
+		keywords: [
+			"comparar pisos",
+			"comparador de pisos",
+			"comparador de casas",
+			"cómo elegir entre varios pisos",
+			"tabla para comparar viviendas",
+			"puntuar pisos para comprar",
+			"checklist para visitar pisos",
+			"criterios para comparar casas",
+			"comparar casas en paralelo",
+			"comparar viviendas",
+		],
+		ogImageAlt: "ComparaCasa — compara pisos y casas con criterios ponderados",
 	},
 	common: {
 		brand: "ComparaCasa",
@@ -270,12 +332,48 @@ export const es: Dictionary = {
 	},
 	home: {
 		badge: "ComparaCasa",
-		titleLead: "Puntúa y compara casas",
-		titleHighlight: "a tu manera",
+		titleLead: "Compara pisos y casas y",
+		titleHighlight: "decide con confianza",
 		description:
-			"Define los aspectos que te importan — ubicación, estado, aparcamiento, terraza, luz — dale un peso a cada uno y deja que ComparaCasa ordene cada casa según lo que más valoras.",
+			"Puntúa cada vivienda con los criterios que te importan — ubicación, estado, aparcamiento, luz — y compáralas en paralelo con checklist y pros y contras para decidir con confianza.",
 		getStarted: "Empezar",
 		logIn: "Iniciar sesión",
+		howItWorks: {
+			title: "Cómo funciona",
+			step1Title: "Define tus criterios",
+			step1Desc:
+				"Elige lo que importa — ubicación, estado, aparcamiento, luz — y dale un peso a cada uno según su importancia.",
+			step2Title: "Puntúa cada casa",
+			step2Desc:
+				"Valora cada piso y casa según tus criterios y marca las características imprescindibles de tu checklist.",
+			step3Title: "Compara y decide",
+			step3Desc:
+				"Verás las casas ordenadas por puntuación ponderada, en paralelo con pros y contras, para elegir con confianza.",
+		},
+		features: {
+			title: "Todo lo que necesitas para elegir vivienda",
+			weightedTitle: "Criterios ponderados",
+			weightedDesc:
+				"Crea tu propia matriz de decisión para que los criterios que más valoras marquen la puntuación final.",
+			checklistTitle: "Checklist para visitas",
+			checklistDesc:
+				"Reutiliza una misma checklist en cada visita y marca qué características tiene realmente cada casa.",
+			prosConsTitle: "Pros y contras",
+			prosConsDesc:
+				"Anota lo positivo y lo negativo de cada casa mientras tienes los detalles frescos.",
+			compareTitle: "Comparación en paralelo",
+			compareDesc:
+				"Compara pisos y casas en una sola tabla, ordenados por la puntuación que te importa.",
+		},
+		faq: {
+			title: "Preguntas frecuentes",
+			q1: "¿Cómo decido entre dos casas?",
+			a1: "Enumera los criterios que te importan, dale un peso a cada uno, puntúa ambas casas y ComparaCasa las ordena para que la mejor opción quede clara.",
+			q2: "¿Qué criterios debería comparar?",
+			a2: "Los más habituales son ubicación, estado, precio, aparcamiento, terraza y luz natural, pero defines los tuyos y los ponderas como quieras.",
+			q3: "¿ComparaCasa es gratis?",
+			a3: "Sí. Crea una cuenta o entra como invitado, añade tus casas y empieza a comparar al momento.",
+		},
 	},
 	login: {
 		title: "Bienvenido a ComparaCasa",
