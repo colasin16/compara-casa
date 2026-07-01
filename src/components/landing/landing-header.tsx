@@ -12,20 +12,14 @@ import { cn } from "@/lib/utils";
 
 const menuByLocale: Record<Locale, Array<{ name: string; href: string }>> = {
   en: [
-    { name: "Problem", href: "#problem" },
-    { name: "Solution", href: "#solution" },
     { name: "How it works", href: "#how-it-works" },
-    { name: "Highlights", href: "#highlights" },
     { name: "Roadmap", href: "#roadmap" },
-    { name: "FAQ", href: "#faq" },
+    { name: "FAQs", href: "#faq" },
   ],
   es: [
-    { name: "Problema", href: "#problem" },
-    { name: "Solución", href: "#solution" },
     { name: "Cómo funciona", href: "#how-it-works" },
-    { name: "Beneficios", href: "#highlights" },
     { name: "Roadmap", href: "#roadmap" },
-    { name: "FAQ", href: "#faq" },
+    { name: "FAQs", href: "#faq" },
   ],
 };
 
