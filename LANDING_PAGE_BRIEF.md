@@ -14,9 +14,11 @@ business/positioning decision that the code can't settle, it is marked
 > **score** each house/flat 0–10 against them. It computes a **normalized
 > weighted final score**, ranks houses, and shows them **side by side**. You
 > also get a reusable **checklist**, per-house **pros & cons**, free-form
-> **notes**, and **price + currency**. Data is **cloud-synced** per user
-> (Supabase + Row Level Security). Auth is **email/password** or **guest**.
-> Available in **English and Spanish**. Free to use.
+> **notes**, a **listing link**, and **price + currency**. Addresses use
+> **autocomplete geocoding**, and all located houses appear on an interactive
+> **map** on the dashboard. Data is **cloud-synced** per user (Supabase + Row
+> Level Security). Auth is **email/password** or **guest**. Available in
+> **English and Spanish**. Free to use.
 
 ---
 
@@ -104,15 +106,18 @@ Alternate one-liner already used on the site:
    There's a one-click "starter criteria" seed if you want to skip setup.
 3. **(Optional) Set up a checklist** (`/dashboard/checklist`) of must-have
    features to verify on every visit (Lift, Storage, A/C, Heating…).
-4. **Add a house** (name, address, notes, price + currency) from the dashboard.
+4. **Add a house** (name, address, listing link, price + currency) from the
+   dashboard. The **address field autocompletes** and stores the precise
+   location, so the house appears on the **map**.
 5. **Open the house** (`/dashboard/houses/[id]`) and **rate each criterion 0–10**
    with sliders. The **weighted final score updates live** as you drag. Tick the
    checklist items the house has, and jot **pros, cons, and notes** while the
    visit is fresh.
-6. **Compare** (`/dashboard/compare`) — a side-by-side table (criteria × houses)
-   ranked by weighted score, with a red→green colour scale and the best house per
-   criterion highlighted, plus a comparison of price, pros/cons, notes and
-   checklist features.
+6. **See all houses on a map** on the dashboard, and **Compare**
+   (`/dashboard/compare`) — a side-by-side table (criteria × houses) ranked by
+   weighted score, with a red→green colour scale and the best house per criterion
+   highlighted, plus a comparison of price, pros/cons, notes and checklist
+   features.
 
 - **How long until useful information?** As soon as you've scored **two houses**
   against your criteria you get a ranked comparison — realistically a couple of
@@ -122,7 +127,11 @@ Alternate one-liner already used on the site:
 
 ## 5. Features *(actual features, not benefits)*
 
-- Create unlimited houses/flats (name, address, notes).
+- Create unlimited houses/flats (name, address, listing link).
+- **Address autocomplete** (geocoding) that captures the precise location.
+- Interactive **map** on the dashboard showing all located houses, with
+  price/name tooltips on each marker.
+- House **listing link** (URL of the portal listing you found it on).
 - House **price + currency** (multi-currency supported).
 - Define your own **criteria** with an importance **weight (0–10)**.
 - **Rate** each house per criterion (0–10) with sliders.
@@ -145,8 +154,8 @@ Alternate one-liner already used on the site:
 - SEO-ready (metadata, sitemap, Open Graph images, structured data).
 
 **Not yet available (so we don't over-promise):** photo uploads per house,
-sharing/collaborating with a partner on the *same* account/board, maps, charts
-(radar), export.
+sharing/collaborating with a partner on the *same* account/board, charts (radar),
+export.
 
 > **❓ NEEDS YOUR INPUT** — Two commonly expected features are **not built yet**:
 > **photo upload** and **real-time sharing with a partner** (today a couple would
@@ -166,6 +175,8 @@ sharing/collaborating with a partner on the *same* account/board, maps, charts
 | Pros & cons | Capture the real reasons you liked/disliked a place while it's fresh. |
 | Notes | Keep every detail (the noisy street, the great light) attached to the right house. |
 | Price + currency | Weigh value against score, in your own currency. |
+| Address autocomplete + map | See where every shortlisted house is, and how they cluster across the city, at a glance. |
+| Listing link | Jump straight back to the original portal listing when you need the details. |
 | Cloud sync + accounts | Pick up where you left off on any device, right after a visit. |
 | Continue as guest | Start comparing in seconds, no signup friction. |
 | Automatic saving | Never lose a rating or a note. |
@@ -186,6 +197,8 @@ Why not just use Excel / Google Sheets / Apple Notes / Notion?
   fiddly spreadsheet on a phone.
 - **Structured, consistent axes** — every house is compared on the same criteria,
   so comparisons are apples-to-apples.
+- **Location built in** — address autocomplete plots every house on a map, so you
+  see where your shortlist sits without pasting links into a separate maps tab.
 - **Zero setup option** — starter templates and guest mode get you going
   immediately; a blank spreadsheet doesn't.
 
@@ -239,7 +252,7 @@ After using ComparaCasa, users should feel:
 
 ## 12. Trust
 
-- Available today: **live product screenshots** (dashboard, house detail,
+- Available today: **live product screenshots** (dashboard with map, house detail,
   comparison table), and a working **guest mode** so people can try before
   signing up.
 - Not available yet: user counts, testimonials, reviews, press mentions, case
@@ -278,6 +291,8 @@ After using ComparaCasa, users should feel:
   pros/cons, notes, price.
 - **Comparison table** — criteria × houses, red→green colour scale,
   best-in-category highlight (**the hero visual**).
+- **Map** — all located houses as markers on the dashboard, with price/name
+  tooltips.
 - **Criteria setup** — weighting sliders.
 - **Checklist** setup and per-house ticks.
 - Light and dark theme variants.
@@ -338,14 +353,16 @@ please confirm which of these you actually want to signal on the landing page:
 
 - Photo uploads per house.
 - Real-time sharing / collaboration with a partner.
-- Maps + location context (transport, schools, crime, points of interest).
+- Richer **map / location context** (transport, schools, crime, points of
+  interest) — a basic map of your houses already exists today.
 - Charts (radar per house) and export/share of results.
 - Budget / value analysis and mortgage comparison.
 - Renovation cost estimation.
 - AI recommendations ("based on your weights, House B is your best fit").
 
 Proposed near-term roadmap to hint at: **photos**, **partner sharing**, and
-**maps** — the most requested and most on-brand for the current product.
+**richer map context** — the most requested and most on-brand for the current
+product.
 
 ---
 
