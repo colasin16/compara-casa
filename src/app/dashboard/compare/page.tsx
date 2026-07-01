@@ -1,14 +1,10 @@
-import Link from "next/link";
+import { Home, HousePlus } from "lucide-react";
 import { ComparisonTable } from "@/components/comparison-table";
+import { EmptyStateCard } from "@/components/empty-state-card";
 import { FeaturesComparison } from "@/components/features-comparison";
 import { PointsComparison } from "@/components/points-comparison";
 import { PriceComparison } from "@/components/price-comparison";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { AddHouseDialog } from "@/components/add-house-dialog";
 import { getComparisonData } from "@/lib/queries";
 import { getTranslations } from "@/lib/i18n/server";
 
@@ -17,7 +13,7 @@ export default async function ComparePage() {
     await getComparisonData();
   const { t } = await getTranslations();
 
-  const isEmpty = houses.length === 0 || criteria.length === 0;
+  const hasEnoughHouses = houses.length >= 2;
 
   return (
     <main className="mx-auto w-full max-w-screen-xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
@@ -28,21 +24,22 @@ export default async function ComparePage() {
         <p className="text-sm text-muted-foreground">{t("compare.subtitle")}</p>
       </div>
 
-      {isEmpty ? (
-        <Card className="border border-dashed border-border bg-transparent shadow-none">
-          <CardHeader>
-            <CardTitle className="text-base font-medium text-muted-foreground">
-              {t("compare.emptyTitle")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t("compare.emptyBodyBefore")}
-            <Link href="/dashboard/criteria" className="underline">
-              {t("compare.emptyBodyLink")}
-            </Link>
-            {t("compare.emptyBodyAfter")}
-          </CardContent>
-        </Card>
+      {!hasEnoughHouses ? (
+        houses.length === 0 ? (
+          <EmptyStateCard
+            icon={Home}
+            title={t("compare.emptyNoHousesTitle")}
+            description={t("compare.emptyNoHousesBody")}
+            actions={<AddHouseDialog label={t("compare.emptyNoHousesCTA")} />}
+          />
+        ) : (
+          <EmptyStateCard
+            icon={HousePlus}
+            title={t("compare.emptyOneHouseTitle")}
+            description={t("compare.emptyOneHouseBody")}
+            actions={<AddHouseDialog label={t("compare.emptyOneHousesCTA")} />}
+          />
+        )
       ) : (
         <div className="flex flex-col gap-12">
           <section>

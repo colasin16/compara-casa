@@ -129,19 +129,23 @@ export const en = {
 			"Add your first house using the form, then open it to score each criterion. Make sure you've set up your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " first.",
+		emptyCreateCTA: "Add your first house",
 		criteriaRated: "{rated} of {total} criteria rated",
 		score: "score",
 		addHouse: "Add a house",
+		mapTitle: "Locations",
+		mapNoCoordinates: "None of your houses have a location yet. Select an address from the autocomplete when adding or editing a house.",
 	},
 	criteria: {
 		title: "Your criteria",
 		subtitle:
 			"Define the aspects you care about and how much each one matters (weight 0–10). These are reused to score every house.",
 		loadError: "Couldn't load criteria: {message}",
-		emptyTitle: "No criteria yet",
+		emptyTitle: "Set up the criteria you will score",
 		emptyBody:
-			"Start from a common set of house-hunting criteria, then tweak the weights to match what matters to you.",
-		addStarter: "Add starter criteria",
+			"Create your first criterion from scratch or start with a few example criteria you can tweak later.",
+		emptyCreateCTA: "Create your first criterion",
+		addStarter: "Add example criteria",
 		addCriterion: "Add a criterion",
 	},
 	checklist: {
@@ -149,10 +153,11 @@ export const en = {
 		subtitle:
 			"Define the features you want to verify on every house. The same list is reused so you can tick off what each house actually has.",
 		loadError: "Couldn't load features: {message}",
-		emptyTitle: "No features yet",
+		emptyTitle: "Set up the features you want to check",
 		emptyBody:
-			"Start from a common set of features to check when house-hunting, then tweak the list to match what matters to you.",
-		addStarter: "Add starter features",
+			"Create your first feature from scratch or start with a few example features you can adjust later.",
+		emptyCreateCTA: "Create your first feature",
+		addStarter: "Add example features",
 		addItem: "Add an item",
 	},
 	houseDetail: {
@@ -162,6 +167,7 @@ export const en = {
 		deleteConfirmDescription:
 			"This will permanently delete this house and all of its ratings, notes and checklist progress. This action cannot be undone.",
 		deleteConfirm: "Delete house",
+		visitHousePage: "Visit listing",
 	},
 	houseForm: {
 		name: "Name",
@@ -171,8 +177,8 @@ export const en = {
 		currency: "Currency",
 		address: "Address (optional)",
 		addressPlaceholder: "Street, city…",
-		notes: "Notes (optional)",
-		notesPlaceholder: "Anything to remember…",
+		link: "Listing link (optional)",
+		linkPlaceholder: "https://…",
 		add: "Add house",
 	},
 	criterionForm: {
@@ -249,6 +255,14 @@ export const en = {
 		emptyBodyBefore: "Add at least one house and rate it against your ",
 		emptyBodyLink: "criteria",
 		emptyBodyAfter: " to see a comparison here.",
+		emptyNoHousesTitle: "Start by adding your first house",
+		emptyNoHousesBody:
+			"Once you have two or more houses, you'll be able to compare them side by side. Add your first one to get started!",
+		emptyNoHousesCTA: "Add your first house",
+		emptyOneHouseTitle: "Almost there — add one more house",
+		emptyOneHouseBody:
+			"You've added one house — great start! Add at least one more and the comparison will appear here automatically.",
+		emptyOneHousesCTA: "Add another house",
 		priceTitle: "Price",
 		scoresTitle: "Scores",
 		featuresTitle: "Features",
@@ -266,7 +280,7 @@ export const en = {
 		negativesSubtitle: "What counts against each house.",
 		notesTitle: "Notes",
 		notesSubtitle: "Anything else worth remembering about each house.",
-		noPoints: "—",
+		noPoints: "Nothing here yet",
 	},
 };
 
@@ -401,19 +415,23 @@ export const es: Dictionary = {
 			"Añade tu primera casa con el formulario y luego ábrela para puntuar cada criterio. Asegúrate de haber configurado tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " primero.",
+		emptyCreateCTA: "Añadir tu primera casa",
 		criteriaRated: "{rated} de {total} criterios puntuados",
 		score: "puntuación",
 		addHouse: "Añadir una casa",
+		mapTitle: "Ubicaciones",
+		mapNoCoordinates: "Ninguna de tus casas tiene ubicación todavía. Selecciona una dirección del autocompletado al añadir o editar una casa.",
 	},
 	criteria: {
 		title: "Tus criterios",
 		subtitle:
 			"Define los aspectos que te importan y cuánto pesa cada uno (peso 0–10). Se reutilizan para puntuar cada casa.",
 		loadError: "No se pudieron cargar los criterios: {message}",
-		emptyTitle: "Aún no hay criterios",
+		emptyTitle: "Configura los criterios que vas a puntuar",
 		emptyBody:
-			"Empieza con un conjunto habitual de criterios para buscar casa y luego ajusta los pesos a lo que más te importa.",
-		addStarter: "Añadir criterios iniciales",
+			"Crea tu primer criterio desde cero o empieza con algunos criterios de ejemplo que podrás ajustar después.",
+		emptyCreateCTA: "Crear tu primer criterio",
+		addStarter: "Añadir criterios de ejemplo",
 		addCriterion: "Añadir un criterio",
 	},
 	checklist: {
@@ -421,10 +439,11 @@ export const es: Dictionary = {
 		subtitle:
 			"Define las características que quieres verificar en cada casa. La misma lista se reutiliza para marcar lo que cada casa tiene de verdad.",
 		loadError: "No se pudieron cargar las características: {message}",
-		emptyTitle: "Aún no hay características",
+		emptyTitle: "Configura las características que quieres revisar",
 		emptyBody:
-			"Empieza con un conjunto habitual de características a comprobar al buscar casa y luego ajusta la lista a lo que más te importa.",
-		addStarter: "Añadir características iniciales",
+			"Crea tu primera característica desde cero o empieza con algunas características de ejemplo que podrás ajustar después.",
+		emptyCreateCTA: "Crear tu primera característica",
+		addStarter: "Añadir características de ejemplo",
 		addItem: "Añadir un elemento",
 	},
 	houseDetail: {
@@ -434,6 +453,7 @@ export const es: Dictionary = {
 		deleteConfirmDescription:
 			"Esto eliminará permanentemente esta casa y todas sus valoraciones, notas y progreso de la lista de comprobación. Esta acción no se puede deshacer.",
 		deleteConfirm: "Eliminar casa",
+		visitHousePage: "Visitar anuncio",
 	},
 	houseForm: {
 		name: "Nombre",
@@ -443,8 +463,8 @@ export const es: Dictionary = {
 		currency: "Moneda",
 		address: "Dirección (opcional)",
 		addressPlaceholder: "Calle, ciudad…",
-		notes: "Notas (opcional)",
-		notesPlaceholder: "Algo que recordar…",
+		link: "Enlace al anuncio (opcional)",
+		linkPlaceholder: "https://…",
 		add: "Añadir casa",
 	},
 	criterionForm: {
@@ -521,6 +541,14 @@ export const es: Dictionary = {
 		emptyBodyBefore: "Añade al menos una casa y puntúala según tus ",
 		emptyBodyLink: "criterios",
 		emptyBodyAfter: " para ver una comparativa aquí.",
+		emptyNoHousesTitle: "Empieza añadiendo tu primera casa",
+		emptyNoHousesBody:
+			"Cuando tengas dos o más casas podrás compararlas una al lado de la otra. ¡Añade la primera para comenzar!",
+		emptyNoHousesCTA: "Añadir tu primera casa",
+		emptyOneHouseTitle: "Casi está — añade una casa más",
+		emptyOneHouseBody:
+			"Ya tienes una casa añadida, ¡buen comienzo! Añade al menos una más y la comparativa aparecerá aquí automáticamente.",
+		emptyOneHousesCTA: "Añadir otra casa",
 		priceTitle: "Precio",
 		scoresTitle: "Puntuaciones",
 		featuresTitle: "Características",
@@ -540,7 +568,7 @@ export const es: Dictionary = {
 		notesTitle: "Notas",
 		notesSubtitle:
 			"Cualquier otra cosa que valga la pena recordar de cada casa.",
-		noPoints: "—",
+		noPoints: "Nada aquí todavía",
 	},
 };
 

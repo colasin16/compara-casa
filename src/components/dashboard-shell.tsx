@@ -8,9 +8,9 @@ import {
 	ChevronRight,
 	GitCompareArrows,
 	Home,
-	ListChecks,
 	LogOut,
 	Menu,
+	NotepadText,
 	SlidersHorizontal,
 	X,
 	type LucideIcon,
@@ -60,7 +60,7 @@ export function DashboardShell({
 		{
 			href: "/dashboard/checklist",
 			label: t("header.checklist"),
-			icon: ListChecks,
+			icon: NotepadText,
 		},
 		{
 			href: "/dashboard/compare",
@@ -180,11 +180,11 @@ export function DashboardShell({
 	);
 
 	return (
-		<div className="flex min-h-screen flex-1">
+		<div className="flex min-h-[100dvh] flex-1">
 			{/* Desktop sidebar */}
 			<aside
 				className={cn(
-					"sticky top-0 hidden h-screen shrink-0 border-r border-sidebar-border transition-[width] duration-200 md:block",
+					"sticky top-0 hidden h-[100dvh] shrink-0 border-r border-sidebar-border transition-[width] duration-200 md:block",
 					collapsed ? "w-16" : "w-64",
 				)}
 			>
@@ -218,7 +218,7 @@ export function DashboardShell({
 
 			{/* Mobile drawer */}
 			{open ? (
-				<div className="fixed inset-0 z-50 md:hidden">
+				<div className="fixed inset-x-0 top-0 z-50 h-[100dvh] md:hidden">
 					<button
 						type="button"
 						aria-label={t("header.closeMenu")}

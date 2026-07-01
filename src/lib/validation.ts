@@ -91,12 +91,21 @@ export const houseSchema = z.object({
     .max(200, "Address must be 200 characters or fewer")
     .optional()
     .or(z.literal("")),
-  notes: z
+  link: z
     .string()
     .trim()
-    .max(1000, "Notes must be 1000 characters or fewer")
+    .max(500, "Link must be 500 characters or fewer")
+    .url("Enter a valid URL")
     .optional()
     .or(z.literal("")),
+  latitude: z
+    .literal("")
+    .transform(() => null)
+    .or(z.coerce.number().optional().nullable()),
+  longitude: z
+    .literal("")
+    .transform(() => null)
+    .or(z.coerce.number().optional().nullable()),
 });
 
 export type HouseInput = z.infer<typeof houseSchema>;
@@ -139,18 +148,12 @@ export const DEFAULT_CRITERIA: Record<
   en: [
     { name: "Location", weight: 9 },
     { name: "Price", weight: 9 },
-    { name: "Condition", weight: 8 },
     { name: "Lighting / Orientation", weight: 7 },
-    { name: "Parking", weight: 6 },
-    { name: "Terrace", weight: 5 },
   ],
   es: [
     { name: "Ubicación", weight: 9 },
     { name: "Precio", weight: 9 },
-    { name: "Estado", weight: 8 },
     { name: "Iluminación / Orientación", weight: 7 },
-    { name: "Parking", weight: 6 },
-    { name: "Terraza", weight: 5 },
   ],
 };
 

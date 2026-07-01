@@ -1,13 +1,9 @@
+import { NotepadText } from "lucide-react";
 import { seedDefaultChecklist } from "@/app/dashboard/checklist/actions";
 import { AddChecklistItemDialog } from "@/components/add-checklist-item-dialog";
 import { ChecklistItemRow } from "@/components/checklist-item-row";
+import { EmptyStateCard } from "@/components/empty-state-card";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import type { ChecklistItem } from "@/lib/types";
 import { getTranslations } from "@/lib/i18n/server";
@@ -22,6 +18,7 @@ export default async function ChecklistPage() {
 
   const items = (data ?? []) as ChecklistItem[];
   const { t } = await getTranslations();
+  const hasItems = items.length > 0;
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
@@ -34,7 +31,7 @@ export default async function ChecklistPage() {
             {t("checklist.subtitle")}
           </p>
         </div>
-        <AddChecklistItemDialog />
+        {hasItems ? <AddChecklistItemDialog /> : null}
       </div>
 
       <div className="flex flex-col gap-3">
@@ -42,22 +39,25 @@ export default async function ChecklistPage() {
           <p className="text-sm text-destructive">
             {t("checklist.loadError", { message: error.message })}
           </p>
-        ) : items.length === 0 ? (
-          <Card className="border border-dashed border-border bg-transparent shadow-none">
-            <CardHeader>
-              <CardTitle className="text-base font-medium text-muted-foreground">
-                {t("checklist.emptyTitle")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-start gap-3 text-sm text-muted-foreground">
-              <p>{t("checklist.emptyBody")}</p>
-              <form action={seedDefaultChecklist}>
-                <button type="submit" className={buttonVariants({ size: "sm" })}>
-                  {t("checklist.addStarter")}
-                </button>
-              </form>
-            </CardContent>
-          </Card>
+        ) : !hasItems ? (
+          <EmptyStateCard
+            icon={NotepadText}
+            title={t("checklist.emptyTitle")}
+            description={t("checklist.emptyBody")}
+            actions={
+              <>
+                <AddChecklistItemDialog label={t("checklist.emptyCreateCTA")} />
+                <form action={seedDefaultChecklist}>
+                  <button
+                    type="submit"
+                    className={buttonVariants({ size: "sm", variant: "outline" })}
+                  >
+                    {t("checklist.addStarter")}
+                  </button>
+                </form>
+              </>
+            }
+          />
         ) : (
           items.map((item) => (
             <ChecklistItemRow key={item.id} item={item} />

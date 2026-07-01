@@ -27,7 +27,9 @@ export async function createHouse(
     price: formData.get("price"),
     currency: formData.get("currency"),
     address: formData.get("address"),
-    notes: formData.get("notes"),
+    link: formData.get("link"),
+    latitude: formData.get("latitude"),
+    longitude: formData.get("longitude"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0].message };
@@ -39,7 +41,9 @@ export async function createHouse(
     price: parsed.data.price,
     currency: parsed.data.currency,
     address: parsed.data.address || null,
-    notes: parsed.data.notes || null,
+    link: parsed.data.link || null,
+    latitude: parsed.data.latitude ?? null,
+    longitude: parsed.data.longitude ?? null,
   });
 
   if (error) return { error: error.message };
@@ -65,7 +69,9 @@ export async function updateHouse(
     price: formData.get("price"),
     currency: formData.get("currency"),
     address: formData.get("address"),
-    notes: formData.get("notes"),
+    link: formData.get("link"),
+    latitude: formData.get("latitude"),
+    longitude: formData.get("longitude"),
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0].message };
@@ -78,7 +84,9 @@ export async function updateHouse(
       price: parsed.data.price,
       currency: parsed.data.currency,
       address: parsed.data.address || null,
-      notes: parsed.data.notes || null,
+      link: parsed.data.link || null,
+      latitude: parsed.data.latitude ?? null,
+      longitude: parsed.data.longitude ?? null,
     })
     .eq("id", id)
     .eq("user_id", userId);

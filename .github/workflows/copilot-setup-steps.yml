@@ -1,0 +1,70 @@
+name: "Copilot Setup Steps"
+
+# Run automatically when this file changes, and allow manual runs from the Actions tab.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # Job name MUST be `copilot-setup-steps` — Copilot ignores any other name.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Grant the minimum permissions required by the steps below.
+    # Copilot receives its own separate token for its own operations.
+    permissions:
+      contents: read
+
+    # Secrets stored under Settings → Secrets and Variables → Agents (the Copilot
+    # agent secrets store) are automatically injected as environment variables into
+    # this job — no ${{ secrets.XXX }} mapping required.
+    #
+    # Expected secrets (add them under Settings → Secrets and Variables → Agents):
+    #
+    #   SUPABASE_ACCESS_TOKEN   – Personal access token from https://supabase.com/dashboard/account/tokens
+    #                             Used by the Supabase CLI to authenticate (`supabase login`).
+    #
+    #   SUPABASE_PROJECT_REF    – Project reference ID (e.g. "abcdefghijklmnopqrst").
+    #                             Found in Settings → General inside your Supabase project.
+    #                             Used to link the CLI to your remote project.
+    #
+    #   SUPABASE_DB_PASSWORD    – Database password for your project.
+    #                             Required by `supabase db push` / `supabase db pull`.
+    #
+    # Optional secrets (needed if the app itself must connect to Supabase at runtime):
+    #
+    #   NEXT_PUBLIC_SUPABASE_URL      – Project API URL  (https://<ref>.supabase.co)
+    #   NEXT_PUBLIC_SUPABASE_ANON_KEY – Public anon key
+    #   SUPABASE_SERVICE_ROLE_KEY     – Service-role key (keep this secret)
+    #
+    # MCP connection (optional – lets the agent use the Supabase MCP server):
+    #   Add the same SUPABASE_ACCESS_TOKEN secret above; the agent will use it
+    #   to authenticate with the Supabase MCP server automatically.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link Supabase project
+        # Skipped gracefully when the secrets are absent (e.g. local forks / open PRs).
+        if: env.SUPABASE_ACCESS_TOKEN != '' && env.SUPABASE_PROJECT_REF != ''
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF"

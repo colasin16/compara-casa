@@ -6,6 +6,7 @@ import {
   updateHouse,
   type HouseFormState,
 } from "@/app/dashboard/houses/actions";
+import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +24,9 @@ type Props = {
     price: number;
     currency: string;
     address: string | null;
-    notes: string | null;
+    link: string | null;
+    latitude: number | null;
+    longitude: number | null;
   };
   onDone?: () => void;
 };
@@ -93,23 +96,24 @@ export function HouseForm({ mode, house, onDone }: Props) {
 
       <div className="flex flex-col gap-1.5">
         <Label htmlFor={`address-${uid}`}>{t("houseForm.address")}</Label>
-        <Input
+        <AddressAutocomplete
           id={`address-${uid}`}
-          name="address"
           placeholder={t("houseForm.addressPlaceholder")}
           defaultValue={house?.address ?? ""}
-          maxLength={200}
+          defaultLatitude={house?.latitude ?? null}
+          defaultLongitude={house?.longitude ?? null}
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor={`notes-${uid}`}>{t("houseForm.notes")}</Label>
+        <Label htmlFor={`link-${uid}`}>{t("houseForm.link")}</Label>
         <Input
-          id={`notes-${uid}`}
-          name="notes"
-          placeholder={t("houseForm.notesPlaceholder")}
-          defaultValue={house?.notes ?? ""}
-          maxLength={1000}
+          id={`link-${uid}`}
+          name="link"
+          type="url"
+          placeholder={t("houseForm.linkPlaceholder")}
+          defaultValue={house?.link ?? ""}
+          maxLength={500}
         />
       </div>
 
