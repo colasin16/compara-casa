@@ -7,6 +7,7 @@ import type { Locale } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { getLandingCopy } from "./copy";
+import { LandingHeader } from "./landing-header";
 
 type LandingPageProps = {
   locale: Locale;
@@ -161,7 +162,8 @@ export function LandingPage({ locale }: LandingPageProps) {
   const copy = getLandingCopy(locale);
 
   return (
-    <main className="relative overflow-hidden pb-20">
+    <main id="top" className="relative overflow-hidden pb-20 pt-24 sm:pt-28">
+      <LandingHeader locale={locale} />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(45%_35%_at_20%_5%,rgba(0,167,111,0.1),transparent_70%),radial-gradient(40%_30%_at_80%_15%,rgba(0,167,111,0.07),transparent_75%)]"
@@ -192,7 +194,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </ScreenFrame>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section id="problem" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <SectionHeading title={copy.problem.title} description={copy.problem.description} />
         <div className="mt-8 grid gap-8 rounded-3xl border border-border/70 bg-card p-6 shadow-card lg:grid-cols-[1.1fr_auto_1fr] lg:items-start">
           <ul className="space-y-2 text-sm text-muted-foreground sm:text-base">
@@ -216,7 +218,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section id="solution" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <SectionHeading title={copy.solution.title} description={copy.solution.description} centered />
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {copy.solution.cards.map((card) => (
@@ -262,7 +264,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section id="notes-vs-excel" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <SectionHeading
           title={copy.notesVsExcel.title}
           description={copy.notesVsExcel.description}
@@ -290,7 +292,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section id="highlights" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <SectionHeading title={copy.highlights.title} description={copy.highlights.description} centered />
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {copy.highlights.items.map((item) => (
@@ -306,7 +308,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+      <section id="roadmap" className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <div className="rounded-3xl border border-dashed border-primary/50 bg-primary/7 p-6 sm:p-8">
           <SectionHeading title={copy.roadmap.title} description={copy.roadmap.description} />
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -320,7 +322,7 @@ export function LandingPage({ locale }: LandingPageProps) {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6">
+      <section id="faq" className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6">
         <SectionHeading title={copy.faq.title} description="" centered />
         <div className="mt-6 space-y-3">
           {copy.faq.items.map((item) => (

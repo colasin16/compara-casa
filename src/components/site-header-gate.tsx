@@ -9,7 +9,11 @@ import { usePathname } from "next/navigation";
 export function SiteHeaderGate({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+  if (
+    pathname === "/" ||
+    pathname === "/dashboard" ||
+    pathname.startsWith("/dashboard/")
+  ) {
     return null;
   }
 
