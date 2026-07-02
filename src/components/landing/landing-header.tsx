@@ -42,7 +42,7 @@ export function LandingHeader({ locale }: { locale: Locale }) {
       <div
         className={cn(
           "mx-auto mt-2 max-w-6xl px-4 transition-all duration-300 sm:px-6",
-          isScrolled && "max-w-4xl rounded-full border border-border/60 bg-background/80 backdrop-blur-md",
+          isScrolled && "max-w-4xl rounded-md border border-border/60 bg-background/80 backdrop-blur-md",
         )}
       >
         <div className="relative flex flex-wrap items-center justify-between gap-4 py-2.5 lg:gap-0">
